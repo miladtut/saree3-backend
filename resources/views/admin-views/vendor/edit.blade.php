@@ -78,10 +78,10 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-12" style="margin-top: auto;margin-bottom: auto;">
-                            <div class="form-group" style="margin-bottom:0%;">                       
+                            <div class="form-group" style="margin-bottom:0%;">
                                 <center>
                                     <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
-                                        src="{{asset('storage/app/public/store').'/'.$store->logo}}" alt="{{$store->name}}"/>
+                                        src="{{asset('storage/store').'/'.$store->logo}}" alt="{{$store->name}}"/>
                                 </center>
                             </div>
                         </div>
@@ -157,13 +157,13 @@
                                 accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                             <label class="custom-file-label" for="customFileUpload">{{translate('messages.choose')}} {{translate('messages.file')}}</label>
                         </div>
-                    </div> 
+                    </div>
                     <center>
                         <img style="max-width: 100%;border: 1px solid; border-radius: 10px; max-height:200px;" id="coverImageViewer"
                         onerror="this.src='{{asset('public/assets/admin/img/900x400/img1.jpg')}}'"
-                        src="{{asset('storage/app/public/store/cover/'.$store->cover_photo)}}" alt="Product thumbnail"/>
-                    </center>  
-                    
+                        src="{{asset('storage/store/cover/'.$store->cover_photo)}}" alt="Product thumbnail"/>
+                    </center>
+
                     <br>
                     <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.store')}} {{translate('messages.info')}}</small>
                     <br>
@@ -191,7 +191,7 @@
                         </div>
                     </div>
                     <br>
-                    
+
                     <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.login')}} {{translate('messages.info')}}</small>
                     <br>
                     <div class="row">
@@ -275,7 +275,7 @@
         });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{\App\Models\BusinessSetting::where('key', 'map_api_key')->first()->value}}&libraries=places&callback=initMap&v=3.45.8"></script>
-    <script> 
+    <script>
         let myLatlng = { lat: {{$store->latitude}}, lng: {{$store->longitude}} };
         const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 13,
@@ -294,7 +294,7 @@
                 map,
                 title: "{{$store->name}}",
             });
-            infoWindow.open(map);    
+            infoWindow.open(map);
             const input = document.getElementById("pac-input");
             const searchBox = new google.maps.places.SearchBox(input);
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
@@ -343,7 +343,7 @@
                     }
                 });
                 map.fitBounds(bounds);
-            });          
+            });
         }
         initMap();
         function get_zone_data(id)
@@ -379,7 +379,7 @@
                         document.getElementById('latitude').value = coordinates['lat'];
                         document.getElementById('longitude').value = coordinates['lng'];
                         infoWindow.open(map);
-                    });    
+                    });
                 },
             });
         }
@@ -422,7 +422,7 @@
                         document.getElementById('latitude').value = coordinates['lat'];
                         document.getElementById('longitude').value = coordinates['lng'];
                         infoWindow.open(map);
-                    });    
+                    });
                 },
             });
         });
