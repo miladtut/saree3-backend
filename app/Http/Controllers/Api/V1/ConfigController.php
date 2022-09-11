@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Http;
 class ConfigController extends Controller
 {
     private $map_api_key;
-    
-    function __construct() 
+
+    function __construct()
     {
         $map_api_key_server=BusinessSetting::where(['key'=>'map_api_key_server'])->first();
         $map_api_key_server=$map_api_key_server?$map_api_key_server->value:null;
@@ -28,9 +28,9 @@ class ConfigController extends Controller
     public function configuration()
     {
         $key = ['currency_code','cash_on_delivery','digital_payment','default_location','free_delivery_over','business_name','logo','address','phone','email_address','country','currency_symbol_position','app_minimum_version_android','app_url_android','app_minimum_version_ios','app_url_ios','customer_verification','schedule_order','order_delivery_verification','per_km_shipping_charge','minimum_shipping_charge','show_dm_earning','canceled_by_deliveryman','canceled_by_store','timeformat','toggle_veg_non_veg','toggle_dm_registration','toggle_store_registration','schedule_order_slot_duration','parcel_per_km_shipping_charge','parcel_minimum_shipping_charge','web_app_landing_page_settings','footer_text','landing_page_links','loyalty_point_exchange_rate', 'loyalty_point_item_purchase_point', 'loyalty_point_status', 'loyalty_point_minimum_point', 'wallet_status', 'dm_tips_status', 'ref_earning_status','ref_earning_exchange_rate'];
-        
+
         $settings =  array_column(BusinessSetting::whereIn('key',$key)->get()->toArray(), 'value', 'key');
-        
+
         $currency_symbol = Currency::where(['currency_code' => Helpers::currency_code()])->first()->currency_symbol;
         $cod = json_decode($settings['cash_on_delivery'], true);
         $digital_payment = json_decode($settings['digital_payment'], true);
@@ -70,22 +70,22 @@ class ConfigController extends Controller
             // 'store_location_coverage' => Branch::where(['id'=>1])->first(['longitude','latitude','coverage']),
             // 'minimum_order_value' => (float)$settings['minimum_order_value'],
             'base_urls' => [
-                'item_image_url' => asset('storage/app/public/product'),
-                'customer_image_url' => asset('storage/app/public/profile'),
-                'banner_image_url' => asset('storage/app/public/banner'),
-                'category_image_url' => asset('storage/app/public/category'),
-                'review_image_url' => asset('storage/app/public/review'),
-                'notification_image_url' => asset('storage/app/public/notification'),
-                'store_image_url' => asset('storage/app/public/store'),
-                'vendor_image_url' => asset('storage/app/public/vendor'),
-                'store_cover_photo_url' => asset('storage/app/public/store/cover'),
-                'delivery_man_image_url' => asset('storage/app/public/delivery-man'),
-                'chat_image_url' => asset('storage/app/public/conversation'),
-                'campaign_image_url' => asset('storage/app/public/campaign'),
-                'business_logo_url' => asset('storage/app/public/business'),
-                'order_attachment_url' => asset('storage/app/public/order'),
-                'module_image_url' => asset('storage/app/public/module'),
-                'parcel_category_image_url' => asset('storage/app/public/parcel_category'),
+                'item_image_url' => asset('public/storage/product'),
+                'customer_image_url' => asset('public/storage/profile'),
+                'banner_image_url' => asset('public/storage/banner'),
+                'category_image_url' => asset('public/storage/category'),
+                'review_image_url' => asset('public/storage/review'),
+                'notification_image_url' => asset('public/storage/notification'),
+                'store_image_url' => asset('public/storage/store'),
+                'vendor_image_url' => asset('public/storage/vendor'),
+                'store_cover_photo_url' => asset('public/storage/store/cover'),
+                'delivery_man_image_url' => asset('public/storage/delivery-man'),
+                'chat_image_url' => asset('public/storage/conversation'),
+                'campaign_image_url' => asset('public/storage/campaign'),
+                'business_logo_url' => asset('public/storage/business'),
+                'order_attachment_url' => asset('public/storage/order'),
+                'module_image_url' => asset('public/storage/module'),
+                'parcel_category_image_url' => asset('public/storage/parcel_category'),
                 'landing_page_image_url' => asset('public/assets/landing/image')
             ],
             'country' => $settings['country'],
@@ -217,7 +217,7 @@ class ConfigController extends Controller
         $response = Http::get('https://maps.googleapis.com/maps/api/place/details/json?placeid='.$request['placeid'].'&key='.$this->map_api_key);
         return $response->json();
     }
-    
+
     public function geocode_api(Request $request)
     {
         $validator = Validator::make($request->all(), [
