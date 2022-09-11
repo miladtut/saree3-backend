@@ -78,8 +78,8 @@
                             <div class="form-group">
                                 <label class="input-label" for="store_id">{{translate('messages.store')}}<span
                                         class="input-label-secondary"></span></label>
-                                <select name="store_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.store')}}" id="store_id" class="js-data-example-ajax form-control" onchange="getRestaurantData('{{url('/')}}/admin/vendor/get-addons?data[]=0&store_id=',this.value,'add_on')" oninvalid="this.setCustomValidity('{{translate('messages.please_select_store')}}')">
-                                                        
+                                <select name="store_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.store')}}" id="store_id" class="js-data-example-ajax form-control " onchange="getRestaurantData('{{url('/')}}/admin/vendor/get-addons?data[]=0&store_id=',this.value,'add_on')" oninvalid="this.setCustomValidity('{{translate('messages.please_select_store')}}')">
+
                                 </select>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         {{--<div class="col-md-4 col-6">
                             <div class="form-group">
                                 <label class="input-label" for="sub-sub-categories">Sub Sub Category<span
@@ -193,16 +193,16 @@
                     <div class="row mt-2">
                         <div class="col-sm-6" id="stock_input">
                             <div class="form-group">
-                                <label class="input-label" for="total_stock">{{translate('messages.total_stock')}}</label>                                
+                                <label class="input-label" for="total_stock">{{translate('messages.total_stock')}}</label>
                                 <input type="number" class="form-control" name="current_stock" id="quantity">
                             </div>
                         </div>
                         <div class="col-sm-6" id="addon_input">
                             <div class="form-group">
                                 <label class="input-label" for="exampleFormControlSelect1">{{translate('messages.addon')}}<span
-                                        class="input-label-secondary" title="{{translate('messages.addon')}}"><img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.store_required_warning')}}"></span></label>                                
+                                        class="input-label-secondary" title="{{translate('messages.addon')}}"><img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.store_required_warning')}}"></span></label>
                                 <select name="addon_ids[]" class="form-control js-select2-custom" multiple="multiple" id="add_on">
-                                   
+
                                 </select>
                             </div>
                         </div>
@@ -266,7 +266,7 @@
                 },
             });
         }
-        
+
         function getRequest(route, id) {
             $.get({
                 url: route,
@@ -293,6 +293,11 @@
             $('#image-viewer-section').show(1000);
         });
     </script>
+
+
+
+
+
 
     <script>
         var module_id = 0;
@@ -377,7 +382,7 @@
                 },
                 processResults: function (data) {
                     return {
-                    results: data
+                        results: data
                     };
                 },
                 __port: function (params, success, failure) {
@@ -403,7 +408,7 @@
                 },
                 processResults: function (data) {
                     return {
-                    results: data
+                        results: data
                     };
                 },
                 __port: function (params, success, failure) {
@@ -431,7 +436,7 @@
                 },
                 processResults: function (data) {
                     return {
-                    results: data
+                        results: data
                     };
                 },
                 __port: function (params, success, failure) {
@@ -448,7 +453,7 @@
         $('#choice_attributes').on('change', function () {
             if(module_id == 0)
             {
-                toastr.error('{{translate("messages.select_a_module")}}', {
+                toastr.error('Please select a module!', {
                     CloseButton: true,
                     ProgressBar: true
                 });
@@ -459,7 +464,7 @@
             $.each($("#choice_attributes option:selected"), function () {
                 if($(this).val().length > 50)
                 {
-                    toastr.error('{{translate('validation.max.string',['attribute'=>translate('messages.variation'),'max'=>'50'])}}', {
+                    toastr.error('The Variation must not be greater than 50 characters.', {
                         CloseButton: true,
                         ProgressBar: true
                     });
@@ -471,7 +476,7 @@
 
         function add_more_customer_choice_option(i, name) {
             let n = name;
-            $('#customer_choice_options').append('<div class="row"><div class="col-md-3"><input type="hidden" name="choice_no[]" value="' + i + '"><input type="text" class="form-control" name="choice[]" value="' + n + '" placeholder="{{translate('messages.choice_title')}}" readonly></div><div class="col-lg-9"><input type="text" class="form-control" name="choice_options_' + i + '[]" placeholder="{{translate('messages.enter_choice_values')}}" data-role="tagsinput" onchange="combination_update()"></div></div>');
+            $('#customer_choice_options').append('<div class="row"><div class="col-md-3"><input type="hidden" name="choice_no[]" value="' + i + '"><input type="text" class="form-control" name="choice[]" value="' + n + '" placeholder="Choice Title" readonly></div><div class="col-lg-9"><input type="text" class="form-control" name="choice_options_' + i + '[]" placeholder="Enter choice values" data-role="tagsinput" onchange="combination_update()"></div></div>');
             $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
         }
 
@@ -499,6 +504,13 @@
             });
         }
     </script>
+
+
+{{-- ---------------------------------------------------------------------------------   --}}
+
+
+
+
 
     <script>
         $('#item_form').on('submit', function (e) {
