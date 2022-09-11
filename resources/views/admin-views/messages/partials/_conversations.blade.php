@@ -10,7 +10,7 @@
     <div class="card-header">
         <div class="avatar avatar-lg avatar-circle">
             <img class="avatar-img" style="width: 54px;height: 54px"
-                 src="{{asset('storage/app/public/profile/'.$user['image'])}}"
+                 src="{{asset('public/storage/profile/'.$user['image'])}}"
                  onerror="this.src='{{asset('public/assets/admin')}}/img/160x160/img1.jpg'"
                  alt="Image Description">
         </div>
@@ -28,7 +28,7 @@
                             <br>
                             @if($con->image!=null)
                                 <img style="width:100%"
-                                     src="{{asset('storage/app/public/conversation').'/'.$con->image}}">
+                                     src="{{asset('public/storage/conversation').'/'.$con->image}}">
                             @endif
                         </div>
                     </div>

@@ -57,7 +57,7 @@
                             </tr>
                             <!-- <tr>
                                 <th>
-                                    
+
                                 </th>
                                 <th>
                                     <input type="text" id="column1_search" class="form-control form-control-sm"
@@ -89,7 +89,7 @@
                                     </td>
                                     <td>
                                         <div style="overflow-x: hidden;overflow-y: hidden;">
-                                            <img src="{{asset('storage/app/public/campaign')}}/{{$campaign['image']}}" style="width: 100%; max-height:75px; margin-top:auto; margin-bottom:auto;"
+                                            <img src="{{asset('public/storage/campaign')}}/{{$campaign['image']}}" style="width: 100%; max-height:75px; margin-top:auto; margin-bottom:auto;"
                                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'">
                                         </div>
                                     </td>
@@ -106,17 +106,17 @@
                                         <button type="button" onclick="form_alert('campaign-{{$campaign['id']}}','{{translate('messages.alert_store_out_from_campaign')}}')" title="You are already joined. Click to out from the campaign." class="btn btn-outline-danger">Out</button>
                                         <form action="{{route('vendor.campaign.remove-store',[$campaign['id'],$store_id])}}"
                                                 method="GET" id="campaign-{{$campaign['id']}}">
-                                            @csrf 
+                                            @csrf
                                         </form>
                                         @else
                                         <button type="button" class="btn btn-outline-primary" onclick="form_alert('campaign-{{$campaign['id']}}','{{translate('messages.alert_store_join_campaign')}}')" title="Click to join the campaign">Join</button>
                                         <form action="{{route('vendor.campaign.add-store',[$campaign['id'],$store_id])}}"
                                                 method="GET" id="campaign-{{$campaign['id']}}">
-                                            @csrf 
+                                            @csrf
                                         </form>
                                         @endif
-                                        
-                                        
+
+
                                     </td>
                                 </tr>
                             @endforeach

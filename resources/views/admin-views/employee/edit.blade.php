@@ -8,7 +8,7 @@
            width: 367px !important;
          margin-left: 0 !important;
      }
-    
+
      }
 
 @media(max-width:500px){
@@ -16,14 +16,14 @@
            width: 400px !important;
          margin-left: 0 !important;
      }
-   
-   
+
+
 }
  </style>
 @endpush
 
 @section('content')
-<div class="content container-fluid"> 
+<div class="content container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
@@ -76,7 +76,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-   
+
                                 <div class="col-md-6">
                                     <label class="input-label qcont" for="name">{{translate('messages.Role')}}</label>
                                     <select class="form-control js-select2-custom" name="role_id"
@@ -88,7 +88,7 @@
                                             @endforeach
                                     </select>
                                 </div>
-                             
+
                             </div>
                         </div>
 
@@ -126,12 +126,12 @@
                                                 accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                                             <label class="custom-file-label" for="customFileUpload">{{translate('messages.choose')}} {{translate('messages.file')}}</label>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <center>
                                         <img style="width: auto;border: 1px solid; border-radius: 10px; max-height:200px;" id="viewer"
                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                        src="{{asset('storage/app/public/admin')}}/{{$e['image']}}" alt="Employee thumbnail"/>
-                                    </center>  
+                                        src="{{asset('public/storage/admin')}}/{{$e['image']}}" alt="Employee thumbnail"/>
+                                    </center>
                                     </button>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
             readURL(this);
         });
 
-        
+
         $(".js-example-theme-single").select2({
             theme: "classic"
         });

@@ -79,7 +79,7 @@
                                     <div class="form-group" id="item_wise">
                                         <label class="input-label" for="exampleFormControlInput1">{{translate('messages.select')}} {{translate('messages.item')}}</label>
                                         <select name="item_id" id="choice_item" class="form-control js-select2-custom" placeholder="{{translate('messages.select_item')}}">
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="form-group" style="margin-bottom:0%;">
                                         <center>
-                                            <img style="width: 80%;border: 1px solid; border-radius: 10px;" id="viewer" onerror="this.src='{{asset('public/assets/admin/img/900x400/img1.jpg')}}'" src="{{asset('storage/app/public/banner')}}/{{$banner['image']}}" alt="campaign image"/>
+                                            <img style="width: 80%;border: 1px solid; border-radius: 10px;" id="viewer" onerror="this.src='{{asset('public/assets/admin/img/900x400/img1.jpg')}}'" src="{{asset('public/storage/banner')}}/{{$banner['image']}}" alt="campaign image"/>
                                         </center>
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@
     </script>
     <script>
         var zone_id = {{$banner->zone_id}};
-        
+
         var module_id = {{$banner->module_id}};
 
         function get_items()
@@ -157,11 +157,11 @@
                 success: function (data) {
                     $('#choice_item').empty().append(data.options);
                 }
-            });   
+            });
         }
         $(document).on('ready', function () {
 
-            
+
             $('#module_select').on('change', function(){
                 if($(this).val())
                 {
@@ -214,7 +214,7 @@
 
             $('.js-select2-custom').each(function () {
                 var select2 = $.HSCore.components.HSSelect2.init($(this));
-            });   
+            });
         });
 
         function banner_type_change(order_type) {
@@ -235,7 +235,7 @@
         }
         @if($banner->type == 'item_wise')
         getRequest('{{url('/')}}/admin/item/get-items?module_id={{$banner->module_id}}&zone_id={{$banner->zone_id}}&data[]={{$banner->data}}','choice_item');
-        @endif 
+        @endif
         $('#banner_form').on('submit', function (e) {
             e.preventDefault();
             var formData = new FormData(this);

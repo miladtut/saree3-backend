@@ -137,7 +137,7 @@
                     </div>
                 </div>
             </div>
- 
+
         </div>
     </div>
     <div class="card my-2">
@@ -147,9 +147,9 @@
                     <div class="d-flex align-items-center">
                         <img class="avatar avatar-xxl avatar-4by3 mr-4"
                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                        src="{{asset('storage/app/public/store')}}/{{$store->logo}}"
+                        src="{{asset('public/storage/store')}}/{{$store->logo}}"
                                 alt="{{$store->name}} Logo">
-                        
+
                     </div>
                 </div>
 
@@ -218,7 +218,7 @@
 
                         <!-- Review Ratings -->
                         <li class="d-flex align-items-center font-size-sm">
-                        
+
                             <span class="mr-3">1 star</span>
                             <div class="progress flex-grow-1">
                                 <div class="progress-bar" role="progressbar"
@@ -271,7 +271,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="row pt-4">
@@ -284,10 +284,10 @@
                             <div class="text-center">
                                 <div class="avatar avatar-xxl avatar-circle avatar-border-lg">
                                     <img class="avatar-img" onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                src="{{asset('storage/app/public/vendor')}}/{{$store->vendor->image}}" alt="Image Description">
+                                src="{{asset('public/storage/vendor')}}/{{$store->vendor->image}}" alt="Image Description">
                                 </div>
-                            
-                            
+
+
                                 <ul class="list-unstyled list-unstyled-py-3 text-dark mb-3">
                                     <li>
                                         <i class="tio-user-outlined nav-icon"></i>
@@ -302,7 +302,7 @@
                                     {{$store->vendor->phone}}
                                     </li>
                                 </ul>
-                            </div>   
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -337,7 +337,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>      
+                    </div>
                 </div>
             </div>
         </div>

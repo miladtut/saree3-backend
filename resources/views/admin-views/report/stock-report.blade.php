@@ -114,7 +114,7 @@
                         <td>{{$key+$items->firstItem()}}</td>
                         <td>
                             <a class="media align-items-center" href="{{route('admin.item.view',[$item['id']])}}">
-                                <img class="avatar avatar-lg mr-3" src="{{asset('storage/app/public/product')}}/{{$item['image']}}" onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" alt="{{$item->name}} image">
+                                <img class="avatar avatar-lg mr-3" src="{{asset('public/storage/product')}}/{{$item['image']}}" onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" alt="{{$item->name}} image">
                                 <div class="media-body">
                                     <h5 class="text-hover-primary mb-0">{{$item['name']}}</h5>
                                 </div>
@@ -182,12 +182,12 @@
 @push('script')
 <script>
     function update_quantity(val) {
-     
+
         $.get({
             url: '{{url('/')}}/admin/item/get-variations?id='+val,
             dataType: 'json',
             success: function (data) {
-               
+
                 $('.rest-part').empty().html(data.view);
             },
         });
@@ -229,10 +229,10 @@
                     return {
                         q: params.term, // search term
                         // all:true,
-                        @if(isset($zone)) 
+                        @if(isset($zone))
                             zone_ids: [{{$zone->id}}],
                         @endif
-                        @if(request('module_id')) 
+                        @if(request('module_id'))
                         module_id: {{request('module_id')}}
                         ,
                         @endif

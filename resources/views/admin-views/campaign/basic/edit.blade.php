@@ -90,7 +90,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class="input-label" for="title">{{translate('messages.start')}} {{translate('messages.date')}}</label>
-                                        <input type="date" id="date_from" class="form-control" required name="start_date" value="{{$campaign->start_date->format('Y-m-d')}}"> 
+                                        <input type="date" id="date_from" class="form-control" required name="start_date" value="{{$campaign->start_date->format('Y-m-d')}}">
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -124,7 +124,7 @@
                             <div class="form-group" style="margin-bottom:0%;">
                                 <center>
                                     <img style="width: 80%;border: 1px solid; border-radius: 10px;" id="viewer"
-                                         src="{{asset('storage/app/public/campaign')}}/{{$campaign->image}}" alt="campaign image"/>
+                                         src="{{asset('public/storage/campaign')}}/{{$campaign->image}}" alt="campaign image"/>
                                 </center>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                 $("#type-category").show();
             }
         }
-    
+
         $('#campaign-form').on('submit', function (e) {
             e.preventDefault();
             var formData = new FormData(this);

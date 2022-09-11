@@ -31,7 +31,7 @@
                     <div class="col-sm-4 mb-3 mb-md-0">
                         <div class="d-flex align-items-center">
                             <img class="avatar avatar-xxl avatar-4by3 mr-4"
-                                 src="{{asset('storage/app/public/product')}}/{{$product['image']}}"
+                                 src="{{asset('public/storage/product')}}/{{$product['image']}}"
                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
                                  alt="Image Description">
                             <div class="d-block">
@@ -126,7 +126,7 @@
                             <img
                                 class="avatar-img avatar-circle" style="width: 75px;margin:auto;"
                                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                src="{{asset('storage/app/public/store/'.$product->store->logo)}}"
+                                src="{{asset('public/storage/store/'.$product->store->logo)}}"
                                 alt="Image Description">
                             <label class="input-label">{{$product->store['name']}}</label>
                         </a>
@@ -156,7 +156,7 @@
                         </span><br>
                         <span>
                             {{translate('messages.available')}} {{translate('messages.time')}} {{translate('messages.ends')}} : {{date(config('timeformat'), strtotime($product['available_time_ends']))}}
-                        </span>                            
+                        </span>
                         @endif
                         @if($product->variations && is_array(json_decode($product['variations'],true)))
                         <h4 class="border-bottom mt-2"> {{translate('messages.variations')}} </h4>
@@ -230,7 +230,7 @@
                                         <div class="avatar avatar-circle">
                                             <img class="avatar-img" width="75" height="75"
                                                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                                src="{{asset('storage/app/public/profile/'.$review->customer->image)}}"
+                                                src="{{asset('public/storage/profile/'.$review->customer->image)}}"
                                                 alt="Image Description">
                                         </div>
                                         <div class="ml-3">
@@ -298,7 +298,7 @@
     function status_form_alert(id, message, e) {
         e.preventDefault();
         Swal.fire({
-            title: '{{translate('messages.are_you_sure')}}',   
+            title: '{{translate('messages.are_you_sure')}}',
             text: message,
             type: 'warning',
             showCancelButton: true,

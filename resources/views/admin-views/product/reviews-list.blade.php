@@ -54,7 +54,7 @@
                                     <td>
                                         @if ($review->item)
                                             <a class="media align-items-center" href="{{route('admin.item.view',[$review->item['id']])}}">
-                                                <img class="avatar avatar-lg mr-3" src="{{asset('storage/app/public/product')}}/{{$review->item['image']}}" 
+                                                <img class="avatar avatar-lg mr-3" src="{{asset('public/storage/product')}}/{{$review->item['image']}}"
                                                     onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" alt="{{$review->item->name}} image">
                                                 <div class="media-body">
                                                     <h5 class="text-hover-primary mb-0">{{Str::limit($review->item['name'],20,'...')}}</h5>
@@ -120,7 +120,7 @@
         function status_form_alert(id, message, e) {
             e.preventDefault();
             Swal.fire({
-                title: '{{translate('messages.are_you_sure')}}',   
+                title: '{{translate('messages.are_you_sure')}}',
                 text: message,
                 type: 'warning',
                 showCancelButton: true,

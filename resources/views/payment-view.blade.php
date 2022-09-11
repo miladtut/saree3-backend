@@ -90,7 +90,7 @@
                                                 data-buttontext="Pay {{$order->order_amount}} {{\App\CentralLogics\Helpers::currency_code()}}"
                                                 data-name="{{\App\Models\BusinessSetting::where(['key'=>'business_name'])->first()->value}}"
                                                 data-description="{{$order['id']}}"
-                                                data-image="{{asset('storage/app/public/business/'.\App\Models\BusinessSetting::where(['key'=>'logo'])->first()->value)}}"
+                                                data-image="{{asset('public/storage/business/'.\App\Models\BusinessSetting::where(['key'=>'logo'])->first()->value)}}"
                                                 data-prefill.name="{{$order->customer->f_name}}"
                                                 data-prefill.email="{{$order->customer->email}}"
                                                 data-theme.color="#ff7529">

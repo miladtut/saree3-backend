@@ -25,7 +25,7 @@
                         <td scope="row">
                             <img height="35" style="border-radius: 5px"
                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                 src="{{asset('storage/app/public/store')}}/{{$item->store['logo']}}">
+                                 src="{{asset('public/storage/store')}}/{{$item->store['logo']}}">
                             <span class="ml-2"> {{Str::limit($item->store->name??translate('messages.store deleted!'), 20, '...')}} </span>
                         </td>
                         <td>

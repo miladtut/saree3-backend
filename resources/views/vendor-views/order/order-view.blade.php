@@ -105,9 +105,9 @@
                             @elseif ($order['order_status']=='confirmed' || $order['order_status']=='accepted')
                             <a class="btn btn-sm btn-primary" onclick="order_status_change_alert('{{route('vendor.order.status',['id'=>$order['id'],'order_status'=>'processing'])}}','Change status to processing ?')" href="javascript:">{{translate('messages.Proceed_for_cooking')}}</a>
                             @elseif ($order['order_status']=='processing')
-                            <a class="btn btn-sm btn-primary" onclick="order_status_change_alert('{{route('vendor.order.status',['id'=>$order['id'],'order_status'=>'handover'])}}','Change status to ready for handover ?')" href="javascript:">{{translate('messages.make_ready_for_handover')}}</a>    
+                            <a class="btn btn-sm btn-primary" onclick="order_status_change_alert('{{route('vendor.order.status',['id'=>$order['id'],'order_status'=>'handover'])}}','Change status to ready for handover ?')" href="javascript:">{{translate('messages.make_ready_for_handover')}}</a>
                             @elseif ($order['order_status']=='handover' && ($order['order_type']=='take_away' || \App\CentralLogics\Helpers::get_store_data()->self_delivery_system))
-                            <a class="btn btn-sm btn-primary" onclick="order_status_change_alert('{{route('vendor.order.status',['id'=>$order['id'],'order_status'=>'delivered'])}}','Change status to delivered (payment status will be paid if not) ?', {{$order_delivery_verification?'true':'false'}})" href="javascript:">{{translate('messages.maek_delivered')}}</a>    
+                            <a class="btn btn-sm btn-primary" onclick="order_status_change_alert('{{route('vendor.order.status',['id'=>$order['id'],'order_status'=>'delivered'])}}','Change status to delivered (payment status will be paid if not) ?', {{$order_delivery_verification?'true':'false'}})" href="javascript:">{{translate('messages.maek_delivered')}}</a>
                             @endif
                         </div>
                         <!-- End Unfold -->
@@ -158,7 +158,7 @@
                                     <button class="btn w-100"  data-toggle="modal" data-target="#imagemodal" title="{{translate('messages.order')}} {{translate('messages.attachment')}}">
                                         <div class="gallary-card">
                                             <img src="{{asset('storage/app/'.'public/order/'.$order->order_attachment)}}" alt="{{translate('messages.prescription')}}" style="height:auto;width:50%;">
-                                        </div>    
+                                        </div>
                                     </button>
                                     <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -215,7 +215,7 @@
                             <div class="media">
                                 <a class="avatar avatar-xl mr-3 cursor-pointer" href="{{route('vendor.item.view',$detail->item['id'])}}">
                                     <img class="img-fluid"
-                                            src="{{asset('storage/app/public/product')}}/{{$detail->item['image']}}"
+                                            src="{{asset('public/storage/product')}}/{{$detail->item['image']}}"
                                             onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
                                             alt="Image Description">
                                 </a>
@@ -232,7 +232,7 @@
                                                         <div class="font-size-sm text-body">
                                                             <span>{{$key1}} :  </span>
                                                             <span class="font-weight-bold">{{Str::limit($variation,20,'...')}}</span>
-                                                        </div>                                                        
+                                                        </div>
                                                     @endif
 
                                                 @endforeach
@@ -274,7 +274,7 @@
                                 <div class="media">
                                     <div class="avatar avatar-xl mr-3">
                                         <img class="img-fluid"
-                                             src="{{asset('storage/app/public/campaign')}}/{{$detail->campaign['image']}}"
+                                             src="{{asset('public/storage/campaign')}}/{{$detail->campaign['image']}}"
                                              onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
                                              alt="Image Description">
                                     </div>
@@ -291,7 +291,7 @@
                                                             <div class="font-size-sm text-body">
                                                                 <span>{{$key1}} :  </span>
                                                                 <span class="font-weight-bold">{{Str::limit($variation, 25, '...')}}</span>
-                                                            </div>                                                        
+                                                            </div>
                                                         @endif
                                                     @endforeach
                                                 @endif
@@ -328,12 +328,12 @@
                                 <hr>
                         @endif
                     @endforeach
-                        <?php 
+                        <?php
 
                             $coupon_discount_amount = $order['coupon_discount_amount'];
 
                             $total_price = $product_price + $total_addon_price - $store_discount_amount - $coupon_discount_amount;
-                        
+
                             $total_tax_amount= $order['total_tax_amount'];
 
                             $store_discount_amount = $order['store_discount_amount'];
@@ -396,15 +396,15 @@
                     <!-- End Header -->
 
                     <!-- Body -->
-                    
+
                     <div class="card-body">
-                    @if($order->delivery_man)    
+                    @if($order->delivery_man)
                         <div class="media align-items-center" href="javascript:">
                             <div class="avatar avatar-circle mr-3">
                                 <img
                                     class="avatar-img" style="width: 75px"
                                     onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                    src="{{asset('storage/app/public/delivery-man/'.$order->delivery_man->image)}}"
+                                    src="{{asset('public/storage/delivery-man/'.$order->delivery_man->image)}}"
                                     alt="Image Description">
                             </div>
                             <div class="media-body">
@@ -444,7 +444,7 @@
                             <li>
                                 <a class="deco-none" href="tel:{{$order->delivery_man['phone']}}">
                                     <i class="tio-android-phone-vs mr-2"></i>
-                                {{$order->delivery_man['phone']}}</a> 
+                                {{$order->delivery_man['phone']}}</a>
                             </li>
                         </ul>
 
@@ -471,9 +471,9 @@
                         <span class="d-block text-lowercase qcont">
                                 {{translate('messages.deliveryman').' '.translate('messages.not_found')}}
                         </span>
-                    @endif    
+                    @endif
                     </div>
-                    
+
                 <!-- End Body -->
                 </div>
                 <!-- End Card -->
@@ -494,7 +494,7 @@
                                     <img
                                         class="avatar-img" style="width: 75px"
                                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                        src="{{asset('storage/app/public/profile/'.$order->customer->image)}}"
+                                        src="{{asset('public/storage/profile/'.$order->customer->image)}}"
                                         alt="Image Description">
                                 </div>
                                 <div class="media-body">
@@ -753,7 +753,7 @@
                         location.href = route;
                     }
                 })
-            }   
+            }
         }
 
         function last_location_view() {

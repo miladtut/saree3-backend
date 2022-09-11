@@ -1405,7 +1405,7 @@
                                 <center>
                                     <img style="height: 100px;border: 1px solid; border-radius: 10px;" id="viewer"
                                         onerror="this.src='{{ asset('public/assets/admin/img/160x160/img2.jpg') }}'"
-                                        src="{{ asset('storage/app/public/business/' . $logo) }}" alt="logo image" />
+                                        src="{{ asset('public/storage/business/' . $logo) }}" alt="logo image" />
                                 </center>
                             </div>
                         </div>
@@ -1424,7 +1424,7 @@
                                 <center>
                                     <img style="height: 100px;border: 1px solid; border-radius: 10px;" id="iconViewer"
                                         onerror="this.src='{{ asset('public/assets/admin/img/160x160/img2.jpg') }}'"
-                                        src="{{ asset('storage/app/public/business/' . $icon) }}" alt="Fav icon" />
+                                        src="{{ asset('public/storage/business/' . $icon) }}" alt="Fav icon" />
                                 </center>
                             </div>
                         </div>

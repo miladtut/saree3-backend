@@ -23,7 +23,7 @@
                 <div class="grid-card">
                     <label class="label_1">{{translate('messages.sold')}} : {{$item['order_count']}}</label>
                     <img style="width: 100%;height: 120px"
-                         src="{{asset('storage/app/public/product')}}/{{$item['image']}}"
+                         src="{{asset('public/storage/product')}}/{{$item['image']}}"
                          onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
                          alt="{{$item->name}} image">
                     <div class="text-center mt-2">

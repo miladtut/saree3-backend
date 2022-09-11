@@ -117,7 +117,7 @@
                     <td>
                         <div style="text-align: right; margin-right:15px;">
                             <img style="max-width:250px;border:0;"
-                                src="{{ asset('/storage/app/public/business/' . $logo) }}" title=""
+                                src="{{ asset('/public/storage/business/' . $logo) }}" title=""
                                 class="sitelogo" width="60%" alt="Image" />
                         </div>
                     </td>
@@ -136,7 +136,7 @@
                                 @if ($order->store)
                                     <div style="display:flex; align-items:center;margin-top:10px;">
                                         <img style="border:0;border-radius:50%;"
-                                            src="{{ asset('/storage/app/public/store/' . $order->store->logo) }}" title="Logo"
+                                            src="{{ asset('/public/storage/store/' . $order->store->logo) }}" title="Logo"
                                             class="sitelogo" width="20%" alt="Image" />
                                         <span style="padding-left: 5px;">{{ $order->store->name }}</span>
                                     </div>
@@ -159,7 +159,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </td>     
+                        </td>
                     @else
                     <td style="width:100%;vertical-align: top;">
                         <div style="margin-top:10px;">
@@ -178,7 +178,7 @@
                                 </span>
                             </div>
                         </div>
-                    </td>                                         
+                    </td>
                     @endif
                 </tr>
             </tbody>
@@ -270,7 +270,7 @@
                             $total_discount_on_product += $details['discount'];
                             $total += $subtotal;
                             ?>
-                        @endforeach                    
+                        @endforeach
                     @endif
 
                     </tbody>

@@ -42,7 +42,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="input-label" for="tergat">{{translate('messages.send')}} {{translate('messages.to')}}</label>
-                        
+
                                 <select name="tergat" class="form-control" id="tergat" data-placeholder="{{translate('messages.select')}} {{translate('messages.tergat')}}" required>
                                     <option value="customer" {{$notification->tergat=='customer'?'selected':''}}>{{translate('messages.customer')}}</option>
                                     <option value="deliveryman" {{$notification->tergat=='deliveryman'?'selected':''}}>{{translate('messages.deliveryman')}}</option>
@@ -66,7 +66,7 @@
                         <hr>
                         <center>
                             <img style="width: 30%;border: 1px solid; border-radius: 10px;" id="viewer"
-                                 src="{{asset('storage/app/public/notification')}}/{{$notification['image']}}"  onerror="src='{{asset('public/assets/admin/img/900x400/img1.jpg')}}'" alt="image"/>
+                                 src="{{asset('public/storage/notification')}}/{{$notification['image']}}"  onerror="src='{{asset('public/assets/admin/img/900x400/img1.jpg')}}'" alt="image"/>
                         </center>
                     </div>
                     <hr>

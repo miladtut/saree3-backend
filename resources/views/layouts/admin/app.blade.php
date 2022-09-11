@@ -9,7 +9,7 @@
     <!-- Favicon -->
     @php($logo=\App\Models\BusinessSetting::where(['key'=>'icon'])->first()->value)
     <link rel="shortcut icon" href="">
-    <link rel="icon" type="image/x-icon" href="{{asset('storage/app/public/business/'.$logo??'')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('public/storage/business/'.$logo??'')}}">
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
     <!-- CSS Implementing Plugins -->
@@ -236,13 +236,13 @@
         @foreach (\App\Models\Module::notParcel()->get() as $module)
         <li>
             <a class="p-2 navbar-dropdown-account-wrapper" href="javascript:;" onclick="set_filter('{{url()->full()}}',{{$module->id}},'module_id')" title="{{$module->module_name}}">
-                <img class="avatar avatar-sm avatar-circle" src="{{asset('storage/app/public/module')}}/{{$module['thumbnail']}}" alt="{{$module->module_name}}" width="20">
+                <img class="avatar avatar-sm avatar-circle" src="{{asset('public/storage/module')}}/{{$module['thumbnail']}}" alt="{{$module->module_name}}" width="20">
             </a>
         </li>
         @endforeach
         <li>
             <a class="p-2 navbar-dropdown-account-wrapper" href="javascript:;" onclick="set_filter('{{url()->full()}}','','module_id')" title="{{$module->module_name}}">
-                <img class="avatar avatar-sm avatar-circle" src="{{asset('storage/app/public/business/'.$logo??'')}}" alt="{{translate('messages.all')}} {{translate('messages.module')}}" width="20">
+                <img class="avatar avatar-sm avatar-circle" src="{{asset('public/storage/business/'.$logo??'')}}" alt="{{translate('messages.all')}} {{translate('messages.module')}}" width="20">
             </a>
         </li>
     </ul>
@@ -428,7 +428,7 @@
             {
                 location.href = "{{route('admin.order.list',['status'=>'all'])}}";
             }
-            
+
         }
         @endif
     @endif
@@ -473,7 +473,7 @@
 
         location.href = nurl;
     }
-    
+
     function set_store_filter(url, id) {
         var nurl = new URL(url);
         nurl.searchParams.set('store_id', id);

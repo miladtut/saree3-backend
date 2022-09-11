@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-4">
                 <img width="150"
-                     src="{{asset('storage/app/public/restaurant')}}/{{\App\Models\BusinessSetting::where(['key'=>'logo'])->first()->value}}">
+                     src="{{asset('public/storage/restaurant')}}/{{\App\Models\BusinessSetting::where(['key'=>'logo'])->first()->value}}">
                 <br><br>
                 <strong>Phone : {{\App\Models\BusinessSetting::where(['key'=>'phone'])->first()->value}}</strong><br>
                 <strong>Email : {{\App\Models\BusinessSetting::where(['key'=>'email_address'])->first()->value}}</strong><br>
@@ -107,7 +107,7 @@
                                     <div class="avatar avatar-xl mr-3">
                                         <img class="img-fluid"
                                              onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
-                                             src="{{asset('storage/app/public/product')}}/{{$detail->product['image']}}"
+                                             src="{{asset('public/storage/product')}}/{{$detail->product['image']}}"
                                              alt="Image Description">
                                     </div>
 

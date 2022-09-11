@@ -5,7 +5,7 @@
 @endpush
 
 @section('content')
-<div class="content container-fluid"> 
+<div class="content container-fluid">
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -16,7 +16,7 @@
                 @if($shop->cover_photo)
                 <div class="row">
                     <div class="col-12"  style="max-height:250px; overflow-y: hidden;">
-                         <img src="{{asset('storage/app/public/store/cover/'.$shop->cover_photo)}}" onerror="this.src='{{asset('public/assets/admin/img/900x400/img1.jpg')}}'" style="max-height:auto;width: 100%;">
+                         <img src="{{asset('public/storage/store/cover/'.$shop->cover_photo)}}" onerror="this.src='{{asset('public/assets/admin/img/900x400/img1.jpg')}}'" style="max-height:auto;width: 100%;">
                     </div>
                 </div>
                 @endif
@@ -28,18 +28,18 @@
                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
                         alt="User Pic">
                     </div>
-                    
+
                     @else
-                    
+
                         <div class="col-md-4">
-                            <img src="{{asset('storage/app/public/store/'.$shop->logo)}}" class="rounded-circle border"
+                            <img src="{{asset('public/storage/store/'.$shop->logo)}}" class="rounded-circle border"
                             onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
                             height="200" width="200" alt="">
                         </div>
 
-                    
+
                     @endif
-                 
+
                     <!-- http://localhost/Food-multivendor/public/assets/admin/img/restaurant_cover.jpg -->
                     <div class="col-md-8 mt-4">
                         <span class="h4">{{translate('messages.name')}} : {{$shop->name}}</span><br>
@@ -50,8 +50,8 @@
                         <a class="btn btn-primary mt-1" href="{{route('vendor.shop.edit')}}">EDIT</a>
                     </div>
                 </div>
-                
-               
+
+
             </div>
         </div>
     </div>

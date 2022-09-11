@@ -84,10 +84,10 @@
                         <div class="col-12">
                             <center>
                                 <img style="width: 30%;border: 1px solid; border-radius: 10px;" id="viewer"
-                                     src="{{asset('storage/app/public/category')}}/{{$category['image']}}" alt=""/>
+                                     src="{{asset('public/storage/category')}}/{{$category['image']}}" alt=""/>
                             </center>
                         </div>
-                    </div>                        
+                    </div>
                     @endif
 
                     <button type="submit" class="btn btn-primary">{{translate('messages.update')}}</button>

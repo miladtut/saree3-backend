@@ -13,7 +13,7 @@
            width: 367px !important;
          margin-left: 0 !important;
      }
-    
+
      }
 
 @media(max-width:500px){
@@ -21,14 +21,14 @@
            width: 400px !important;
          margin-left: 0 !important;
      }
-   
-   
+
+
 }
  </style>
 @endpush
 @section('content')
     <!-- Content Row -->
-    <div class="content container-fluid"> 
+    <div class="content container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -65,12 +65,12 @@
                                             accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                                         <label class="custom-file-label" for="customFileUpload">{{translate('messages.choose')}} {{translate('messages.file')}}</label>
                                     </div>
-                                </div> 
+                                </div>
                                 <center>
                                     <img style="width: auto;border: 1px solid; border-radius: 10px; max-height:200px;" id="viewer"
                                     onerror="this.src='{{asset('public/assets/admin/img/image-place-holder.png')}}'"
-                                    src="{{asset('storage/app/public/store/'.$shop->logo)}}" alt="Product thumbnail"/>
-                                </center>  
+                                    src="{{asset('public/storage/store/'.$shop->logo)}}" alt="Product thumbnail"/>
+                                </center>
                             </div>
                         </div>
                         <div class="form-group">
@@ -80,12 +80,12 @@
                                     accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                                 <label class="custom-file-label" for="customFileUpload">{{translate('messages.choose')}} {{translate('messages.file')}}</label>
                             </div>
-                        </div> 
+                        </div>
                         <center>
                             <img style="max-width: 100%;border: 1px solid; border-radius: 10px; max-height:200px;" id="coverImageViewer"
                             onerror="this.src='{{asset('public/assets/admin/img/restaurant_cover.jpg')}}'"
-                            src="{{asset('storage/app/public/store/cover/'.$shop->cover_photo)}}" alt="Product thumbnail"/>
-                        </center>  
+                            src="{{asset('public/storage/store/cover/'.$shop->cover_photo)}}" alt="Product thumbnail"/>
+                        </center>
                         <br>
                         <button type="submit" class="btn btn-primary text-capitalize" id="btn_update">{{translate('messages.update')}}</button>
                         <a class="btn btn-danger text-capitalize" href="{{route('vendor.shop.view')}}">{{translate('messages.cancel')}}</a>

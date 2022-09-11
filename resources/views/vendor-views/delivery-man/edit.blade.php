@@ -91,7 +91,7 @@
 
                         @foreach(json_decode($delivery_man['identity_image'],true) as $img)
                             <div class="col-md-4 col-12 mb-2">
-                                <img height="150" src="{{asset('storage/app/public/delivery-man').'/'.$img}}">
+                                <img height="150" src="{{asset('public/storage/delivery-man').'/'.$img}}">
                             </div>
                         @endforeach
                         <hr>
@@ -133,10 +133,10 @@
                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                             <label class="custom-file-label" for="customFileEg1">{{translate('messages.choose')}} {{translate('messages.file')}}</label>
                         </div>
-                     
+
                         <center class="pt-4">
                             <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
-                                 src="{{asset('storage/app/public/delivery-man').'/'.$delivery_man['image']}}" alt="delivery-man image"/>
+                                 src="{{asset('public/storage/delivery-man').'/'.$delivery_man['image']}}" alt="delivery-man image"/>
                         </center>
                     </div>
                     <hr>

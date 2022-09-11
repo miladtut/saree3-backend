@@ -81,7 +81,7 @@
                             <div class="form-group" style="margin-bottom:0%;">
                                 <center>
                                     <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
-                                        src="{{asset('storage/store').'/'.$store->logo}}" alt="{{$store->name}}"/>
+                                        src="{{asset("public/storage/store/$store->logo")}}" alt="{{$store->name}}"/>
                                 </center>
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                     <center>
                         <img style="max-width: 100%;border: 1px solid; border-radius: 10px; max-height:200px;" id="coverImageViewer"
                         onerror="this.src='{{asset('public/assets/admin/img/900x400/img1.jpg')}}'"
-                        src="{{asset('storage/store/cover/'.$store->cover_photo)}}" alt="Product thumbnail"/>
+                        src="{{asset('public/storage/store/cover/'.$store->cover_photo)}}" alt="Product thumbnail"/>
                     </center>
 
                     <br>

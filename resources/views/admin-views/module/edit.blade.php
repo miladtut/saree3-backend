@@ -82,7 +82,7 @@
                                 <div class="card mt-1" id="module_des_card">
                                     <div class="card-body" id="module_description">{{config('module.'.$module->module_type)['description']}}</div>
                                 </div>
-                            </div>                       
+                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group" id="zone_check">
@@ -91,7 +91,7 @@
                                         <img src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
                                             alt="{{ translate('messages.module_all_zone_hint') }}" style="height: 10px; width: 10px;">
                                 </span> *</small></label>
-                                
+
                                 <div class="input-group input-group-md-down-break">
                                     <!-- Custom Radio -->
                                     <div class="form-control">
@@ -146,7 +146,7 @@
                             </div>
                             <div class="form-group" style="margin-bottom:0%;">
                                 <center>
-                                    <img style="width: 150px; height:150px; border: 1px solid; border-radius: 10px;" id="viewer" onerror="this.src='{{asset('public/assets/admin/img/400x400/img2.jpg')}}'" src="{{asset('storage/app/public/module/'.$module['icon'])}}" alt="image" />
+                                    <img style="width: 150px; height:150px; border: 1px solid; border-radius: 10px;" id="viewer" onerror="this.src='{{asset('public/assets/admin/img/400x400/img2.jpg')}}'" src="{{asset('public/storage/module/'.$module['icon'])}}" alt="image" />
                                 </center>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                             </div>
                             <div class="form-group" style="margin-bottom:0%;">
                                 <center>
-                                    <img style="width: 200px; height:200px; border: 1px solid; border-radius: 10px;" id="viewer2" onerror="this.src='{{asset('public/assets/admin/img/400x400/img2.jpg')}}'" src="{{asset('storage/app/public/module/'.$module['thumbnail'])}}" alt="image" />
+                                    <img style="width: 200px; height:200px; border: 1px solid; border-radius: 10px;" id="viewer2" onerror="this.src='{{asset('public/assets/admin/img/400x400/img2.jpg')}}'" src="{{asset('public/storage/module/'.$module['thumbnail'])}}" alt="image" />
                                 </center>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
                     if(data.data.description.length)
                     {
                         $('#module_des_card').show();
-                        $('#module_description').html(data.data.description);                    
+                        $('#module_description').html(data.data.description);
                     }
                     else
                     {
@@ -194,7 +194,7 @@
                     if(id=='parcel')
                     {
                         $('#module_theme').hide();
-                        
+
                     }
                 },
             });

@@ -77,7 +77,7 @@
                         <center>
                             <img style="width: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
                                 @if(isset($category))
-                                src="{{asset('storage/app/public/category')}}/{{$category['image']}}"
+                                src="{{asset('public/storage/category')}}/{{$category['image']}}"
                                 @else
                                 src="{{asset('public/assets/admin/img/900x400/img1.jpg')}}"
                                 @endif
@@ -87,7 +87,7 @@
                     <div class="form-group pt-2">
                         <button type="submit" class="btn btn-primary">{{isset($category)?translate('messages.update'):translate('messages.add')}}</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -168,7 +168,7 @@
                                 </td>
                                 <td>
                                     <form action="{{route('admin.category.priority',$category->id)}}">
-                                    <select name="priority" id="priority" class="w-100" onchange="this.form.submit()"> 
+                                    <select name="priority" id="priority" class="w-100" onchange="this.form.submit()">
                                         <option value="0" {{$category->priority == 0?'selected':''}}>{{translate('messages.normal')}}</option>
                                         <option value="1" {{$category->priority == 1?'selected':''}}>{{translate('messages.medium')}}</option>
                                         <option value="2" {{$category->priority == 2?'selected':''}}>{{translate('messages.high')}}</option>
@@ -194,7 +194,7 @@
             </div>
             <div class="card-footer page-area">
                 <!-- Pagination -->
-                <div class="row justify-content-center justify-content-sm-between align-items-sm-center"> 
+                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
                     <div class="col-sm-auto">
                         <div class="d-flex justify-content-center justify-content-sm-end">
                             <!-- Pagination -->
@@ -215,7 +215,7 @@
         $(document).on('ready', function () {
             // INITIALIZATION OF DATATABLES
             // =======================================================
-            
+
 
             $('#dataSearch').on('submit', function (e) {
                 e.preventDefault();

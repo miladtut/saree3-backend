@@ -9,14 +9,14 @@
                 </tr>
             </thead>
             <tbody>
-            <?php 
+            <?php
                 $subtotal = 0;
                 $addon_price = 0;
                 $tax = $store? $store->tax: 0;
                 $discount = 0;
                 $discount_type = 'amount';
                 $discount_on_product = 0;
-            ?>    
+            ?>
             @if(session()->has('cart') && count( session()->get('cart')) > 0)
                 <?php
                     $cart = session()->get('cart');
@@ -39,8 +39,8 @@
                     $addon_price += $cartItem['addon_price'];
                     ?>
                 <tr>
-                    <td class="media align-items-center cursor-pointer" onclick="quickViewCartItem({{$cartItem['id']}}, {{$key}})">          
-                        <img class="avatar avatar-sm mr-1" src="{{asset('storage/app/public/product')}}/{{$cartItem['image']}}" 
+                    <td class="media align-items-center cursor-pointer" onclick="quickViewCartItem({{$cartItem['id']}}, {{$key}})">
+                        <img class="avatar avatar-sm mr-1" src="{{asset('public/storage/product')}}/{{$cartItem['image']}}"
                                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" alt="{{$cartItem['name']}} image">
                         <div class="media-body">
                             <h5 class="text-hover-primary mb-0">{{Str::limit($cartItem['name'], 10)}}</h5>
@@ -90,7 +90,7 @@
 
             <dt  class="col-sm-6">Tax  : </dt>
             <dd class="col-sm-6 text-right"><button class="btn btn-sm" type="button" data-toggle="modal" data-target="#add-tax"><i class="tio-edit"></i></button>{{\App\CentralLogics\Helpers::format_currency(round($total_tax_amount,2))}}</dd>
-            
+
             <dt  class="col-sm-6">Total: </dt>
             <dd class="col-sm-6 text-right h4 b"> {{\App\CentralLogics\Helpers::format_currency(round($total+$total_tax_amount, 2))}} </dd>
         </dl>
@@ -188,7 +188,7 @@
                                     <option value="cash">{{translate('messages.cash')}}</option>
                                     <option value="card">{{translate('messages.card')}}</option>
                                 </select>
-                            </div>                            
+                            </div>
                         </div>
 
                         <div class="row collapse" id="delivery_address">
@@ -247,4 +247,3 @@
     });
     </script>
 
-    

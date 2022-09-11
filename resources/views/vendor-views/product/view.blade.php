@@ -31,7 +31,7 @@
                     <div class="col-md-auto mb-3 mb-md-0">
                         <div class="d-flex align-items-center">
                             <img class="avatar avatar-xxl avatar-4by3 mr-4"
-                                 src="{{asset('storage/app/public/product')}}/{{$product['image']}}"
+                                 src="{{asset('public/storage/product')}}/{{$product['image']}}"
                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
                                  alt="Image Description">
                             <div class="d-block">
@@ -140,7 +140,7 @@
                             </span><br>
                             <span>
                                 {{translate('messages.available')}} {{translate('messages.time')}} {{translate('messages.ends')}} : {{date(config('timeformat'), strtotime($product['available_time_ends']))}}
-                            </span>                            
+                            </span>
                         @endif
 
                         @if ($product->variations && is_array(json_decode($product['variations'],true)))
@@ -149,7 +149,7 @@
                                 <span class="text-capitalize">
                                 {{$variation['type']}} : {{\App\CentralLogics\Helpers::format_currency($variation['price'])}}
                                 </span><br>
-                            @endforeach                            
+                            @endforeach
                         @endif
 
                         @if (config('module.'.\App\CentralLogics\Helpers::get_store_data()->module->module_type)['add_on'])
@@ -211,7 +211,7 @@
                                         <div class="avatar avatar-circle">
                                             <img class="avatar-img" width="75" height="75"
                                                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                                src="{{asset('storage/app/public/profile/'.$review->customer->image)}}"
+                                                src="{{asset('public/storage/profile/'.$review->customer->image)}}"
                                                 alt="Image Description">
                                         </div>
                                         <div class="ml-3">

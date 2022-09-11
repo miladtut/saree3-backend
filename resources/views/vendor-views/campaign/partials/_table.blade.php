@@ -9,7 +9,7 @@
         </td>
         <td>
             <div style="overflow-x: hidden;overflow-y: hidden;">
-                <img src="{{asset('storage/app/public/campaign')}}/{{$campaign['image']}}" style="width: 100%; max-height:75px; margin-top:auto; margin-bottom:auto;"
+                <img src="{{asset('public/storage/campaign')}}/{{$campaign['image']}}" style="width: 100%; max-height:75px; margin-top:auto; margin-bottom:auto;"
                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'">
             </div>
         </td>
@@ -26,7 +26,7 @@
             @else
             <button type="button" class="btn btn-outline-primary" onclick="location.href='{{route('vendor.campaign.add-store',[$campaign['id'],$store_id])}}'" title="Click to join the campaign">Join</button>
             @endif
-            
+
         </td>
     </tr>
 @endforeach

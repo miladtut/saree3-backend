@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="">
     @php($logo = \App\Models\BusinessSetting::where(['key' => 'icon'])->first()->value ?? '')
-    <link rel="icon" type="image/x-icon" href="{{ asset('storage/app/public/business/' . $logo ?? '') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('public/storage/business/' . $logo ?? '') }}">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
@@ -68,7 +68,7 @@
                 @php($logo = \App\CentralLogics\Helpers::get_settings('logo'))
                 <img class="img-fluid w-100 logo"
                     onerror="this.src='{{ asset('public/assets/admin/img/160x160/img2.jpg') }}'"
-                    src="{{ asset('storage/app/public/business/' . $logo) }}" alt="StackFood">
+                    src="{{ asset('public/storage/business/' . $logo) }}" alt="StackFood">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -148,7 +148,7 @@
                         @php($logo = \App\CentralLogics\Helpers::get_settings('logo'))
                         <img style="max-width: 200px; max-height: 60px;" class="img-fluid"
                             onerror="this.src='{{ asset('public/assets/admin/img/160x160/img2.jpg') }}'"
-                            src="{{ asset('storage/app/public/business/' . $logo) }}" alt="Image">
+                            src="{{ asset('public/storage/business/' . $logo) }}" alt="Image">
                     </a>
                     <p class="paragraph">
                         {{ isset($landing_page_text) ? $landing_page_text['footer_article'] : '' }}

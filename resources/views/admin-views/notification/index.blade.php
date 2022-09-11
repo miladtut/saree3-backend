@@ -42,7 +42,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="input-label" for="tergat">{{translate('messages.send')}} {{translate('messages.to')}}</label>
-                        
+
                                 <select name="tergat" class="form-control" id="tergat" data-placeholder="{{translate('messages.select')}} {{translate('messages.tergat')}}" required>
                                     <option value="customer">{{translate('messages.customer')}}</option>
                                     <option value="deliveryman">{{translate('messages.deliveryman')}}</option>
@@ -96,7 +96,7 @@
                                 <!-- End Search -->
                                 </form>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                     <!-- Table -->
                     <div class="table-responsive datatable-custom">
@@ -135,7 +135,7 @@
                                     <td>
                                         @if($notification['image']!=null)
                                             <img style="height: 50px"
-                                                 src="{{asset('storage/app/public/notification')}}/{{$notification['image']}}">
+                                                 src="{{asset('public/storage/notification')}}/{{$notification['image']}}">
                                         @else
                                             <label class="badge badge-soft-warning">No {{translate('messages.image')}}</label>
                                         @endif
@@ -234,10 +234,10 @@
         });
 
         $('#notification').on('submit', function (e) {
-            
+
             e.preventDefault();
             var formData = new FormData(this);
-            
+
             Swal.fire({
                 title: '{{translate('messages.are_you_sure')}}',
                 text: '{{translate('messages.you want to sent notification to')}}'+$('#tergat').val()+'?',

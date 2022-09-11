@@ -32,7 +32,7 @@
         <a class="d-flex justify-content-center mb-5" href="javascript:">
             <img class="z-index-2"
             onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
-                         src="{{asset('storage/app/public/business/'.$systemlogo)}}"
+                         src="{{asset('public/storage/business/'.$systemlogo)}}"
                   alt="Image Description" style="max-height: 100px;max-width: 300px">
         </a>
 
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                             @endif
-                            
+
                             <button type="submit" class="btn btn-lg btn-block btn-primary">Sign in</button>
                             <div class="text-center">
                                 <span class="divider text-muted m-4">OR</span>

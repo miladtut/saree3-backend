@@ -15,12 +15,12 @@
                     <img class="navbar-brand-logo"
                          style="border-radius: 50%;height: 55px;width: 55px!important; border: 5px solid #80808012"
                          onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
-                         src="{{asset('storage/app/public/store/'.$store_data->logo)}}"
+                         src="{{asset('public/storage/store/'.$store_data->logo)}}"
                          alt="Logo">
                     <img class="navbar-brand-logo-mini"
                          style="border-radius: 50%;height: 55px;width: 55px!important; border: 5px solid #80808012"
                          onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
-                         src="{{asset('storage/app/public/store/'.$store_data->logo)}}" alt="Logo">
+                         src="{{asset('public/storage/store/'.$store_data->logo)}}" alt="Logo">
                 </a>
                 {{\Illuminate\Support\Str::limit($store_data->name,15)}}
                 <!-- End Logo -->
@@ -49,7 +49,7 @@
                     <!-- End Dashboards -->
 
                     @if(\App\CentralLogics\Helpers::employee_module_permission_check('order'))
-                    <li class="nav-item">   
+                    <li class="nav-item">
                         <small class="nav-subtitle" title="{{translate('messages.order')}} {{translate('messages.section')}}">{{translate('messages.order')}} {{translate('messages.section')}}</small>
                         <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                     </li>
@@ -192,15 +192,15 @@
                     </li>
                     <!-- End Order -->
                     @endif
-                    
+
                     @if(\App\CentralLogics\Helpers::employee_module_permission_check('pos'))
                     <li class="nav-item">
                         <small
                             class="nav-subtitle">{{translate('messages.pos')}} {{translate('messages.system')}}</small>
                         <small class="tio-more-horizontal nav-subtitle-replacer"></small>
                     </li>
-                    
-                    
+
+
                     <!-- POS -->
                     <li class="navbar-vertical-aside-has-menu {{Request::is('vendor-panel/pos/*')?'active':''}}">
                         <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:"
@@ -232,7 +232,7 @@
                         </ul>
                     </li>
                     <!-- End POS -->
-                    @endif      
+                    @endif
                     <li class="nav-item">
                         <small
                             class="nav-subtitle">{{translate('messages.item')}} {{translate('messages.management')}}</small>

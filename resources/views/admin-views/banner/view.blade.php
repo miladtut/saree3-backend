@@ -30,12 +30,12 @@
                     <div class="col-md-auto mb-3 mb-md-0">
                         <div class="d-flex align-items-center">
                             <img class="avatar avatar-xxl avatar-4by3 mr-4"
-                                 src="{{asset('storage/app/public/banner')}}/{{$banner->image}}"
+                                 src="{{asset('public/storage/banner')}}/{{$banner->image}}"
                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
                                  alt="Image Description">
                             <div class="d-block">
-                                
-                                
+
+
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                                         @csrf
                                         <!-- Search -->
                                         <div class="row">
-                                            <div class="input-group-prepend col-md-7">   
+                                            <div class="input-group-prepend col-md-7">
                                             @php($allstores=App\Models\Store::all())
                                                 <select name="store_id" id="store_id" class="form-control">
                                                     @forelse($allstores as $store)
@@ -114,7 +114,7 @@
                                         <!-- End Search -->
                                     </form>
                                 </th>
-                                
+
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -128,7 +128,7 @@
                                         <div style="height: 60px; width: 60px; overflow-x: hidden;overflow-y: hidden">
                                             <img width="60" style="border-radius: 50%"
                                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                                 src="{{asset('storage/app/public/store')}}/{{$dm['logo']}}">
+                                                 src="{{asset('public/storage/store')}}/{{$dm['logo']}}">
                                         </div>
                                     </td>
                                     <td>

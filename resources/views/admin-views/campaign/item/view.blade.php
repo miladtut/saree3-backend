@@ -31,7 +31,7 @@
                     <div class="col-sm-4 mb-3 mb-md-0">
                         <div class="d-flex align-items-center">
                             <img class="avatar avatar-xxl avatar-4by3 mr-4"
-                                 src="{{asset('storage/app/public/campaign')}}/{{$campaign['image']}}"
+                                 src="{{asset('public/storage/campaign')}}/{{$campaign['image']}}"
                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'"
                                  alt="Image Description">
                             {{--<!-- <div class="d-block">
@@ -141,7 +141,7 @@
                             <img
                                 class="avatar-img avatar-circle" style="width: 75px;margin:auto;"
                                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                src="{{asset('storage/app/public/store/'.$campaign->store->logo)}}"
+                                src="{{asset('public/storage/store/'.$campaign->store->logo)}}"
                                 alt="Image Description">
                             <label class="input-label">{{$campaign->store['name']}}</label>
                         </a>
@@ -163,7 +163,7 @@
                                         <small class="text-dark">{{translate('messages.discount')}} :
                                             {{\App\CentralLogics\Helpers::format_currency(\App\CentralLogics\Helpers::discount_calculate($campaign,$campaign['price']))}}
                                         </small class="text-dark"><br>
-                                        
+
                                         <small class="card-subtitle border-bottom mt-2"> {{translate('messages.variations')}} </small><br>
                                         @foreach(json_decode($campaign['variations'],true) as $variation)
                                             <small class="text-capitalize">
@@ -180,13 +180,13 @@
                                     <div class="col-8 pt-2 border-left">
                                         <h4>{{translate('messages.short')}} {{translate('messages.description')}} : </h4>
                                         <p>{{$campaign['description']}}</p>
-                                    </div> 
+                                    </div>
                                 </div>
-                                
+
                             </div>
-                        </div> 
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
             <!-- End Body -->

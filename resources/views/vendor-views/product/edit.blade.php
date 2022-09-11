@@ -120,7 +120,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>                            
+                            </div>
                         @endif
                         @if ($module_data['veg_non_veg'])
                             <div class="col-6">
@@ -131,7 +131,7 @@
                                         <option value="1" {{$product['veg']==1?'selected':''}}>{{translate('messages.veg')}}</option>
                                     </select>
                                 </div>
-                            </div>                            
+                            </div>
                         @endif
 
                     </div>
@@ -202,13 +202,13 @@
                         </div>
                     </div>
                     @if ($module_data['add_on'])
-                        
+
                     @endif
                     <div class="row mt-2">
                         @if ($module_data['stock'])
                         <div class="col-12">
                             <div class="form-group">
-                                <label class="input-label" for="total_stock">{{translate('messages.total_stock')}}</label>                                
+                                <label class="input-label" for="total_stock">{{translate('messages.total_stock')}}</label>
                                 <input type="number" class="form-control" name="current_stock" value="{{$product->stock}}" id="quantity">
                             </div>
                         </div>
@@ -234,7 +234,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="input-label" for="exampleFormControlInput1">{{translate('messages.available')}} {{translate('messages.time')}} {{translate('messages.starts')}}</label>
-                                <input type="time" value="{{$product['available_time_starts']}}" 
+                                <input type="time" value="{{$product['available_time_starts']}}"
                                        name="available_time_starts" class="form-control"
                                        placeholder="Ex : 10:30 am" required>
                             </div>
@@ -261,7 +261,7 @@
 
                         <center style="display: block" id="image-viewer-section" class="pt-2">
                             <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
-                                 src="{{asset('storage/app/public/product')}}/{{$product['image']}}"
+                                 src="{{asset('public/storage/product')}}/{{$product['image']}}"
                                  alt="product image"/>
                         </center>
                     </div>
@@ -276,7 +276,7 @@
                                             <div class="card-body">
                                                 <img style="width: 100%" height="auto"
                                                         onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                                        src="{{asset("storage/app/public/product/$photo")}}"
+                                                        src="{{asset("public/storage/product/$photo")}}"
                                                         alt="Product image">
                                                 <a href="{{route('vendor.item.remove-image',['id'=>$product['id'],'name'=>$photo])}}"
                                                     class="btn btn-danger btn-block">{{translate('messages.remove')}}</a>

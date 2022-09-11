@@ -106,7 +106,7 @@
                         <div class="col-md-3 col-6">
                             <div class="form-group">
                                 <label class="input-label" for="title">{{translate('messages.start')}} {{translate('messages.date')}}</label>
-                                <input type="date" id="date_from" class="form-control" required="" name="start_date" value="{{$campaign->start_date->format('Y-m-d')}}"> 
+                                <input type="date" id="date_from" class="form-control" required="" name="start_date" value="{{$campaign->start_date->format('Y-m-d')}}">
                             </div>
                         </div>
                         <div class="col-md-3 col-6">
@@ -117,7 +117,7 @@
                         </div>
                         <div class="col-md-3 col-6">
                             <div class="form-group">
-                                <label class="input-label" for="title">{{translate('messages.start')}} {{translate('messages.time')}}</label>                                    
+                                <label class="input-label" for="title">{{translate('messages.start')}} {{translate('messages.time')}}</label>
                                 <input type="time" id="start_time" class="form-control" name="start_time" value="{{$campaign->start_time->format('H:i')}}">
                             </div>
                         </div>
@@ -225,7 +225,7 @@
                     <div class="row mt-2">
                         <div class="col-sm-6" id="stock_input">
                             <div class="form-group">
-                                <label class="input-label" for="total_stock">{{translate('messages.total_stock')}}</label>                                
+                                <label class="input-label" for="total_stock">{{translate('messages.total_stock')}}</label>
                                 <input type="number" class="form-control" name="current_stock" value="{{$campaign->stock}}" id="quantity">
                             </div>
                         </div>
@@ -252,7 +252,7 @@
 
                         <center id="image-viewer-section" class="pt-2">
                             <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
-                            src="{{asset('storage/app/public/campaign')}}/{{$campaign->image}}" alt="campaign image"/>
+                            src="{{asset('public/storage/campaign')}}/{{$campaign->image}}" alt="campaign image"/>
                         </center>
                     </div>
                     <hr>
@@ -350,7 +350,7 @@
     <script>
         var module_id = {{$campaign->module_id}};
         var parent_category_id = {{$category?$category->id:0}};
-        <?php 
+        <?php
             $module_data = config('module.'.$campaign->module->module_type);
             unset($module_data['description']);
         ?>

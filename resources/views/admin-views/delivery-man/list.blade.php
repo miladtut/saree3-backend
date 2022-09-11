@@ -16,7 +16,7 @@
                 </div>
                 {{--<a href="{{route('admin.delivery-man.add')}}" class="btn btn-primary pull-right"><i
                                 class="tio-add-circle"></i> {{translate('messages.add')}} {{translate('messages.deliveryman')}}</a>--}}
-                
+
                 @if(!isset(auth('admin')->user()->zone_id))
                 <div class="col-sm-auto" style="width: 306px;">
                     <select name="zone_id" class="form-control js-select2-custom"
@@ -87,7 +87,7 @@
                                     <td>
                                         <a class="media align-items-center" href="{{route('admin.delivery-man.preview',[$dm['id']])}}">
                                             <img class="avatar avatar-lg mr-3" onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                                    src="{{asset('storage/app/public/delivery-man')}}/{{$dm['image']}}" alt="{{$dm['f_name']}} {{$dm['l_name']}}">
+                                                    src="{{asset('public/storage/delivery-man')}}/{{$dm['image']}}" alt="{{$dm['f_name']}} {{$dm['l_name']}}">
                                             <div class="media-body">
                                                 <h5 class="text-hover-primary mb-0">{{$dm['f_name'].' '.$dm['l_name']}}</h5>
                                             </div>
