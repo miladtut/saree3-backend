@@ -255,7 +255,7 @@
 
 
 @push('script_2')
-    <script src="{{asset('public/assets/admin')}}/js/tags-input.min.js"></script>
+
     <script>
         function getRestaurantData(route, store_id , id) {
             $.get({
