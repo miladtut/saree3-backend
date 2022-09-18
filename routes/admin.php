@@ -69,7 +69,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('search', 'EmployeeController@search')->name('search');
         });
         Route::post('item/variant-price', 'ItemController@variant_price')->name('item.variant-price');
-        
+
         Route::group(['prefix' => 'item', 'as' => 'item.', 'middleware' => ['module:item']], function () {
             Route::get('add-new', 'ItemController@index')->name('add-new');
             Route::post('variant-combination', 'ItemController@variant_combination')->name('variant-combination');
@@ -177,7 +177,93 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
                 Route::get('featured/{store}/{status}', 'VendorController@featured')->name('featured');
                 Route::get('toggle-settings-status/{store}/{status}/{menu}', 'VendorController@store_status')->name('toggle-settings');
                 Route::post('status-filter', 'VendorController@status_filter')->name('status-filter');
-                
+
+                //Import and export
+                Route::get('bulk-import', 'VendorController@bulk_import_index')->name('bulk-import');
+                Route::post('bulk-import', 'VendorController@bulk_import_data');
+                Route::get('bulk-export', 'VendorController@bulk_export_index')->name('bulk-export-index');
+                Route::post('bulk-export', 'VendorController@bulk_export_data')->name('bulk-export');
+                //Store shcedule
+                Route::post('add-schedule', 'VendorController@add_schedule')->name('add-schedule');
+                Route::get('remove-schedule/{store_schedule}', 'VendorController@remove_schedule')->name('remove-schedule');
+            });
+
+            Route::group(['middleware' => ['module:withdraw_list']], function () {
+                Route::post('withdraw-status/{id}', 'VendorController@withdrawStatus')->name('withdraw_status');
+                Route::get('withdraw_list', 'VendorController@withdraw')->name('withdraw_list');
+                Route::get('withdraw-view/{withdraw_id}/{seller_id}', 'VendorController@withdraw_view')->name('withdraw_view');
+            });
+
+        });
+
+        Route::group(['prefix' => 'agent', 'as' => 'agent.'], function () {
+            Route::get('get-stores-data/{store}', 'VendorController@get_store_data')->name('get-stores-data');
+            Route::get('store-filter/{id}', 'VendorController@store_filter')->name('storefilter');
+            Route::get('get-account-data/{store}', 'VendorController@get_account_data')->name('storefilter');
+            Route::get('get-stores', 'VendorController@get_stores')->name('get-stores');
+            Route::get('get-addons', 'VendorController@get_addons')->name('get_addons');
+            Route::group(['middleware' => ['module:agent']], function () {
+                Route::get('update-application/{id}/{status}', 'VendorController@update_application')->name('application');
+                Route::get('add', 'AgentController@index')->name('add');
+                Route::post('store', 'AgentController@store')->name('store');
+                Route::get('edit/{id}', 'VendorController@edit')->name('edit');
+                Route::post('update/{store}', 'VendorController@update')->name('update');
+                Route::post('discount/{store}', 'VendorController@discountSetup')->name('discount');
+                Route::post('update-settings/{store}', 'VendorController@updateStoreSettings')->name('update-settings');
+                Route::delete('delete/{store}', 'VendorController@destroy')->name('delete');
+                Route::delete('clear-discount/{store}', 'VendorController@cleardiscount')->name('clear-discount');
+                // Route::get('view/{store}', 'VendorController@view')->name('view_tab');
+                Route::get('view/{store}/{tab?}/{sub_tab?}', 'VendorController@view')->name('view');
+                Route::get('list', 'AgentController@list')->name('list');
+                Route::post('search', 'VendorController@search')->name('search');
+                Route::get('status/{store}/{status}', 'AgentController@status')->name('status');
+                Route::get('featured/{store}/{status}', 'VendorController@featured')->name('featured');
+                Route::get('toggle-settings-status/{store}/{status}/{menu}', 'VendorController@store_status')->name('toggle-settings');
+                Route::post('status-filter', 'VendorController@status_filter')->name('status-filter');
+
+                //Import and export
+                Route::get('bulk-import', 'VendorController@bulk_import_index')->name('bulk-import');
+                Route::post('bulk-import', 'VendorController@bulk_import_data');
+                Route::get('bulk-export', 'VendorController@bulk_export_index')->name('bulk-export-index');
+                Route::post('bulk-export', 'VendorController@bulk_export_data')->name('bulk-export');
+                //Store shcedule
+                Route::post('add-schedule', 'VendorController@add_schedule')->name('add-schedule');
+                Route::get('remove-schedule/{store_schedule}', 'VendorController@remove_schedule')->name('remove-schedule');
+            });
+
+            Route::group(['middleware' => ['module:withdraw_list']], function () {
+                Route::post('withdraw-status/{id}', 'VendorController@withdrawStatus')->name('withdraw_status');
+                Route::get('withdraw_list', 'VendorController@withdraw')->name('withdraw_list');
+                Route::get('withdraw-view/{withdraw_id}/{seller_id}', 'VendorController@withdraw_view')->name('withdraw_view');
+            });
+
+        });
+
+        Route::group(['prefix' => 'broker', 'as' => 'broker.'], function () {
+            Route::get('get-stores-data/{store}', 'VendorController@get_store_data')->name('get-stores-data');
+            Route::get('store-filter/{id}', 'VendorController@store_filter')->name('storefilter');
+            Route::get('get-account-data/{store}', 'VendorController@get_account_data')->name('storefilter');
+            Route::get('get-stores', 'VendorController@get_stores')->name('get-stores');
+            Route::get('get-addons', 'VendorController@get_addons')->name('get_addons');
+            Route::group(['middleware' => ['module:store']], function () {
+                Route::get('update-application/{id}/{status}', 'VendorController@update_application')->name('application');
+                Route::get('add', 'VendorController@index')->name('add');
+                Route::post('store', 'VendorController@store')->name('store');
+                Route::get('edit/{id}', 'VendorController@edit')->name('edit');
+                Route::post('update/{store}', 'VendorController@update')->name('update');
+                Route::post('discount/{store}', 'VendorController@discountSetup')->name('discount');
+                Route::post('update-settings/{store}', 'VendorController@updateStoreSettings')->name('update-settings');
+                Route::delete('delete/{store}', 'VendorController@destroy')->name('delete');
+                Route::delete('clear-discount/{store}', 'VendorController@cleardiscount')->name('clear-discount');
+                // Route::get('view/{store}', 'VendorController@view')->name('view_tab');
+                Route::get('view/{store}/{tab?}/{sub_tab?}', 'VendorController@view')->name('view');
+                Route::get('list', 'BrokerController@list')->name('list');
+                Route::post('search', 'VendorController@search')->name('search');
+                Route::get('status/{store}/{status}', 'VendorController@status')->name('status');
+                Route::get('featured/{store}/{status}', 'VendorController@featured')->name('featured');
+                Route::get('toggle-settings-status/{store}/{status}/{menu}', 'VendorController@store_status')->name('toggle-settings');
+                Route::post('status-filter', 'VendorController@status_filter')->name('status-filter');
+
                 //Import and export
                 Route::get('bulk-import', 'VendorController@bulk_import_index')->name('bulk-import');
                 Route::post('bulk-import', 'VendorController@bulk_import_data');
@@ -239,7 +325,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'order', 'as' => 'order.', 'middleware' => ['module:order']], function () {
             Route::get('list/{status}', 'OrderController@list')->name('list');
             Route::get('details/{id}', 'OrderController@details')->name('details');
-            
+
             // Route::put('status-update/{id}', 'OrderController@status')->name('status-update');
             Route::get('view/{id}', 'OrderController@view')->name('view');
             Route::post('update-shipping/{order}', 'OrderController@update_shipping')->name('update-shipping');
@@ -247,7 +333,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
             Route::get('add-delivery-man/{order_id}/{delivery_man_id}', 'OrderController@add_delivery_man')->name('add-delivery-man');
             Route::get('payment-status', 'OrderController@payment_status')->name('payment-status');
-            
+
             Route::post('add-payment-ref-code/{id}', 'OrderController@add_payment_ref_code')->name('add-payment-ref-code');
             Route::get('store-filter/{store_id}', 'OrderController@restaurnt_filter')->name('store-filter');
             Route::get('filter/reset', 'OrderController@filter_reset');
@@ -375,7 +461,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         // Subscribed customer Routes
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
 
-            
+
             Route::group(['prefix' => 'wallet', 'as' => 'wallet.', 'middleware' => ['module:customer_wallet']], function () {
                 Route::get('add-fund', 'CustomerWalletController@add_fund_view')->name('add-fund');
                 Route::post('add-fund', 'CustomerWalletController@add_fund');
@@ -385,7 +471,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             // Subscribed customer Routes
             Route::get('subscribed', 'CustomerController@subscribedCustomers')->name('subscribed');
             Route::post('subscriber-search', 'CustomerController@subscriberMailSearch')->name('subscriberMailSearch');
-            
+
             Route::get('loyalty-point/report', 'LoyaltyPointController@report')->name('loyalty-point.report');
             Route::get('settings', 'CustomerController@settings')->name('settings');
             Route::post('update-settings', 'CustomerController@update_settings')->name('update-settings');

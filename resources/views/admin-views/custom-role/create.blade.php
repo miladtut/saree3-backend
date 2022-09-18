@@ -5,7 +5,7 @@
 @endpush
 
 @section('content')
-<div class="content container-fluid"> 
+<div class="content container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
@@ -163,7 +163,7 @@
                                     <label class="form-check-label qcont text-dark" for="settings">{{translate('messages.business')}} {{translate('messages.settings')}}</label>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-3">
                                 <div class="form-group form-check">
                                     <input type="checkbox" name="modules[]" value="withdraw_list" class="form-check-input"
@@ -197,6 +197,21 @@
                                     <input type="checkbox" name="modules[]" value="pos" class="form-check-input"
                                            id="pos">
                                     <label class="form-check-label qcont text-dark" for="pos">{{translate('messages.pos_system')}}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="modules[]" value="agent" class="form-check-input"
+                                           id="agent">
+                                    <label class="form-check-label qcont text-dark" for="agent">{{translate('messages.agent')}}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="modules[]" value="broker" class="form-check-input"
+                                           id="pos">
+                                    <label class="form-check-label qcont text-dark" for="broker">{{translate('messages.broker')}}</label>
                                 </div>
                             </div>
                         </div>

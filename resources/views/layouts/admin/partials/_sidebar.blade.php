@@ -316,6 +316,92 @@
                     @endif
                     <!--End Parcel Section -->
 
+                    <!-- Agents -->
+                    <li class="nav-item">
+                        <small class="nav-subtitle" title="{{ translate('messages.agent') }} {{ translate('messages.section') }}">{{ translate('messages.agent') }}
+                            {{ translate('messages.management') }}</small>
+                        <small class="tio-more-horizontal nav-subtitle-replacer"></small>
+                    </li>
+
+                    @if (\App\CentralLogics\Helpers::module_permission_check('agent'))
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/agent*') && !Request::is('admin/agent/withdraw_list') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('messages.agent') }}">
+                                <i class="tio-filter-list nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.agents') }}</span>
+                            </a>
+                            <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display: {{ Request::is('admin/vendor*') && !Request::is('admin/vendor/withdraw_list') ? 'block' : 'none' }}">
+                                <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/agent/add') ? 'active' : '' }}">
+                                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.agent.add') }}" title="{{ translate('messages.register') }} {{ translate('messages.agent') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                        {{ translate('messages.add') }} {{ translate('messages.agent') }}
+                                    </span>
+                                    </a>
+                                </li>
+
+                                <li class="navbar-item {{ Request::is('admin/agent/list') ? 'active' : '' }}">
+                                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.agent.list') }}" title="{{ translate('messages.agent') }} {{ translate('messages.list') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.agents') }}
+                                            {{ translate('list') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/agent/bulk-import') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.agent.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('messages.bulk_import') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/agent/bulk-export') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.agent.bulk-export-index') }}" title="{{ translate('messages.bukl_export') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('messages.bulk_export') }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    @endif
+                    @if (\App\CentralLogics\Helpers::module_permission_check('broker'))
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/broker*') && !Request::is('admin/agent/withdraw_list') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{ translate('messages.broker') }}">
+                                <i class="tio-filter-list nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.brokers') }}</span>
+                            </a>
+                            <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display: {{ Request::is('admin/vendor*') && !Request::is('admin/vendor/withdraw_list') ? 'block' : 'none' }}">
+                                <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/broker/add') ? 'active' : '' }}">
+                                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.broker.add') }}" title="{{ translate('messages.register') }} {{ translate('messages.agent') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                        {{ translate('messages.add') }} {{ translate('messages.broker') }}
+                                    </span>
+                                    </a>
+                                </li>
+
+                                <li class="navbar-item {{ Request::is('admin/broker/list') ? 'active' : '' }}">
+                                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.broker.list') }}" title="{{ translate('messages.broker') }} {{ translate('messages.list') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.brokers') }}
+                                            {{ translate('list') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/broker/bulk-import') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.broker.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('messages.bulk_import') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/broker/bulk-export') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.broker.bulk-export-index') }}" title="{{ translate('messages.bukl_export') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate text-capitalize">{{ translate('messages.bulk_export') }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    @endif
+
                     <!-- Restaurant -->
                     <li class="nav-item">
                         <small class="nav-subtitle" title="{{ translate('messages.store') }} {{ translate('messages.section') }}">{{ translate('messages.store') }}

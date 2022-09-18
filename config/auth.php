@@ -50,7 +50,17 @@ return [
             'driver' => 'session',
             'provider' => 'vendors',
         ],
-        
+
+        'agent' => [
+            'driver' => 'session',
+            'provider' => 'agents',
+        ],
+
+        'broker' => [
+            'driver' => 'session',
+            'provider' => 'brokers',
+        ],
+
         'vendor_employee' => [
             'driver' => 'session',
             'provider' => 'vendor_employees',
@@ -103,6 +113,16 @@ return [
             'model' => App\Models\Vendor::class,
         ],
 
+        'agents' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Agent::class,
+        ],
+
+        'brokers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Broker::class,
+        ],
+
         'vendor_employees' => [
             'driver' => 'eloquent',
             'model' => App\Models\VendorEmployee::class,
@@ -148,13 +168,28 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        
+
         'vendors' => [
             'provider' => 'vendors',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        'agents' => [
+            'provider' => 'agents',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'brokers' => [
+            'provider' => 'brokers',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
         'delivery_men' => [
             'provider' => 'delivery_men',
             'table' => 'password_resets',
