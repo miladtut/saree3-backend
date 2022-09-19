@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\AgentScope;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Vendor;
 use App\Scopes\ZoneScope;
@@ -48,7 +49,7 @@ class Store extends Model
     protected $hidden = [
         'gst'
     ];
-    
+
     public function vendor()
     {
         return $this->belongsTo(Vendor::class);
@@ -93,7 +94,7 @@ class Store extends Model
     {
         return $this->belongsToMany(Campaign::class);
     }
-    
+
     public function itemCampaigns()
     {
         return $this->hasMany(ItemCampaign::class);
@@ -133,12 +134,12 @@ class Store extends Model
     {
         return $query->where('module_id', $module_id);
     }
-    
+
     public function scopeDelivery($query)
     {
         $query->where('delivery',1);
     }
-    
+
     public function scopeTakeaway($query)
     {
         $query->where('take_away',1);
@@ -168,10 +169,18 @@ class Store extends Model
     {
         return $query->where('off_day', 'not like', "%".now()->dayOfWeek."%");
     }
-    
+
     protected static function booted()
     {
         static::addGlobalScope(new ZoneScope);
+        if(auth('agent')->check())
+        {
+            static::addGlobalScope(new AgentScope());
+        }
+        if(auth('broker')->check())
+        {
+            static::addGlobalScope(new AgentScope());
+        }
     }
 
     public function scopeType($query, $type)
@@ -186,6 +195,6 @@ class Store extends Model
         }
 
         return $query;
-        
+
     }
 }

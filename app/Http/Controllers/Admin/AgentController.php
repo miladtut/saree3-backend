@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Agent;
+use App\Models\AgentWallet;
 use App\Models\Zone;
 use App\Models\AddOn;
 use App\Models\Store;
@@ -72,67 +73,47 @@ class AgentController extends Controller
             Toastr::warning(translate('messages.you_can_not_edit_this_store_please_add_a_new_store_to_edit'));
             return back();
         }
-        $store = Store::findOrFail($id);
-        return view('admin-views.vendor.edit', compact('store'));
+        $agent = Agent::findOrFail($id);
+        return view('admin-views.agent.edit', compact('agent'));
     }
 
-    public function update(Request $request, Store $store)
+    public function update($agent,Request $request)
     {
+        $agent = Agent::query ()->findOrFail ($agent);
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|max:100',
             'l_name' => 'nullable|max:100',
-            'name' => 'required|max:191',
-            'email' => 'required|unique:vendors,email,'.$store->vendor->id,
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:vendors,phone,'.$store->vendor->id,
-            'zone_id'=>'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
-            'tax' => 'required',
+            'email' => 'required|unique:agents,email,'.$agent->id,
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:agents,phone,'.$agent->id,
             'password' => 'nullable|min:6',
-            'minimum_delivery_time' => 'required',
-            'maximum_delivery_time' => 'required',
-            'delivery_time_type'=>'required'
         ], [
             'f_name.required' => translate('messages.first_name_is_required')
         ]);
 
-        if($request->zone_id)
-        {
-            $point = new Point($request->latitude, $request->longitude);
-            $zone = Zone::contains('coordinates', $point)->where('id', $request->zone_id)->first();
-            if(!$zone){
-                $validator->getMessageBag()->add('latitude', translate('messages.coordinates_out_of_zone'));
-                return back()->withErrors($validator)
-                        ->withInput();
-            }
-        }
+
         if ($validator->fails()) {
             return back()
                     ->withErrors($validator)
                     ->withInput();
         }
-        $vendor = Vendor::findOrFail($store->vendor->id);
-        $vendor->f_name = $request->f_name;
-        $vendor->l_name = $request->l_name;
-        $vendor->email = $request->email;
-        $vendor->phone = $request->phone;
-        $vendor->password = strlen($request->password)>1?bcrypt($request->password):$store->vendor->password;
-        $vendor->save();
 
-        $store->email = $request->email;
-        $store->phone = $request->phone;
-        $store->logo = $request->has('logo') ? Helpers::update('store/', $store->logo, 'png', $request->file('logo')) : $store->logo;
-        $store->cover_photo = $request->has('cover_photo') ? Helpers::update('store/cover/', $store->cover_photo, 'png', $request->file('cover_photo')) : $store->cover_photo;
-        $store->name = $request->name;
-        $store->address = $request->address;
-        $store->latitude = $request->latitude;
-        $store->longitude = $request->longitude;
-        $store->zone_id = $request->zone_id;
-        $store->tax = $request->tax;
-        $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
-        $store->save();
+        $agent->f_name = $request->f_name;
+        $agent->l_name = $request->l_name;
+        $agent->email = $request->email;
+        $agent->phone = $request->phone;
+        $agent->password = strlen($request->password)>1?bcrypt($request->password):$agent->password;
+
+
+        if ($request->hasFile ('logo')){
+            $agent->image = Helpers::upload('agent/', 'png', $request->file('logo'));
+        }
+
+
+        $agent->save();
+
+
         Toastr::success(translate('messages.store').translate('messages.updated_successfully'));
-        return redirect('admin/vendor/list');
+        return redirect('admin/agent/list');
     }
 
     public function destroy(Request $request, Store $store)
@@ -153,13 +134,13 @@ class AgentController extends Controller
         return back();
     }
 
-    public function view(Store $store, $tab=null, $sub_tab='cash')
+    public function view(Agent $agent, $tab=null, $sub_tab='cash')
     {
-        $wallet = $store->vendor->wallet;
+        $wallet = $agent->wallet;
         if(!$wallet)
         {
-            $wallet= new StoreWallet();
-            $wallet->vendor_id = $store->vendor->id;
+            $wallet= new AgentWallet();
+            $wallet->agent_id = $agent->id;
             $wallet->total_earning= 0.0;
             $wallet->total_withdrawn=0.0;
             $wallet->pending_withdraw=0.0;
@@ -167,51 +148,34 @@ class AgentController extends Controller
             $wallet->updated_at=now();
             $wallet->save();
         }
-        if($tab == 'settings')
+
+        if($tab == 'store')
         {
-            return view('admin-views.vendor.view.settings', compact('store'));
+            return view('admin-views.agent.view.store', compact('agent'));
         }
-        else if($tab == 'order')
+        else if($tab == 'broker')
         {
-            return view('admin-views.vendor.view.order', compact('store'));
-        }
-        else if($tab == 'item')
-        {
-            return view('admin-views.vendor.view.product', compact('store'));
-        }
-        else if($tab == 'discount')
-        {
-            return view('admin-views.vendor.view.discount', compact('store'));
+            return view('admin-views.agent.view.broker', compact('agent'));
         }
         else if($tab == 'transaction')
         {
-            return view('admin-views.vendor.view.transaction', compact('store', 'sub_tab'));
+            return view('admin-views.agent.view.transaction', compact('agent', 'sub_tab'));
         }
 
-        else if($tab == 'reviews')
-        {
-            return view('admin-views.vendor.view.review', compact('store', 'sub_tab'));
-        }
-        return view('admin-views.vendor.view.index', compact('store', 'wallet'));
+        return view('admin-views.agent.view.index', compact('agent', 'wallet'));
     }
 
-    public function view_tab(Store $store)
-    {
 
-        Toastr::error(translate('messages.unknown_tab'));
-        return back();
-    }
 
     public function list(Request $request)
     {
         $agents = Agent::latest()->paginate(config('default_pagination'));
-
         return view('admin-views.agent.list', compact('agents'));
     }
 
     public function search(Request $request){
         $key = explode(' ', $request['search']);
-        $stores=Store::orWhereHas('vendor',function ($q) use ($key) {
+        $agents=Agent::where(function ($q) use ($key) {
             foreach ($key as $value) {
                 $q->orWhere('f_name', 'like', "%{$value}%")
                     ->orWhere('l_name', 'like', "%{$value}%")
@@ -219,39 +183,11 @@ class AgentController extends Controller
                     ->orWhere('phone', 'like', "%{$value}%");
             }
         })
-        ->where(function ($q) use ($key) {
-            foreach ($key as $value) {
-                $q->orWhere('name', 'like', "%{$value}%")
-                    ->orWhere('email', 'like', "%{$value}%")
-                    ->orWhere('phone', 'like', "%{$value}%");
-            }
-        })->get();
-        $total=$stores->count();
+       ->get();
+        $total=$agents->count();
         return response()->json([
-            'view'=>view('admin-views.vendor.partials._table',compact('stores'))->render(), 'total'=>$total
+            'view'=>view('admin-views.agent.partials._table',compact('agents'))->render(), 'total'=>$total
         ]);
-    }
-
-    public function get_stores(Request $request){
-        $zone_ids = isset($request->zone_ids)?(count($request->zone_ids)>0?$request->zone_ids:[]):0;
-        $data = Store::withOutGlobalScopes()->join('zones', 'zones.id', '=', 'stores.zone_id')
-        ->when($zone_ids, function($query) use($zone_ids){
-            $query->whereIn('stores.zone_id', $zone_ids);
-        })
-        ->when($request->module_id, function($query)use($request){
-            $query->where('module_id', $request->module_id);
-        })
-        ->when($request->module_type, function($query)use($request){
-            $query->whereHas('module', function($q)use($request){
-                $q->where('module_type', $request->module_type);
-            });
-        })
-        ->where('stores.name', 'like', '%'.$request->q.'%')->limit(8)->get([DB::raw('stores.id as id, CONCAT(stores.name, " (", zones.name,")") as text')]);
-        if(isset($request->all))
-        {
-            $data[]=(object)['id'=>'all', 'text'=>'All'];
-        }
-        return response()->json($data);
     }
 
     public function status($agent, Request $request)
@@ -261,6 +197,38 @@ class AgentController extends Controller
         $agent->save();
         Toastr::success(translate('messages.agent').translate('messages.status_updated'));
         return back();
+    }
+
+    //-----------------------------------------------------
+
+
+    public function view_tab(Store $store)
+    {
+
+        Toastr::error(translate('messages.unknown_tab'));
+        return back();
+    }
+
+    public function get_stores(Request $request){
+        $zone_ids = isset($request->zone_ids)?(count($request->zone_ids)>0?$request->zone_ids:[]):0;
+        $data = Store::withOutGlobalScopes()->join('zones', 'zones.id', '=', 'stores.zone_id')
+            ->when($zone_ids, function($query) use($zone_ids){
+                $query->whereIn('stores.zone_id', $zone_ids);
+            })
+            ->when($request->module_id, function($query)use($request){
+                $query->where('module_id', $request->module_id);
+            })
+            ->when($request->module_type, function($query)use($request){
+                $query->whereHas('module', function($q)use($request){
+                    $q->where('module_type', $request->module_type);
+                });
+            })
+            ->where('stores.name', 'like', '%'.$request->q.'%')->limit(8)->get([DB::raw('stores.id as id, CONCAT(stores.name, " (", zones.name,")") as text')]);
+        if(isset($request->all))
+        {
+            $data[]=(object)['id'=>'all', 'text'=>'All'];
+        }
+        return response()->json($data);
     }
 
     public function store_status(Store $store, Request $request)

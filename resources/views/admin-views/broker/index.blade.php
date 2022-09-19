@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',translate('messages.add_new_store'))
+@section('title',translate('messages.add_new_agent'))
 
 @push('css_or_js')
 <style>
@@ -22,47 +22,24 @@
         <div class="page-header" style="border-bottom:0;padding-bottom:0;">
             <div class="row align-items-center">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title"><i class="tio-add-circle-outlined"></i> {{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.store')}}</h1>
+                    <h1 class="page-header-title"><i class="tio-add-circle-outlined"></i> {{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.agent')}}</h1>
                 </div>
             </div>
         </div>
         <!-- End Page Header -->
         <div class="row gx-2 gx-lg-3">
             <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
-                <form action="{{route('admin.vendor.store')}}" method="post" enctype="multipart/form-data" class="js-validate" id="vendor_form">
+                <form action="{{route('admin.agent.store')}}" method="post" enctype="multipart/form-data" class="js-validate" id="vendor_form">
                     @csrf
 
-                    <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.store')}} {{translate('messages.info')}}</small>
+                    <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.agent')}} {{translate('messages.info')}}</small>
                     <br>
                     <div class="row">
                         <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label class="input-label" for="name">{{translate('messages.store')}} {{translate('messages.name')}}</label>
-                                <input type="text" name="name" class="form-control" placeholder="{{translate('messages.store')}} {{translate('messages.name')}}" value="{{old('name')}}" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="address">{{translate('messages.store')}} {{translate('messages.address')}}</label>
-                                <textarea type="text" name="address" class="form-control" placeholder="{{translate('messages.store')}} {{translate('messages.address')}}" required >{{old('address')}}</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="tax">{{translate('messages.vat/tax')}} (%)</label>
-                                <input type="number" name="tax" class="form-control" placeholder="{{translate('messages.vat/tax')}}" min="0" step=".01" required value="{{old('tax')}}">
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="maximum_delivery_time">{{translate('messages.approx_delivery_time')}}</label>
-                                <div class="input-group">
-                                    <input type="number" name="minimum_delivery_time" class="form-control" placeholder="Min: 10" value="{{old('minimum_delivery_time')}}">
-                                    <input type="number" name="maximum_delivery_time" class="form-control" placeholder="Max: 20" value="{{old('maximum_delivery_time')}}">
-                                    <select name="delivery_time_type" class="form-control text-capitalize" id="" required>
-                                        <option value="min">{{translate('messages.minutes')}}</option>
-                                        <option value="hours">{{translate('messages.hours')}}</option>
-                                        <option value="days">{{translate('messages.days')}}</option>
-                                    </select>
-                                </div>
-                            </div>
+
 
                             <div class="form-group">
-                                <label class="input-label">{{translate('messages.store')}} {{translate('messages.logo')}}<small style="color: red"> ( {{translate('messages.ratio')}} 1:1 )</small></label>
+                                <label class="input-label">{{translate('messages.agent')}} {{translate('messages.logo')}}<small style="color: red"> ( {{translate('messages.ratio')}} 1:1 )</small></label>
                                 <div class="custom-file">
                                     <input type="file" name="logo" id="customFileEg1" class="custom-file-input"
                                         accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" required>
@@ -71,80 +48,17 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-12" style="margin-top: auto;margin-bottom: auto;">
-                            <div class="form-group" style="margin-bottom:0%;">                       
+                            <div class="form-group" style="margin-bottom:0%;">
                                 <center>
                                     <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
-                                        src="{{asset('public/assets/admin/img/400x400/img2.jpg')}}" alt="{{translate('store_logo')}}"/>
+                                        src="{{asset('public/assets/admin/img/400x400/img2.jpg')}}" alt="{{translate('agent_logo')}}"/>
                                 </center>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-12">
-                            <div class="form-group">
-                                <label class="input-label">{{translate('messages.module')}}</label>
-                                <select name="module_id" required
-                                        class="form-control js-select2-custom"  data-placeholder="{{translate('messages.select')}} {{translate('messages.module')}}">
-                                        <option value="" selected disabled>{{translate('messages.select')}} {{translate('messages.module')}}</option>
-                                    @foreach(\App\Models\Module::notParcel()->get() as $module)
-                                        <option value="{{$module->id}}">{{$module->module_name}}</option>
-                                    @endforeach
-                                </select>
-                                <small class="text-danger">{{translate('messages.module_change_warning')}}</small>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="choice_zones">{{translate('messages.zone')}}<span
-                                        class="input-label-secondary" title="{{translate('messages.select_zone_for_map')}}"><img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.select_zone_for_map')}}"></span></label>
-                                <select name="zone_id" id="choice_zones" required
-                                        class="form-control js-select2-custom"  data-placeholder="{{translate('messages.select')}} {{translate('messages.zone')}}">
-                                        <option value="" selected disabled>{{translate('messages.select')}} {{translate('messages.zone')}}</option>
-                                    @foreach(\App\Models\Zone::active()->get() as $zone)
-                                        @if(isset(auth('admin')->user()->zone_id))
-                                            @if(auth('admin')->user()->zone_id == $zone->id)
-                                                <option value="{{$zone->id}}">{{$zone->name}}</option>
-                                            @endif
-                                        @else
-                                        <option value="{{$zone->id}}">{{$zone->name}}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="latitude">{{translate('messages.latitude')}}<span
-                                        class="input-label-secondary" title="{{translate('messages.store_lat_lng_warning')}}"><img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.store_lat_lng_warning')}}"></span></label>
-                                <input type="text" id="latitude"
-                                       name="latitude" class="form-control"
-                                       placeholder="Ex : -94.22213" value="{{old('latitude')}}" required readonly>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="longitude">{{translate('messages.longitude')}}<span
-                                        class="input-label-secondary" title="{{translate('messages.store_lat_lng_warning')}}"><img src="{{asset('/public/assets/admin/img/info-circle.svg')}}" alt="{{translate('messages.store_lat_lng_warning')}}"></span></label>
-                                <input type="text" 
-                                       name="longitude" class="form-control"
-                                       placeholder="Ex : 103.344322" id="longitude" value="{{old('longitude')}}" required readonly>
-                            </div>
-                        </div>
 
-                        <div class="col-md-8 col-12">
-                            <input id="pac-input" class="controls rounded" style="height: 3em;width:fit-content;"
-                                title="{{ translate('messages.search_your_location_here') }}" type="text"
-                                placeholder="{{ translate('messages.search_here') }}" />
-                            <div id="map"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">{{translate('messages.upload')}} {{translate('messages.cover')}} {{translate('messages.photo')}} <span class="text-danger">({{translate('messages.ratio')}} 2:1)</span></label>
-                        <div class="custom-file">
-                            <input type="file" name="cover_photo" id="coverImageUpload" class="custom-file-input"
-                                accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                            <label class="custom-file-label" for="customFileUpload">{{translate('messages.choose')}} {{translate('messages.file')}}</label>
-                        </div>
-                    </div> 
-                    <center>
-                        <img style="max-width: 100%;border: 1px solid; border-radius: 10px; max-height:200px;" id="coverImageViewer"
-                        src="{{asset('public/assets/admin/img/900x400/img1.jpg')}}" alt="Product thumbnail"/>
-                    </center>  
-                    <br>
+
+
                     <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.owner')}} {{translate('messages.info')}}</small>
                     <br>
                     <div class="row">
@@ -171,7 +85,7 @@
                         </div>
                     </div>
                     <br>
-                    
+
                     <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.login')}} {{translate('messages.info')}}</small>
                     <br>
                     <div class="row">
@@ -225,7 +139,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary">{{translate('messages.submit')}}</button>
                 </form>
             </div>
@@ -322,7 +236,7 @@
     </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{\App\Models\BusinessSetting::where('key', 'map_api_key')->first()->value}}&libraries=places&callback=initMap&v=3.45.8"></script>
-    <script> 
+    <script>
         @php($default_location=\App\Models\BusinessSetting::where('key','default_location')->first())
         @php($default_location=$default_location->value?json_decode($default_location->value, true):0)
         let myLatlng = { lat: {{$default_location?$default_location['lat']:'23.757989'}}, lng: {{$default_location?$default_location['lng']:'90.360587'}} };
@@ -336,7 +250,7 @@
                 position: myLatlng,
             });
         var bounds = new google.maps.LatLngBounds();
-        function initMap() {           
+        function initMap() {
             // Create the initial InfoWindow.
             infoWindow.open(map);
              //get current location block
@@ -463,7 +377,7 @@
                         document.getElementById('latitude').value = coordinates['lat'];
                         document.getElementById('longitude').value = coordinates['lng'];
                         infoWindow.open(map);
-                    });    
+                    });
                 },
             });
         });

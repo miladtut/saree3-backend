@@ -12,35 +12,9 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title"><i class="tio-filter-list"></i> {{translate('messages.stores')}} <span class="badge badge-soft-dark ml-2" id="itemCount">{{$stores->total()}}</span></h1>
+                    <h1 class="page-header-title"><i class="tio-filter-list"></i> {{translate('messages.agents')}} <span class="badge badge-soft-dark ml-2" id="itemCount">{{$agents->total()}}</span></h1>
                 </div>
 
-                <div class="col-sm mb-1 mb-sm-0">
-                    <select name="module_id" class="form-control js-select2-custom"
-                            onchange="set_filter('{{url()->full()}}',this.value,'module_id')" title="{{translate('messages.select')}} {{translate('messages.modules')}}">
-                        <option value="" {{!request('module_id') ? 'selected':''}}>{{translate('messages.all')}} {{translate('messages.modules')}}</option>
-                        @foreach (\App\Models\Module::notParcel()->get() as $module)
-                            <option
-                                value="{{$module->id}}" {{request('module_id') == $module->id?'selected':''}}>
-                                {{$module['module_name']}}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                @if(!isset(auth('admin')->user()->zone_id))
-                <div class="col-sm" style="min-width: 306px;">
-                    <select name="zone_id" class="form-control js-select2-custom"
-                            onchange="set_filter('{{url()->full()}}',this.value,'zone_id')">
-                        <option value="" {{!request('zone_id')?'selected':''}}>All Zones</option>
-                        @foreach(\App\Models\Zone::orderBy('name')->get() as $z)
-                            <option
-                                value="{{$z['id']}}" {{isset($zone) && $zone->id == $z['id']?'selected':''}}>
-                                {{$z['name']}}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                @endif
             </div>
         </div>
         <!-- End Page Header -->
@@ -84,75 +58,44 @@
                             <tr>
                                 <th style="width: 5%;">{{translate('messages.#')}}</th>
                                 <th style="width: 10%;">{{translate('messages.logo')}}</th>
-                                <th style="width: 15%;">{{translate('messages.store')}}</th>
-                                <th style="width: 15%;">{{translate('messages.module')}}</th>
-                                <th style="width: 15%;">{{translate('messages.owner')}}</th>
-                                <th style="width: 10%;">{{translate('messages.zone')}}</th>
+                                <th style="width: 10%;">{{translate('messages.name')}}</th>
                                 <th style="width: 10%;">{{translate('messages.phone')}}</th>
-                                <th class="text-uppercase" style="width: 10%;">{{translate('messages.featured')}}</th>
                                 <th class="text-uppercase" style="width: 10%;">{{translate('messages.active')}}/{{translate('messages.inactive')}}</th>
                                 <th style="width: 10%;">{{translate('messages.action')}}</th>
                             </tr>
                             </thead>
 
                             <tbody id="set-rows">
-                            @foreach($stores as $key=>$store)
+                            @foreach($agents as $key=>$agent)
                                 <tr>
-                                    <td>{{$key+$stores->firstItem()}}</td>
+                                    <td>{{$key+$agents->firstItem()}}</td>
                                     <td>
                                         <div style="height: 60px; width: 60px; overflow-x: hidden;overflow-y: hidden">
-                                            <a href="{{route('admin.vendor.view', $store->id)}}" alt="view store">
+                                            <a href="{{route('admin.agent.view', $agent->id)}}" alt="view agent">
                                             <img width="60" style="border-radius: 50%; height:100%;"
                                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                                 src="{{asset('public/storage/store')}}/{{$store['logo']}}"></a>
+                                                 src="{{asset('public/storage/agent')}}/{{$agent['image']}}"></a>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('admin.vendor.view', $store->id)}}" alt="view store">
-                                            <span class="d-block font-size-sm text-body">
-                                                {{Str::limit($store->name,20,'...')}}<br>
-                                                {{translate('messages.id')}}:{{$store->id}}
-                                            </span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <span class="d-block font-size-sm text-body">
-                                            {{Str::limit($store->module->module_name,20,'...')}}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="d-block font-size-sm text-body">
-                                            {{Str::limit($store->vendor->f_name.' '.$store->vendor->l_name,20,'...')}}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        {{$store->zone?$store->zone->name:translate('messages.zone').' '.translate('messages.deleted')}}
-                                        {{--<span class="d-block font-size-sm">{{$banner['image']}}</span>--}}
-                                    </td>
-                                    <td>
-                                        {{$store['phone']}}
-                                    </td>
-                                    <td>
-                                        <label class="toggle-switch toggle-switch-sm" for="featuredCheckbox{{$store->id}}">
-                                            <input type="checkbox" onclick="location.href='{{route('admin.vendor.featured',[$store->id,$store->featured?0:1])}}'" class="toggle-switch-input" id="featuredCheckbox{{$store->id}}" {{$store->featured?'checked':''}}>
-                                            <span class="toggle-switch-label">
-                                                <span class="toggle-switch-indicator"></span>
-                                            </span>
-                                        </label>
                                     </td>
 
                                     <td>
-                                        @if(isset($store->vendor->status))
-                                            @if($store->vendor->status)
-                                            <label class="toggle-switch toggle-switch-sm" for="stocksCheckbox{{$store->id}}">
-                                                <input type="checkbox" onclick="status_change_alert('{{route('admin.vendor.status',[$store->id,$store->status?0:1])}}', '{{translate('messages.you_want_to_change_this_store_status')}}', event)" class="toggle-switch-input" id="stocksCheckbox{{$store->id}}" {{$store->status?'checked':''}}>
+                                        {{$agent['f_name']}} {{$agent['l_name']}}
+                                    </td>
+
+
+                                    <td>
+                                        {{$agent['phone']}}
+                                    </td>
+
+
+                                    <td>
+                                        @if(isset($agent->status))
+                                            <label class="toggle-switch toggle-switch-sm" for="stocksCheckbox{{$agent->id}}">
+                                                <input type="checkbox" onclick="status_change_alert('{{route('admin.agent.status',[$agent->id,$agent->status?0:1])}}', '{{translate('messages.you_want_to_change_this_agent_status')}}', event)" class="toggle-switch-input" id="stocksCheckbox{{$agent->id}}" {{$agent->status?'checked':''}}>
                                                 <span class="toggle-switch-label">
                                                     <span class="toggle-switch-indicator"></span>
                                                 </span>
                                             </label>
-                                            @else
-                                            <span class="badge badge-soft-danger">{{translate('messages.denied')}}</span>
-                                            @endif
                                         @else
                                             <span class="badge badge-soft-danger">{{translate('messages.pending')}}</span>
                                         @endif
@@ -160,15 +103,15 @@
 
                                     <td>
                                         <a class="btn btn-sm btn-white"
-                                            href="{{route('admin.vendor.view',[$store['id']])}}" title="{{translate('messages.view')}} {{translate('messages.store')}}"><i class="tio-visible text-success"></i>
+                                            href="{{route('admin.agent.view',[$agent['id']])}}" title="{{translate('messages.view')}} {{translate('messages.agent')}}"><i class="tio-visible text-success"></i>
                                         </a>
                                         <a class="btn btn-sm btn-white"
-                                            href="{{route('admin.vendor.edit',[$store['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.store')}}"><i class="tio-edit text-primary"></i>
+                                            href="{{route('admin.agent.edit',[$agent['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.agent')}}"><i class="tio-edit text-primary"></i>
                                         </a>
                                         <a class="btn btn-sm btn-white" href="javascript:"
-                                        onclick="form_alert('vendor-{{$store['id']}}','{{translate('You want to remove this store')}}')" title="{{translate('messages.delete')}} {{translate('messages.store')}}"><i class="tio-delete-outlined text-danger"></i>
+                                        onclick="form_alert('vendor-{{$agent['id']}}','{{translate('You want to remove this agent')}}')" title="{{translate('messages.delete')}} {{translate('messages.agent')}}"><i class="tio-delete-outlined text-danger"></i>
                                         </a>
-                                        <form action="{{route('admin.vendor.delete',[$store['id']])}}" method="post" id="vendor-{{$store['id']}}">
+                                        <form action="{{route('admin.agent.delete',[$agent['id']])}}" method="post" id="vendor-{{$agent['id']}}">
                                             @csrf @method('delete')
                                         </form>
                                     </td>
@@ -181,7 +124,7 @@
                         <div class="page-area">
                             <table>
                                 <tfoot>
-                                {!! $stores->links() !!}
+                                {!! $agents->links() !!}
                                 </tfoot>
                             </table>
                         </div>
@@ -267,7 +210,7 @@
                 }
             });
             $.post({
-                url: '{{route('admin.vendor.search')}}',
+                url: '{{route('admin.agent.search')}}',
                 data: formData,
                 cache: false,
                 contentType: false,

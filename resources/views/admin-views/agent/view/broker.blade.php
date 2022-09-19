@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',$store->name."'s Items")
+@section('title',$agent->f_name. " ".$agent->l_name."'s Brokers")
 
 @push('css_or_js')
     <!-- Custom styles for this page -->
@@ -13,23 +13,22 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
-            <li class="breadcrumb-item" aria-current="page">{{translate('messages.vendor_view')}}</li>
+            <li class="breadcrumb-item" aria-current="page">{{translate('messages.agent_view')}}</li>
         </ol>
     </nav>
 
-    @include('admin-views.vendor.view.partials._header',['store'=>$store])
+    @include('admin-views.agent.view.partials._header',['agent'=>$agent])
     <!-- Page Heading -->
-    @php($foods = \App\Models\Item::withoutGlobalScope(\App\Scopes\StoreScope::class)->where('store_id', $store->id)->latest()->paginate(25))
+    @php($brokers = $agent->brokers()->latest()->paginate(25))
     <div class="tab-content">
         <div class="tab-pane fade show active" id="product">
             <div class="row pt-2">
                 <div class="col-md-12">
                     <div class="card h-100">
                         <div class="card-header">
-                            <h3>{{translate('messages.items')}} <span class="badge badge-soft-dark ml-2">{{$foods->total()}}</span></h3>
+                            <h3>{{translate('messages.brokers')}} <span class="badge badge-soft-dark ml-2">{{$brokers->total()}}</span></h3>
 
-                            <a href="{{route('admin.item.add-new')}}" class="btn btn-primary pull-right"><i
-                                        class="tio-add-circle"></i> {{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.item')}}</a>
+
                         </div>
                         <div class="table-responsive datatable-custom">
                             <table id="columnSearchDatatable"
@@ -42,50 +41,39 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>{{translate('messages.#')}}</th>
-                                        <th style="width: 20%">{{translate('messages.name')}}</th>
-                                        <th style="width: 20%">{{translate('messages.type')}}</th>
-                                        <th>{{translate('messages.price')}}</th>
-                                        <th>{{translate('messages.status')}}</th>
+                                        <th style="width: 20%">{{translate('messages.image')}}</th>
+                                        <th>{{translate('messages.name')}}</th>
+                                        <th>{{translate('messages.agent_name')}}</th>
                                         <th>{{translate('messages.action')}}</th>
                                     </tr>
                                 </thead>
 
                                 <tbody id="set-rows">
-                                @php($foods = \App\Models\Item::withoutGlobalScope(\App\Scopes\StoreScope::class)->where('store_id', $store->id)->latest()->paginate(25))
-                                @foreach($foods as $key=>$food)
+                                @foreach($brokers as $key=>$broker)
 
                                 <tr>
                                     <td>{{$key+1}}</td>
                                     <td>
-                                        <a class="media align-items-center" href="{{route('admin.item.view',[$food['id']])}}">
-                                            <img class="avatar avatar-lg mr-3" src="{{asset('public/storage/product')}}/{{$food['image']}}"
-                                                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" alt="{{$food->name}} image">
-                                            <div class="media-body">
-                                                <h5 class="text-hover-primary mb-0">{{Str::limit($food['name'],20,'...')}}</h5>
-                                            </div>
+                                        <a class="media align-items-center" href="{{route('admin.vendor.view',[$broker->id])}}">
+                                            <img class="avatar avatar-lg mr-3" src="{{asset('public/storage/store')}}/{{$broker->image}}"
+                                                 onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" alt="{{$broker->f_name}} {{$broker->l_name}} image">
                                         </a>
                                     </td>
                                     <td>
-                                    {{Str::limit($food->category?$food->category->name:translate('messages.category_deleted'),20,'...')}}
+                                        {{$broker->f_name}} {{$broker->l_name}}
                                     </td>
-                                    <td>{{\App\CentralLogics\Helpers::format_currency($food['price'])}}</td>
                                     <td>
-                                        <label class="toggle-switch toggle-switch-sm" for="stocksCheckbox{{$food->id}}">
-                                            <input type="checkbox" onclick="location.href='{{route('admin.item.status',[$food['id'],$food->status?0:1])}}'"class="toggle-switch-input" id="stocksCheckbox{{$food->id}}" {{$food->status?'checked':''}}>
-                                            <span class="toggle-switch-label">
-                                                <span class="toggle-switch-indicator"></span>
-                                            </span>
-                                        </label>
+                                        {{$agent->f_name}} {{$agent->l_name}}
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-white"
-                                            href="{{route('admin.item.edit',[$food['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.item')}}"><i class="tio-edit"></i>
+                                            href="{{route('admin.vendor.edit',[$broker['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.item')}}"><i class="tio-edit"></i>
                                         </a>
                                         <a class="btn btn-sm btn-white" href="javascript:"
-                                            onclick="form_alert('food-{{$food['id']}}','Want to delete this item ?')" title="{{translate('messages.delete')}} {{translate('messages.item')}}"><i class="tio-delete-outlined"></i>
+                                            onclick="form_alert('broker-{{$broker['id']}}','Want to delete this item ?')" title="{{translate('messages.delete')}} {{translate('messages.item')}}"><i class="tio-delete-outlined"></i>
                                         </a>
-                                        <form action="{{route('admin.item.delete',[$food['id']])}}"
-                                                method="post" id="food-{{$food['id']}}">
+                                        <form action="{{route('admin.broker.delete',[$broker['id']])}}"
+                                                method="post" id="vendor-{{$broker['id']}}">
                                             @csrf @method('delete')
                                         </form>
                                     </td>
@@ -97,7 +85,7 @@
                             <div class="page-area">
                                 <table>
                                     <tfoot class="border-top">
-                                    {!! $foods->links() !!}
+                                    {!! $brokers->links() !!}
                                     </tfoot>
                                 </table>
                             </div>

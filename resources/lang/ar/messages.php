@@ -1389,4 +1389,7 @@
   'agent_logo' => 'Agent logo',
   'You want to remove this agent' => 'You want to remove this agent',
   'you_want_to_change_this_agent_status' => 'You want to change this agent status',
+  'agent_view' => 'Agent view',
+  'vendor_name' => 'اسم المالك',
+  'agent_name' => 'اسم الوكيل',
 );

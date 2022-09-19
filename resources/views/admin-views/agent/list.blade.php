@@ -210,7 +210,7 @@
                 }
             });
             $.post({
-                url: '{{route('admin.vendor.search')}}',
+                url: '{{route('admin.agent.search')}}',
                 data: formData,
                 cache: false,
                 contentType: false,

@@ -1176,6 +1176,22 @@ class Helpers
         return 0;
     }
 
+    public static function get_agent_id()
+    {
+        if (auth('agent')->check()) {
+            return auth('agent')->id();
+        }
+        return 0;
+    }
+
+    public static function get_broker_id()
+    {
+        if (auth('broker')->check()) {
+            return auth('broker')->id();
+        }
+        return 0;
+    }
+
     public static function get_vendor_data()
     {
         if (auth('vendor')->check()) {

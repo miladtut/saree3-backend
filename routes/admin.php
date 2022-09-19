@@ -197,29 +197,29 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         });
 
         Route::group(['prefix' => 'agent', 'as' => 'agent.'], function () {
-            Route::get('get-stores-data/{store}', 'VendorController@get_store_data')->name('get-stores-data');
-            Route::get('store-filter/{id}', 'VendorController@store_filter')->name('storefilter');
-            Route::get('get-account-data/{store}', 'VendorController@get_account_data')->name('storefilter');
-            Route::get('get-stores', 'VendorController@get_stores')->name('get-stores');
-            Route::get('get-addons', 'VendorController@get_addons')->name('get_addons');
+            Route::get('get-stores-data/{store}', 'AgentController@get_store_data')->name('get-stores-data');
+            Route::get('store-filter/{id}', 'AgentController@store_filter')->name('storefilter');
+            Route::get('get-account-data/{store}', 'AgentController@get_account_data')->name('storefilter');
+            Route::get('get-stores', 'AgentController@get_stores')->name('get-stores');
+            Route::get('get-addons', 'AgentController@get_addons')->name('get_addons');
             Route::group(['middleware' => ['module:agent']], function () {
-                Route::get('update-application/{id}/{status}', 'VendorController@update_application')->name('application');
+                Route::get('update-application/{id}/{status}', 'AgentController@update_application')->name('application');
                 Route::get('add', 'AgentController@index')->name('add');
                 Route::post('store', 'AgentController@store')->name('store');
-                Route::get('edit/{id}', 'VendorController@edit')->name('edit');
-                Route::post('update/{store}', 'VendorController@update')->name('update');
-                Route::post('discount/{store}', 'VendorController@discountSetup')->name('discount');
-                Route::post('update-settings/{store}', 'VendorController@updateStoreSettings')->name('update-settings');
-                Route::delete('delete/{store}', 'VendorController@destroy')->name('delete');
-                Route::delete('clear-discount/{store}', 'VendorController@cleardiscount')->name('clear-discount');
+                Route::get('edit/{id}', 'AgentController@edit')->name('edit');
+                Route::post('update/{store}', 'AgentController@update')->name('update');
+                Route::post('discount/{store}', 'AgentController@discountSetup')->name('discount');
+                Route::post('update-settings/{store}', 'AgentController@updateStoreSettings')->name('update-settings');
+                Route::delete('delete/{store}', 'AgentController@destroy')->name('delete');
+                Route::delete('clear-discount/{store}', 'AgentController@cleardiscount')->name('clear-discount');
                 // Route::get('view/{store}', 'VendorController@view')->name('view_tab');
-                Route::get('view/{store}/{tab?}/{sub_tab?}', 'VendorController@view')->name('view');
+                Route::get('view/{agent?}/{tab?}/{sub_tab?}', 'AgentController@view')->name('view');
                 Route::get('list', 'AgentController@list')->name('list');
-                Route::post('search', 'VendorController@search')->name('search');
+                Route::post('search', 'AgentController@search')->name('search');
                 Route::get('status/{store}/{status}', 'AgentController@status')->name('status');
-                Route::get('featured/{store}/{status}', 'VendorController@featured')->name('featured');
-                Route::get('toggle-settings-status/{store}/{status}/{menu}', 'VendorController@store_status')->name('toggle-settings');
-                Route::post('status-filter', 'VendorController@status_filter')->name('status-filter');
+                Route::get('featured/{store}/{status}', 'AgentController@featured')->name('featured');
+                Route::get('toggle-settings-status/{store}/{status}/{menu}', 'AgentController@store_status')->name('toggle-settings');
+                Route::post('status-filter', 'AgentController@status_filter')->name('status-filter');
 
                 //Import and export
                 Route::get('bulk-import', 'VendorController@bulk_import_index')->name('bulk-import');

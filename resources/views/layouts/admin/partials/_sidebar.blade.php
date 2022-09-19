@@ -346,18 +346,7 @@
                                             {{ translate('list') }}</span>
                                     </a>
                                 </li>
-                                <li class="nav-item {{ Request::is('admin/agent/bulk-import') ? 'active' : '' }}">
-                                    <a class="nav-link " href="{{ route('admin.agent.bulk-import') }}" title="{{ translate('messages.bulk_import') }}">
-                                        <span class="tio-circle nav-indicator-icon"></span>
-                                        <span class="text-truncate text-capitalize">{{ translate('messages.bulk_import') }}</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item {{ Request::is('admin/agent/bulk-export') ? 'active' : '' }}">
-                                    <a class="nav-link " href="{{ route('admin.agent.bulk-export-index') }}" title="{{ translate('messages.bukl_export') }}">
-                                        <span class="tio-circle nav-indicator-icon"></span>
-                                        <span class="text-truncate text-capitalize">{{ translate('messages.bulk_export') }}</span>
-                                    </a>
-                                </li>
+
 
                             </ul>
                         </li>
