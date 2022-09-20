@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',$agent->name)
+@section('title',$broker->name)
 
 @push('css_or_js')
     <!-- Custom styles for this page -->
@@ -31,11 +31,11 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
-            <li class="breadcrumb-item" aria-current="page">{{translate('messages.agent_view')}}</li>
+            <li class="breadcrumb-item" aria-current="page">{{translate('messages.broker_view')}}</li>
         </ol>
     </nav>
 
-    @include('admin-views.agent.view.partials._header',['agent'=>$agent])
+    @include('admin-views.broker.view.partials._header',['broker'=>$broker])
     <!-- Page Heading -->
     <div class="row my-2">
         <!-- Earnings (Monthly) Card Example -->
@@ -153,22 +153,22 @@
                             <div class="text-center">
                                 <div class="avatar avatar-xxl avatar-circle avatar-border-lg">
                                     <img class="avatar-img" onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                src="{{asset('public/storage/agent')}}/{{$agent->image}}" alt="Image Description">
+                                src="{{asset('public/storage/broker')}}/{{$broker->image}}" alt="Image Description">
                                 </div>
 
 
                                 <ul class="list-unstyled list-unstyled-py-3 text-dark mb-3">
                                     <li>
                                         <i class="tio-user-outlined nav-icon"></i>
-                                        {{$agent->f_name}} {{$agent->l_name}}
+                                        {{$broker->f_name}} {{$broker->l_name}}
                                     </li>
                                     <li>
                                         <i class="tio-online nav-icon"></i>
-                                        {{$agent->email}}
+                                        {{$broker->email}}
                                     </li>
                                     <li>
                                         <i class="tio-android-phone-vs nav-icon"></i>
-                                    {{$agent->phone}}
+                                    {{$broker->phone}}
                                     </li>
                                 </ul>
                             </div>
@@ -184,18 +184,18 @@
                                         <li class="py-0 border-bottom">
                                             <small class="card-subtitle">{{translate('messages.bank_info')}}</small>
                                         </li>
-                                        @if($agent->bank_name)
+                                        @if($broker->bank_name)
                                         <li class="pb-1 pt-1">
-                                            {{translate('messages.bank_name')}}: {{$agent->bank_name ? $agent->bank_name : 'No Data found'}}
+                                            {{translate('messages.bank_name')}}: {{$broker->bank_name ? $broker->bank_name : 'No Data found'}}
                                         </li>
                                         <li class="pb-1 pt-1">
-                                            {{translate('messages.branch')}}  : {{$agent->branch ? $agent->branch : 'No Data found'}}
+                                            {{translate('messages.branch')}}  : {{$broker->branch ? $broker->branch : 'No Data found'}}
                                         </li>
                                         <li class="pb-1 pt-1">
-                                            {{translate('messages.holder_name')}} : {{$agent->holder_name ? $agent->holder_name : 'No Data found'}}
+                                            {{translate('messages.holder_name')}} : {{$broker->holder_name ? $broker->holder_name : 'No Data found'}}
                                         </li>
                                         <li class="pb-1 pt-1">
-                                            {{translate('messages.account_no')}}  : {{$agent->account_no ? $agent->account_no : 'No Data found'}}
+                                            {{translate('messages.account_no')}}  : {{$broker->account_no ? $broker->account_no : 'No Data found'}}
                                         </li>
                                         @else
                                         <li class="my-auto">

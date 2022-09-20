@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class BrokerWallet extends Model
 {
     use HasFactory;
+
+    public function getBalanceAttribute()
+    {
+        return $this->total_earning - ($this->total_withdrawn + $this->pending_withdraw + $this->collected_cash);
+    }
 }

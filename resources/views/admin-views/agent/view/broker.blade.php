@@ -54,8 +54,8 @@
                                 <tr>
                                     <td>{{$key+1}}</td>
                                     <td>
-                                        <a class="media align-items-center" href="{{route('admin.vendor.view',[$broker->id])}}">
-                                            <img class="avatar avatar-lg mr-3" src="{{asset('public/storage/store')}}/{{$broker->image}}"
+                                        <a class="media align-items-center" href="{{route('admin.broker.view',[$broker->id])}}">
+                                            <img class="avatar avatar-lg mr-3" src="{{asset('public/storage/broker')}}/{{$broker->image}}"
                                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" alt="{{$broker->f_name}} {{$broker->l_name}} image">
                                         </a>
                                     </td>
@@ -67,7 +67,7 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-white"
-                                            href="{{route('admin.vendor.edit',[$broker['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.item')}}"><i class="tio-edit"></i>
+                                            href="{{route('admin.broker.edit',[$broker['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.item')}}"><i class="tio-edit"></i>
                                         </a>
                                         <a class="btn btn-sm btn-white" href="javascript:"
                                             onclick="form_alert('broker-{{$broker['id']}}','Want to delete this item ?')" title="{{translate('messages.delete')}} {{translate('messages.item')}}"><i class="tio-delete-outlined"></i>

@@ -24,4 +24,8 @@ class Agent extends Model
     public function brokers(){
         return $this->hasMany (Broker::class);
     }
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 }

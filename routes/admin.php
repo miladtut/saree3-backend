@@ -199,8 +199,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'agent', 'as' => 'agent.'], function () {
             Route::get('get-stores-data/{store}', 'AgentController@get_store_data')->name('get-stores-data');
             Route::get('store-filter/{id}', 'AgentController@store_filter')->name('storefilter');
-            Route::get('get-account-data/{store}', 'AgentController@get_account_data')->name('storefilter');
-            Route::get('get-stores', 'AgentController@get_stores')->name('get-stores');
+            Route::get('get-account-data/{agent}', 'AgentController@get_account_data')->name('storefilter');
+            Route::get('get-agents', 'AgentController@get_agents')->name('get-agents');
             Route::get('get-addons', 'AgentController@get_addons')->name('get_addons');
             Route::group(['middleware' => ['module:agent']], function () {
                 Route::get('update-application/{id}/{status}', 'AgentController@update_application')->name('application');
@@ -240,29 +240,29 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         });
 
         Route::group(['prefix' => 'broker', 'as' => 'broker.'], function () {
-            Route::get('get-stores-data/{store}', 'VendorController@get_store_data')->name('get-stores-data');
-            Route::get('store-filter/{id}', 'VendorController@store_filter')->name('storefilter');
-            Route::get('get-account-data/{store}', 'VendorController@get_account_data')->name('storefilter');
-            Route::get('get-stores', 'VendorController@get_stores')->name('get-stores');
-            Route::get('get-addons', 'VendorController@get_addons')->name('get_addons');
+            Route::get('get-stores-data/{store}', 'BrokerController@get_store_data')->name('get-stores-data');
+            Route::get('store-filter/{id}', 'BrokerController@store_filter')->name('storefilter');
+            Route::get('get-account-data/{store}', 'BrokerController@get_account_data')->name('storefilter');
+            Route::get('get-brokers', 'BrokerController@get_brokers')->name('get-brokers');
+            Route::get('get-addons', 'BrokerController@get_addons')->name('get_addons');
             Route::group(['middleware' => ['module:store']], function () {
-                Route::get('update-application/{id}/{status}', 'VendorController@update_application')->name('application');
-                Route::get('add', 'VendorController@index')->name('add');
-                Route::post('store', 'VendorController@store')->name('store');
-                Route::get('edit/{id}', 'VendorController@edit')->name('edit');
-                Route::post('update/{store}', 'VendorController@update')->name('update');
-                Route::post('discount/{store}', 'VendorController@discountSetup')->name('discount');
-                Route::post('update-settings/{store}', 'VendorController@updateStoreSettings')->name('update-settings');
-                Route::delete('delete/{store}', 'VendorController@destroy')->name('delete');
-                Route::delete('clear-discount/{store}', 'VendorController@cleardiscount')->name('clear-discount');
+                Route::get('update-application/{id}/{status}', 'BrokerController@update_application')->name('application');
+                Route::get('add', 'BrokerController@index')->name('add');
+                Route::post('store', 'BrokerController@store')->name('store');
+                Route::get('edit/{id}', 'BrokerController@edit')->name('edit');
+                Route::post('update/{store}', 'BrokerController@update')->name('update');
+                Route::post('discount/{store}', 'BrokerController@discountSetup')->name('discount');
+                Route::post('update-settings/{store}', 'BrokerController@updateStoreSettings')->name('update-settings');
+                Route::delete('delete/{store}', 'BrokerController@destroy')->name('delete');
+                Route::delete('clear-discount/{store}', 'BrokerController@cleardiscount')->name('clear-discount');
                 // Route::get('view/{store}', 'VendorController@view')->name('view_tab');
-                Route::get('view/{store}/{tab?}/{sub_tab?}', 'VendorController@view')->name('view');
+                Route::get('view/{broker?}/{tab?}/{sub_tab?}', 'BrokerController@view')->name('view');
                 Route::get('list', 'BrokerController@list')->name('list');
-                Route::post('search', 'VendorController@search')->name('search');
-                Route::get('status/{store}/{status}', 'VendorController@status')->name('status');
-                Route::get('featured/{store}/{status}', 'VendorController@featured')->name('featured');
-                Route::get('toggle-settings-status/{store}/{status}/{menu}', 'VendorController@store_status')->name('toggle-settings');
-                Route::post('status-filter', 'VendorController@status_filter')->name('status-filter');
+                Route::post('search', 'BrokerController@search')->name('search');
+                Route::get('status/{store}/{status}', 'BrokerController@status')->name('status');
+                Route::get('featured/{store}/{status}', 'BrokerController@featured')->name('featured');
+                Route::get('toggle-settings-status/{store}/{status}/{menu}', 'BrokerController@store_status')->name('toggle-settings');
+                Route::post('status-filter', 'BrokerController@status_filter')->name('status-filter');
 
                 //Import and export
                 Route::get('bulk-import', 'VendorController@bulk_import_index')->name('bulk-import');

@@ -12,7 +12,7 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title"><i class="tio-filter-list"></i> {{translate('messages.agents')}} <span class="badge badge-soft-dark ml-2" id="itemCount">{{$agents->total()}}</span></h1>
+                    <h1 class="page-header-title"><i class="tio-filter-list"></i> {{translate('messages.brokers')}} <span class="badge badge-soft-dark ml-2" id="itemCount">{{$brokers->total()}}</span></h1>
                 </div>
 
             </div>
@@ -66,32 +66,32 @@
                             </thead>
 
                             <tbody id="set-rows">
-                            @foreach($agents as $key=>$agent)
+                            @foreach($brokers as $key=>$broker)
                                 <tr>
-                                    <td>{{$key+$agents->firstItem()}}</td>
+                                    <td>{{$key+$brokers->firstItem()}}</td>
                                     <td>
                                         <div style="height: 60px; width: 60px; overflow-x: hidden;overflow-y: hidden">
-                                            <a href="{{route('admin.agent.view', $agent->id)}}" alt="view agent">
+                                            <a href="{{route('admin.broker.view', $broker->id)}}" alt="view agent">
                                             <img width="60" style="border-radius: 50%; height:100%;"
                                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                                 src="{{asset('public/storage/agent')}}/{{$agent['image']}}"></a>
+                                                 src="{{asset('public/storage/broker')}}/{{$broker['image']}}"></a>
                                         </div>
                                     </td>
 
                                     <td>
-                                        {{$agent['f_name']}} {{$agent['l_name']}}
+                                        {{$broker['f_name']}} {{$broker['l_name']}}
                                     </td>
 
 
                                     <td>
-                                        {{$agent['phone']}}
+                                        {{$broker['phone']}}
                                     </td>
 
 
                                     <td>
-                                        @if(isset($agent->status))
-                                            <label class="toggle-switch toggle-switch-sm" for="stocksCheckbox{{$agent->id}}">
-                                                <input type="checkbox" onclick="status_change_alert('{{route('admin.agent.status',[$agent->id,$agent->status?0:1])}}', '{{translate('messages.you_want_to_change_this_agent_status')}}', event)" class="toggle-switch-input" id="stocksCheckbox{{$agent->id}}" {{$agent->status?'checked':''}}>
+                                        @if(isset($broker->status))
+                                            <label class="toggle-switch toggle-switch-sm" for="stocksCheckbox{{$broker->id}}">
+                                                <input type="checkbox" onclick="status_change_alert('{{route('admin.broker.status',[$broker->id,$broker->status?0:1])}}', '{{translate('messages.you_want_to_change_this_broker_status')}}', event)" class="toggle-switch-input" id="stocksCheckbox{{$broker->id}}" {{$broker->status?'checked':''}}>
                                                 <span class="toggle-switch-label">
                                                     <span class="toggle-switch-indicator"></span>
                                                 </span>
@@ -103,15 +103,15 @@
 
                                     <td>
                                         <a class="btn btn-sm btn-white"
-                                            href="{{route('admin.agent.view',[$agent['id']])}}" title="{{translate('messages.view')}} {{translate('messages.agent')}}"><i class="tio-visible text-success"></i>
+                                            href="{{route('admin.broker.view',[$broker['id']])}}" title="{{translate('messages.view')}} {{translate('messages.broker')}}"><i class="tio-visible text-success"></i>
                                         </a>
                                         <a class="btn btn-sm btn-white"
-                                            href="{{route('admin.agent.edit',[$agent['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.agent')}}"><i class="tio-edit text-primary"></i>
+                                            href="{{route('admin.broker.edit',[$broker['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.broker')}}"><i class="tio-edit text-primary"></i>
                                         </a>
                                         <a class="btn btn-sm btn-white" href="javascript:"
-                                        onclick="form_alert('vendor-{{$agent['id']}}','{{translate('You want to remove this agent')}}')" title="{{translate('messages.delete')}} {{translate('messages.agent')}}"><i class="tio-delete-outlined text-danger"></i>
+                                        onclick="form_alert('vendor-{{$broker['id']}}','{{translate('You want to remove this broker')}}')" title="{{translate('messages.delete')}} {{translate('messages.broker')}}"><i class="tio-delete-outlined text-danger"></i>
                                         </a>
-                                        <form action="{{route('admin.agent.delete',[$agent['id']])}}" method="post" id="vendor-{{$agent['id']}}">
+                                        <form action="{{route('admin.broker.delete',[$broker['id']])}}" method="post" id="vendor-{{$broker['id']}}">
                                             @csrf @method('delete')
                                         </form>
                                     </td>
@@ -124,7 +124,7 @@
                         <div class="page-area">
                             <table>
                                 <tfoot>
-                                {!! $agents->links() !!}
+                                {!! $brokers->links() !!}
                                 </tfoot>
                             </table>
                         </div>
@@ -210,7 +210,7 @@
                 }
             });
             $.post({
-                url: '{{route('admin.agent.search')}}',
+                url: '{{route('admin.broker.search')}}',
                 data: formData,
                 cache: false,
                 contentType: false,

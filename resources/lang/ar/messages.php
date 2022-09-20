@@ -561,7 +561,7 @@
   'method' => 'طريقة',
   'reference' => 'المرجعي',
   'code' => 'شفرة',
-  'type' => 'يكتب',
+  'type' => 'نوع',
   'contact' => 'اتصال',
   'info' => 'معلومات',
   'variation' => 'تفاوت',
@@ -1392,4 +1392,9 @@
   'agent_view' => 'Agent view',
   'vendor_name' => 'اسم المالك',
   'agent_name' => 'اسم الوكيل',
+  'you_want_to_change_this_broker_status' => 'You want to change this broker status',
+  'You want to remove this broker' => 'You want to remove this broker',
+  'broker_view' => 'Broker view',
+  'add_new_broker' => 'Add new broker',
+  'broker_logo' => 'Broker logo',
 );

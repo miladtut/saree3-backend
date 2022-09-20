@@ -26,6 +26,22 @@ class AccountTransaction extends Model
         return null;
     }
 
+    public function getAgentAttribute()
+    {
+        if($this->from_type == 'agent'){
+            return Agent::find($this->from_id);
+        }
+        return null;
+    }
+
+    public function getBrokerAttribute()
+    {
+        if($this->from_type == 'broker'){
+            return Broker::find($this->from_id);
+        }
+        return null;
+    }
+
     public function getDeliverymanAttribute()
     {
         if($this->from_type == 'deliveryman'){
@@ -33,5 +49,5 @@ class AccountTransaction extends Model
         }
         return null;
     }
-    
+
 }

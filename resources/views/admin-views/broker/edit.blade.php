@@ -22,24 +22,24 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title"><i class="tio-edit"></i> {{translate('messages.update')}} {{translate('messages.agent')}}</h1>
+                    <h1 class="page-header-title"><i class="tio-edit"></i> {{translate('messages.update')}} {{translate('messages.broker')}}</h1>
                 </div>
             </div>
         </div>
         <!-- End Page Header -->
         <div class="row gx-2 gx-lg-3">
             <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
-                <form action="{{route('admin.agent.update',[$agent['id']])}}" method="post" class="js-validate"
+                <form action="{{route('admin.broker.update',[$broker['id']])}}" method="post" class="js-validate"
                       enctype="multipart/form-data" id="vendor_form">
                     @csrf
-                    <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.agent')}} {{translate('messages.info')}}</small>
+                    <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.broker')}} {{translate('messages.info')}}</small>
                     <br>
                     <div class="row">
                         <div class="col-md-6 col-12">
 
 
                             <div class="form-group">
-                                <label class="input-label">{{translate('messages.agent')}} {{translate('messages.logo')}}<small style="color: red"> ( {{translate('messages.ratio')}} 1:1 )</small></label>
+                                <label class="input-label">{{translate('messages.broker')}} {{translate('messages.logo')}}<small style="color: red"> ( {{translate('messages.ratio')}} 1:1 )</small></label>
                                 <div class="custom-file">
                                     <input type="file" name="logo" id="customFileEg1" class="custom-file-input"
                                         accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
@@ -51,7 +51,7 @@
                             <div class="form-group" style="margin-bottom:0%;">
                                 <center>
                                     <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
-                                        src="{{asset("public/storage/agent/$agent->image")}}" alt="{{$agent->f_name}}"/>
+                                        src="{{asset("public/storage/broker/$broker->image")}}" alt="{{$broker->f_name}}"/>
                                 </center>
                             </div>
                         </div>
@@ -68,13 +68,13 @@
 
 
 
-                    <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.agent')}} {{translate('messages.info')}}</small>
+                    <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.broker')}} {{translate('messages.info')}}</small>
                     <br>
                     <div class="row">
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label class="input-label" for="exampleFormControlInput1">{{translate('messages.first')}} {{translate('messages.name')}}</label>
-                                <input type="text" name="f_name" class="form-control" placeholder="{{translate('messages.first')}} {{translate('messages.name')}}" value="{{$agent->f_name}}"
+                                <input type="text" name="f_name" class="form-control" placeholder="{{translate('messages.first')}} {{translate('messages.name')}}" value="{{$broker->f_name}}"
                                        required>
                             </div>
                         </div>
@@ -82,14 +82,14 @@
                             <div class="form-group">
                                 <label class="input-label" for="exampleFormControlInput1">{{translate('messages.last')}} {{translate('messages.name')}}</label>
                                 <input type="text" name="l_name" class="form-control" placeholder="{{translate('messages.last')}} {{translate('messages.name')}}"
-                                value="{{$agent->l_name}}"  required>
+                                value="{{$broker->l_name}}"  required>
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label class="input-label" for="exampleFormControlInput1">{{translate('messages.phone')}}</label>
                                 <input type="text" name="phone" class="form-control" placeholder="Ex : 017********"
-                                value="{{$agent->phone}}"   required>
+                                value="{{$broker->phone}}"   required>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label class="input-label" for="exampleFormControlInput1">{{translate('messages.email')}}</label>
-                                <input type="email" name="email" class="form-control" placeholder="Ex : ex@example.com" value="{{$agent->email}}" required>
+                                <input type="email" name="email" class="form-control" placeholder="Ex : ex@example.com" value="{{$broker->email}}" required>
                             </div>
                         </div>
                         <div class="col-md-4 col-12">

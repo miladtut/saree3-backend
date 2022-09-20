@@ -2,13 +2,13 @@
     <div class="page-header">
         <div class="row">
             <div class="col-6">
-                <h1 class="page-header-title text-break">{{$agent->f_name}}</h1>
+                <h1 class="page-header-title text-break">{{$broker->f_name}}</h1>
             </div>
             <div class="col-6">
-               
+
             </div>
         </div>
-        @if($agent->status)
+        @if($broker->status)
         <!-- Nav Scroller -->
         <div class="js-nav-scroller hs-nav-scroller-horizontal">
             <span class="hs-nav-scroller-arrow-prev" style="display: none;">
@@ -26,19 +26,15 @@
             <!-- Nav -->
             <ul class="nav nav-tabs page-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link {{request('tab')==null?'active':''}}" href="{{route('admin.agent.view', $agent->id)}}">{{translate('messages.agent')}}</a>
+                    <a class="nav-link {{request('tab')==null?'active':''}}" href="{{route('admin.broker.view', $broker->id)}}">{{translate('messages.agent')}}</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{request('tab')=='store'?'active':''}}" href="{{route('admin.agent.view', ['agent'=>$agent->id, 'tab'=> 'store'])}}"  aria-disabled="true">{{translate('messages.stores')}}</a>
+                    <a class="nav-link {{request('tab')=='store'?'active':''}}" href="{{route('admin.broker.view', ['agent'=>$broker->id, 'tab'=> 'store'])}}"  aria-disabled="true">{{translate('messages.stores')}}</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{request('tab')=='broker'?'active':''}}" href="{{route('admin.agent.view', ['agent'=>$agent->id, 'tab'=> 'broker'])}}"  aria-disabled="true">{{translate('messages.brokers')}}</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{request('tab')=='transaction'?'active':''}}" href="{{route('admin.agent.view', ['agent'=>$agent->id, 'tab'=> 'transaction'])}}"  aria-disabled="true">{{translate('messages.transaction')}}</a>
+                    <a class="nav-link {{request('tab')=='transaction'?'active':''}}" href="{{route('admin.broker.view', ['agent'=>$broker->id, 'tab'=> 'transaction'])}}"  aria-disabled="true">{{translate('messages.transaction')}}</a>
                 </li>
 
             </ul>

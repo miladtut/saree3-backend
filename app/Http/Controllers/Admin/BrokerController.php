@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Agent;
 use App\Models\AgentWallet;
+use App\Models\Broker;
+use App\Models\BrokerWallet;
 use App\Models\Zone;
 use App\Models\AddOn;
 use App\Models\Store;
@@ -26,11 +28,11 @@ use Illuminate\Support\Facades\Validator;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 
 
-class AgentController extends Controller
+class BrokerController extends Controller
 {
     public function index()
     {
-        return view('admin-views.agent.index');
+        return view('admin-views.broker.index');
     }
 
     public function store(Request $request)
@@ -63,7 +65,7 @@ class AgentController extends Controller
 
         // $store->zones()->attach($request->zone_ids);
         Toastr::success(translate('messages.store').translate('messages.added_successfully'));
-        return redirect('admin/agent/list');
+        return redirect('admin/broker/list');
     }
 
     public function edit($id)
@@ -73,18 +75,18 @@ class AgentController extends Controller
             Toastr::warning(translate('messages.you_can_not_edit_this_store_please_add_a_new_store_to_edit'));
             return back();
         }
-        $agent = Agent::findOrFail($id);
-        return view('admin-views.agent.edit', compact('agent'));
+        $broker = Broker::findOrFail($id);
+        return view('admin-views.broker.edit', compact('broker'));
     }
 
-    public function update($agent,Request $request)
+    public function update($broker,Request $request)
     {
-        $agent = Agent::query ()->findOrFail ($agent);
+        $broker = Broker::query ()->findOrFail ($broker);
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|max:100',
             'l_name' => 'nullable|max:100',
-            'email' => 'required|unique:agents,email,'.$agent->id,
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:agents,phone,'.$agent->id,
+            'email' => 'required|unique:brokers,email,'.$broker->id,
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:brokers,phone,'.$broker->id,
             'password' => 'nullable|min:6',
         ], [
             'f_name.required' => translate('messages.first_name_is_required')
@@ -97,49 +99,48 @@ class AgentController extends Controller
                     ->withInput();
         }
 
-        $agent->f_name = $request->f_name;
-        $agent->l_name = $request->l_name;
-        $agent->email = $request->email;
-        $agent->phone = $request->phone;
-        $agent->password = strlen($request->password)>1?bcrypt($request->password):$agent->password;
+        $broker->f_name = $request->f_name;
+        $broker->l_name = $request->l_name;
+        $broker->email = $request->email;
+        $broker->phone = $request->phone;
+        $broker->password = strlen($request->password)>1?bcrypt($request->password):$broker->password;
 
 
         if ($request->hasFile ('logo')){
-            $agent->image = Helpers::upload('agent/', 'png', $request->file('logo'));
+            $broker->image = Helpers::upload('broker/', 'png', $request->file('logo'));
         }
 
 
-        $agent->save();
+        $broker->save();
 
 
         Toastr::success(translate('messages.store').translate('messages.updated_successfully'));
-        return redirect('admin/agent/list');
+        return redirect('admin/broker/list');
     }
 
-    public function destroy($agent,Request $request)
+    public function destroy(Request $request, Broker $broker)
     {
-        $agent = Agent::query ()->findOrFail ($agent);
-        if(env('APP_MODE')=='demo' && $agent->id == 2)
+        if(env('APP_MODE')=='demo' && $broker->id == 2)
         {
-            Toastr::warning(translate('messages.you_can_not_delete_this_agent_please_add_a_new_agent_to_delete'));
+            Toastr::warning(translate('messages.you_can_not_delete_this_broker_please_add_a_new_broker_to_delete'));
             return back();
         }
-        if (Storage::disk('public')->exists('agent/' . $agent['image'])) {
-            Storage::disk('public')->delete('agent/' .  $agent['image']);
+        if (Storage::disk('public')->exists('broker/' . $broker['image'])) {
+            Storage::disk('public')->delete('broker/' . $broker['image']);
         }
-        $agent->delete();
-
-        Toastr::success(translate('messages.agent').' '.translate('messages.removed'));
+        $broker->delete();
+        Toastr::success(translate('messages.broker').' '.translate('messages.removed'));
         return back();
     }
 
-    public function view(Agent $agent, $tab=null, $sub_tab='cash')
+    public function view($broker, $tab=null, $sub_tab='cash')
     {
-        $wallet = $agent->wallet;
+        $broker = Broker::query ()->findOrFail ($broker);
+        $wallet = $broker->wallet;
         if(!$wallet)
         {
-            $wallet= new AgentWallet();
-            $wallet->agent_id = $agent->id;
+            $wallet= new BrokerWallet();
+            $wallet->broker_id = $broker->id;
             $wallet->total_earning= 0.0;
             $wallet->total_withdrawn=0.0;
             $wallet->pending_withdraw=0.0;
@@ -150,31 +151,27 @@ class AgentController extends Controller
 
         if($tab == 'store')
         {
-            return view('admin-views.agent.view.store', compact('agent'));
-        }
-        else if($tab == 'broker')
-        {
-            return view('admin-views.agent.view.broker', compact('agent'));
+            return view('admin-views.broker.view.store', compact('broker'));
         }
         else if($tab == 'transaction')
         {
-            return view('admin-views.agent.view.transaction', compact('agent', 'sub_tab'));
+            return view('admin-views.broker.view.transaction', compact('broker', 'sub_tab'));
         }
 
-        return view('admin-views.agent.view.index', compact('agent', 'wallet'));
+        return view('admin-views.broker.view.index', compact('broker', 'wallet'));
     }
 
 
 
     public function list(Request $request)
     {
-        $agents = Agent::latest()->paginate(config('default_pagination'));
-        return view('admin-views.agent.list', compact('agents'));
+        $brokers = Broker::latest()->paginate(config('default_pagination'));
+        return view('admin-views.broker.list', compact('brokers'));
     }
 
     public function search(Request $request){
         $key = explode(' ', $request['search']);
-        $agents=Agent::where(function ($q) use ($key) {
+        $brokers=Broker::where(function ($q) use ($key) {
             foreach ($key as $value) {
                 $q->orWhere('f_name', 'like', "%{$value}%")
                     ->orWhere('l_name', 'like', "%{$value}%")
@@ -183,18 +180,18 @@ class AgentController extends Controller
             }
         })
        ->get();
-        $total=$agents->count();
+        $total=$brokers->count();
         return response()->json([
-            'view'=>view('admin-views.agent.partials._table',compact('agents'))->render(), 'total'=>$total
+            'view'=>view('admin-views.broker.partials._table',compact('brokers'))->render(), 'total'=>$total
         ]);
     }
 
-    public function status($agent, Request $request)
+    public function status($broker, Request $request)
     {
-        $agent = Agent::query ()->findOrFail ($agent);
-        $agent->status = $request->status;
-        $agent->save();
-        Toastr::success(translate('messages.agent').translate('messages.status_updated'));
+        $broker = Broker::query ()->findOrFail ($broker);
+        $broker->status = $request->status;
+        $broker->save();
+        Toastr::success(translate('messages.broker').translate('messages.status_updated'));
         return back();
     }
 
@@ -208,11 +205,11 @@ class AgentController extends Controller
         return back();
     }
 
-    public function get_agents(Request $request){
+    public function get_brokers(Request $request){
         $key = explode(' ', $request->q);
-        $data=Agent::when($request->earning, function($query){
-            return $query->earning();
-        })
+        $data=Broker::when($request->earning, function($query){
+                return $query->earning();
+            })
             ->where(function ($q) use ($key) {
                 foreach ($key as $value) {
                     $q->orWhere('f_name', 'like', "%{$value}%")
@@ -421,9 +418,9 @@ class AgentController extends Controller
         return back();
     }
 
-    public function get_account_data(Agent $agent)
+    public function get_account_data(Store $store)
     {
-        $wallet = $agent->wallet;
+        $wallet = $store->vendor->wallet;
         $cash_in_hand = 0;
         $balance = 0;
 

@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',translate('messages.add_new_agent'))
+@section('title',translate('messages.add_new_broker'))
 
 @push('css_or_js')
 <style>
@@ -22,24 +22,24 @@
         <div class="page-header" style="border-bottom:0;padding-bottom:0;">
             <div class="row align-items-center">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title"><i class="tio-add-circle-outlined"></i> {{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.agent')}}</h1>
+                    <h1 class="page-header-title"><i class="tio-add-circle-outlined"></i> {{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.broker')}}</h1>
                 </div>
             </div>
         </div>
         <!-- End Page Header -->
         <div class="row gx-2 gx-lg-3">
             <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
-                <form action="{{route('admin.agent.store')}}" method="post" enctype="multipart/form-data" class="js-validate" id="vendor_form">
+                <form action="{{route('admin.broker.store')}}" method="post" enctype="multipart/form-data" class="js-validate" id="vendor_form">
                     @csrf
 
-                    <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.agent')}} {{translate('messages.info')}}</small>
+                    <small class="nav-subtitle text-secondary border-bottom">{{translate('messages.broker')}} {{translate('messages.info')}}</small>
                     <br>
                     <div class="row">
                         <div class="col-md-6 col-12">
 
 
                             <div class="form-group">
-                                <label class="input-label">{{translate('messages.agent')}} {{translate('messages.logo')}}<small style="color: red"> ( {{translate('messages.ratio')}} 1:1 )</small></label>
+                                <label class="input-label">{{translate('messages.broker')}} {{translate('messages.logo')}}<small style="color: red"> ( {{translate('messages.ratio')}} 1:1 )</small></label>
                                 <div class="custom-file">
                                     <input type="file" name="logo" id="customFileEg1" class="custom-file-input"
                                         accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" required>
@@ -51,7 +51,7 @@
                             <div class="form-group" style="margin-bottom:0%;">
                                 <center>
                                     <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
-                                        src="{{asset('public/assets/admin/img/400x400/img2.jpg')}}" alt="{{translate('agent_logo')}}"/>
+                                        src="{{asset('public/assets/admin/img/400x400/img2.jpg')}}" alt="{{translate('broker_logo')}}"/>
                                 </center>
                             </div>
                         </div>

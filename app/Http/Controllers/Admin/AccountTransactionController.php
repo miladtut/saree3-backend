@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Agent;
+use App\Models\Broker;
 use Illuminate\Http\Request;
 use App\Models\AccountTransaction;
 use App\Models\Store;
@@ -45,16 +47,40 @@ class AccountTransactionController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
-            'type' => 'required|in:store,deliveryman',
+            'type' => 'required|in:store,deliveryman,agent,broker',
             'method' => 'required',
             'store_id' => 'required_if:type,store',
+            'agent_id' => 'required_if:type,agent',
+            'broker_id' => 'required_if:type,broker',
             'deliveryman_id' => 'required_if:type,deliveryman',
             'amount' => 'required|numeric',
         ]);
 
         if ($request['store_id'] && $request['deliveryman_id']) {
             $validator->getMessageBag()->add('from type', 'Can not select both deliveryman and store');
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+        if ($request['store_id'] && $request['agent_id']) {
+            $validator->getMessageBag()->add('from type', 'Can not select both agent and store');
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+        if ($request['store_id'] && $request['broker_id']) {
+            $validator->getMessageBag()->add('from type', 'Can not select both broker and store');
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+        if ($request['agent_id'] && $request['deliveryman_id']) {
+            $validator->getMessageBag()->add('from type', 'Can not select both deliveryman and agent');
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+
+        if ($request['agent_id'] && $request['broker_id']) {
+            $validator->getMessageBag()->add('from type', 'Can not select both agent and broker');
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+        if ($request['broker_id'] && $request['deliveryman_id']) {
+            $validator->getMessageBag()->add('from type', 'Can not select both deliveryman and broker');
             return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
 
@@ -68,6 +94,18 @@ class AccountTransactionController extends Controller
         else if($request['type']=='deliveryman' && $request['deliveryman_id'])
         {
             $data = DeliveryMan::findOrFail($request['deliveryman_id']);
+
+            $current_balance = $data->wallet?$data->wallet->collected_cash:0;
+        }
+        else if($request['type']=='agent' && $request['agent_id'])
+        {
+            $data = Agent::findOrFail($request['agent_id']);
+
+            $current_balance = $data->wallet?$data->wallet->collected_cash:0;
+        }
+        else if($request['type']=='broker' && $request['broker_id'])
+        {
+            $data = Broker::findOrFail($request['broker_id']);
 
             $current_balance = $data->wallet?$data->wallet->collected_cash:0;
         }

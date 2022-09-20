@@ -109,9 +109,9 @@
                                             href="{{route('admin.agent.edit',[$agent['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.agent')}}"><i class="tio-edit text-primary"></i>
                                         </a>
                                         <a class="btn btn-sm btn-white" href="javascript:"
-                                        onclick="form_alert('vendor-{{$agent['id']}}','{{translate('You want to remove this agent')}}')" title="{{translate('messages.delete')}} {{translate('messages.agent')}}"><i class="tio-delete-outlined text-danger"></i>
+                                        onclick="form_alert('agent-{{$agent['id']}}','{{translate('You want to remove this agent')}}')" title="{{translate('messages.delete')}} {{translate('messages.agent')}}"><i class="tio-delete-outlined text-danger"></i>
                                         </a>
-                                        <form action="{{route('admin.agent.delete',[$agent['id']])}}" method="post" id="vendor-{{$agent['id']}}">
+                                        <form action="{{route('admin.agent.delete',[$agent['id']])}}" method="post" id="agent-{{$agent['id']}}">
                                             @csrf @method('delete')
                                         </form>
                                     </td>
