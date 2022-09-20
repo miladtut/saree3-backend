@@ -278,10 +278,8 @@
             },
             __port: function (params, success, failure) {
                 var $request = $.ajax(params);
-
                 $request.then(success);
                 $request.fail(failure);
-
                 return $request;
             }
         }

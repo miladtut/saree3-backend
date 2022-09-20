@@ -73,6 +73,16 @@
                     <div class="row">
                         <div class="col-md-4 col-12">
                             <div class="form-group">
+                                <label class="input-label" for="store">{{translate('messages.agent')}}<span class="input-label-secondary"></span></label>
+                                <select id="agent" name="agent_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.store')}}" onchange="getAccountData('{{url('/')}}/admin/agent/get-account-data/',this.value,'agent')" class="form-control" title="Select Restaurant">
+                                    @if($broker->agent)
+                                        <option value="{{$broker->agent->id}}" selected>{{$broker->agency}}</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
                                 <label class="input-label" for="exampleFormControlInput1">{{translate('messages.first')}} {{translate('messages.name')}}</label>
                                 <input type="text" name="f_name" class="form-control" placeholder="{{translate('messages.first')}} {{translate('messages.name')}}" value="{{$broker->f_name}}"
                                        required>
@@ -156,6 +166,42 @@
 @endsection
 
 @push('script_2')
+    <script>
+        $('#agent').select2({
+            ajax: {
+                url: '{{url('/')}}/admin/agent/get-agents',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                __port: function (params, success, failure) {
+                    var $request = $.ajax(params);
+
+                    $request.then(success);
+                    $request.fail(failure);
+
+                    return $request;
+                }
+            }
+        });
+        function getAccountData(route, data_id, type)
+        {
+            $.get({
+                url: route+data_id,
+                dataType: 'json',
+                success: function (data) {
+                    $('#account_info').html('({{'cash in hand'}}: '+data.cash_in_hand+' {{'earning balance'}}: '+data.earning_balance+')');
+                },
+            });
+        }
+    </script>
     <script>
         function readURL(input, viewer) {
             if (input.files && input.files[0]) {

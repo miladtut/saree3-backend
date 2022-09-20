@@ -53,18 +53,18 @@ class BrokerController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $agent = new Agent();
-        $agent->f_name = $request->f_name;
-        $agent->l_name = $request->l_name;
-        $agent->email = $request->email;
-        $agent->phone = $request->phone;
-        $agent->password = bcrypt($request->password);
-        $agent->image = Helpers::upload('agent/', 'png', $request->file('logo'));
-        $agent->status = 1;
-        $agent->save();
+        $broker = new Broker();
+        $broker->f_name = $request->f_name;
+        $broker->l_name = $request->l_name;
+        $broker->email = $request->email;
+        $broker->phone = $request->phone;
+        $broker->password = bcrypt($request->password);
+        $broker->image = Helpers::upload('broker/', 'png', $request->file('logo'));
+        $broker->status = 1;
+        $broker->save();
 
         // $store->zones()->attach($request->zone_ids);
-        Toastr::success(translate('messages.store').translate('messages.added_successfully'));
+        Toastr::success(translate('messages.broker')." ".translate('messages.added_successfully'));
         return redirect('admin/broker/list');
     }
 
@@ -85,6 +85,7 @@ class BrokerController extends Controller
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|max:100',
             'l_name' => 'nullable|max:100',
+            'agent_id' => 'required|numeric',
             'email' => 'required|unique:brokers,email,'.$broker->id,
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:brokers,phone,'.$broker->id,
             'password' => 'nullable|min:6',
@@ -102,6 +103,7 @@ class BrokerController extends Controller
         $broker->f_name = $request->f_name;
         $broker->l_name = $request->l_name;
         $broker->email = $request->email;
+        $broker->agent_id = $request->agent_id;
         $broker->phone = $request->phone;
         $broker->password = strlen($request->password)>1?bcrypt($request->password):$broker->password;
 
@@ -114,12 +116,13 @@ class BrokerController extends Controller
         $broker->save();
 
 
-        Toastr::success(translate('messages.store').translate('messages.updated_successfully'));
+        Toastr::success(translate('messages.broker')." ".translate('messages.updated_successfully'));
         return redirect('admin/broker/list');
     }
 
-    public function destroy(Request $request, Broker $broker)
+    public function destroy($broker ,Request $request)
     {
+        $broker = Broker::query ()->findOrFail ($broker);
         if(env('APP_MODE')=='demo' && $broker->id == 2)
         {
             Toastr::warning(translate('messages.you_can_not_delete_this_broker_please_add_a_new_broker_to_delete'));

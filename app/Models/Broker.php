@@ -13,4 +13,15 @@ class Broker extends Model
     {
         return $query->where('status', 1);
     }
+
+    public function agent(){
+        return $this->belongsTo (Agent::class);
+    }
+
+    public function getAgencyAttribute(){
+        if ($this->agent){
+            return $this->agent->f_name.' '.$this->agent->l_name;
+        }
+        return translate ('messages.agency_not_found');
+    }
 }

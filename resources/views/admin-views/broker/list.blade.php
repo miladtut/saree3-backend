@@ -24,7 +24,7 @@
                 <div class="card">
                     <!-- Header -->
                     <div class="card-header pb-1 pt-1" >
-                        <h5>{{translate('messages.stores')}} {{translate('messages.list')}}</h5>
+                        <h5>{{translate('messages.brokers')}} {{translate('messages.list')}}</h5>
                         <form action="javascript:" id="search-form" >
                                         <!-- Search -->
                             @csrf
@@ -59,6 +59,7 @@
                                 <th style="width: 5%;">{{translate('messages.#')}}</th>
                                 <th style="width: 10%;">{{translate('messages.logo')}}</th>
                                 <th style="width: 10%;">{{translate('messages.name')}}</th>
+                                <th style="width: 10%;">{{translate('messages.agency')}}</th>
                                 <th style="width: 10%;">{{translate('messages.phone')}}</th>
                                 <th class="text-uppercase" style="width: 10%;">{{translate('messages.active')}}/{{translate('messages.inactive')}}</th>
                                 <th style="width: 10%;">{{translate('messages.action')}}</th>
@@ -82,6 +83,9 @@
                                         {{$broker['f_name']}} {{$broker['l_name']}}
                                     </td>
 
+                                    <td>
+                                        {{$broker->agency}}
+                                    </td>
 
                                     <td>
                                         {{$broker['phone']}}

@@ -1397,4 +1397,7 @@
   'broker_view' => 'Broker view',
   'add_new_broker' => 'Add new broker',
   'broker_logo' => 'Broker logo',
+  'agent deleted!' => 'Agent deleted!',
+  'agency' => 'Agency',
+  'agency_not_found' => 'Agency not found',
 );
