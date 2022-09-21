@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',$agent->f_name. " ".$agent->l_name."'s Stores")
+@section('title',$broker->f_name. " ".$broker->l_name."'s Stores")
 
 @push('css_or_js')
     <!-- Custom styles for this page -->
@@ -17,9 +17,9 @@
         </ol>
     </nav>
 
-    @include('admin-views.agent.view.partials._header',['agent'=>$agent])
+    @include('admin-views.broker.view.partials._header',['broker'=>$broker])
     <!-- Page Heading -->
-    @php($stores = $agent->stores()->latest()->paginate(25))
+    @php($stores = $broker->stores()->latest()->paginate(25))
     <div class="tab-content">
         <div class="tab-pane fade show active" id="product">
             <div class="row pt-2">
@@ -43,6 +43,7 @@
                                         <th>{{translate('messages.#')}}</th>
                                         <th style="width: 20%">{{translate('messages.name')}}</th>
                                         <th>{{translate('messages.vendor_name')}}</th>
+                                        <th>{{translate('messages.broker_name')}}</th>
                                         <th>{{translate('messages.agent_name')}}</th>
                                         <th>{{translate('messages.action')}}</th>
                                     </tr>
@@ -66,7 +67,10 @@
                                         {{$store->vendor->f_name}} {{$store->vendor->l_name}}
                                     </td>
                                     <td>
-                                        {{$agent->f_name}} {{$agent->l_name}}
+                                        {{$store->vendor->broker->f_name}} {{$store->vendor->broker->l_name}}
+                                    </td>
+                                    <td>
+                                        {{$store->vendor->broker->agent->f_name}} {{$store->vendor->broker->agent->l_name}}
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-white"

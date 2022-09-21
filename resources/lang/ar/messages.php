@@ -1400,4 +1400,6 @@
   'agent deleted!' => 'Agent deleted!',
   'agency' => 'Agency',
   'agency_not_found' => 'Agency not found',
+  'broker_name' => 'Broker name',
+  'collect_cash' => 'Collect cash',
 );

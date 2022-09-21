@@ -242,7 +242,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'broker', 'as' => 'broker.'], function () {
             Route::get('get-stores-data/{store}', 'BrokerController@get_store_data')->name('get-stores-data');
             Route::get('store-filter/{id}', 'BrokerController@store_filter')->name('storefilter');
-            Route::get('get-account-data/{store}', 'BrokerController@get_account_data')->name('storefilter');
+            Route::get('get-account-data/{broker}', 'BrokerController@get_account_data')->name('storefilter');
             Route::get('get-brokers', 'BrokerController@get_brokers')->name('get-brokers');
             Route::get('get-addons', 'BrokerController@get_addons')->name('get_addons');
             Route::group(['middleware' => ['module:store']], function () {

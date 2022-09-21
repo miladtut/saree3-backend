@@ -421,9 +421,9 @@ class BrokerController extends Controller
         return back();
     }
 
-    public function get_account_data(Store $store)
+    public function get_account_data(Broker $broker)
     {
-        $wallet = $store->vendor->wallet;
+        $wallet = $broker->wallet;
         $cash_in_hand = 0;
         $balance = 0;
 

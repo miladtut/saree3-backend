@@ -132,6 +132,8 @@
                                         <a href="{{route('admin.delivery-man.preview',[$at->deliveryman->id])}}">{{ $at->deliveryman->f_name }} {{ $at->deliveryman->l_name }}</a>
                                         @elseif($at->agent)
                                         <a href="{{route('admin.agent.view',[$at->agent['id']])}}">{{ $at->agent->f_name }} {{ $at->agent->l_name }}</a>
+                                        @elseif($at->broker)
+                                        <a href="{{route('admin.broker.view',[$at->broker['id']])}}">{{ $at->broker->f_name }} {{ $at->broker->l_name }}</a>
                                         @else
                                             {{translate('messages.not_found')}}
                                         @endif

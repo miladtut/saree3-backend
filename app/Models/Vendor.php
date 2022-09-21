@@ -26,7 +26,7 @@ class Vendor extends Authenticatable
     {
         return $this->hasMany(OrderTransaction::class);
     }
-    
+
     public function todays_earning()
     {
         return $this->hasMany(OrderTransaction::class)->whereDate('created_at',now());
@@ -75,4 +75,11 @@ class Vendor extends Authenticatable
         return $this->hasOne(StoreWallet::class);
     }
 
+    public function agent(){
+        return $this->belongsTo (Agent::class);
+    }
+
+    public function broker(){
+        return $this->belongsTo (Broker::class);
+    }
 }

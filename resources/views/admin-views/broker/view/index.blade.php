@@ -45,7 +45,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="font-weight-bold  text-uppercase for-card-text mb-1">
-                                {{translate('messages.collected_cash_by_store')}}
+                                {{translate('messages.collected_cash')}}
                             </div>
                             <div
                                 class="for-card-count">{{$wallet->collected_cash}}
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="card-footer"  style="background: #8d8d8d; border:none;">
-                        <a class="btn w-100" style="background: #f9fafc;" href="{{route('admin.account-transaction.index')}}" title="{{translate('messages.goto')}} {{translate('messages.account_transaction')}}">{{translate('messages.collect_cash_from_store')}}</a>
+                        <a class="btn w-100" style="background: #f9fafc;" href="{{route('admin.account-transaction.index')}}" title="{{translate('messages.goto')}} {{translate('messages.account_transaction')}}">{{translate('messages.collect_cash')}}</a>
                 </div>
             </div>
         </div>

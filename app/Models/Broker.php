@@ -24,4 +24,12 @@ class Broker extends Model
         }
         return translate ('messages.agency_not_found');
     }
+
+    public function stores(){
+        return $this->hasManyThrough (Store::class,Vendor::class);
+    }
+
+    public function wallet(){
+        return $this->hasOne (BrokerWallet::class);
+    }
 }
