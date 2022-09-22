@@ -146,7 +146,7 @@
         function status_form_alert(id, message, e) {
             e.preventDefault();
             Swal.fire({
-                title: '{{translate('messages.are_you_sure')}}',   
+                title: '{{translate('messages.are_you_sure')}}',
                 text: message,
                 type: 'warning',
                 showCancelButton: true,
@@ -204,9 +204,8 @@
             })
         });
     </script>
-
+{{--    ----------------------------------------------------------------------------------------google maps--------------------------------------------}}
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{\App\Models\BusinessSetting::where('key', 'map_api_key')->first()->value}}&callback=initialize&libraries=drawing,places&v=3.49"></script>
-
     <script>
         var map; // Global declaration of the map
         var drawingManager;
@@ -240,7 +239,7 @@
             controlUI.addEventListener("click", () => {
                 lastpolygon.setMap(null);
                 $('#coordinates').val('');
-                
+
             });
         }
 
@@ -376,15 +375,17 @@
                         }));
                         polygons[i].setMap(map);
                     }
-  
+
                 },
             });
         }
         $(document).on('ready', function(){
             set_all_zones();
         });
-        
+
     </script>
+{{--    --------------------------------------------------------------------------------------end google maps-------------------------------------------}}
+
     <script>
         $('#search-form').on('submit', function () {
             var formData = new FormData(this);
