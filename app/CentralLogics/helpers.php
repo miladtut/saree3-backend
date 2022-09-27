@@ -1208,6 +1208,10 @@ class Helpers
             return auth('vendor')->user();
         } else if (auth('vendor_employee')->check()) {
             return auth('vendor_employee')->user();
+        }else if (auth('agent')->check()) {
+            return auth('agent')->user();
+        }else if (auth('broker')->check()) {
+            return auth('broker')->user();
         }
         return 0;
     }
@@ -1216,6 +1220,10 @@ class Helpers
     {
         if (auth('vendor_employee')->check()) {
             return auth('vendor_employee')->user()->store;
+        }elseif (auth('agent')->check()){
+            return count(auth('agent')->user()->stores) > 0 ? auth('agent')->user()->stores[0] : null;
+        }elseif (auth('broker')->check()){
+            return count(auth('broker')->user()->stores )> 0 ? auth('broker')->user()->stores[0] : null;
         }
         return auth('vendor')->user()->stores[0];
     }

@@ -2,7 +2,7 @@
     <div class="row justify-content-between align-items-center">
         <div class="col">
             <p class="font-size-sm mb-0">
-                &copy; {{Str::limit(\App\CentralLogics\Helpers::get_store_data()->name, 50, '...')}}. <span
+                &copy; {{\App\CentralLogics\Helpers::get_loggedin_user()->f_name }} {{\App\CentralLogics\Helpers::get_loggedin_user()->l_name }}. <span
                     class="d-none d-sm-inline-block"></span>
             </p>
         </div>

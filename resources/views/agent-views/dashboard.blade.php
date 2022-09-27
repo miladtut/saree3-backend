@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.agent.app')
 
 @section('title',translate('messages.dashboard'))
 
@@ -211,7 +211,7 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title">{{translate('messages.welcome')}}, {{auth('vendor_employee')->user()->f_name}}.</h1>
+                    <h1 class="page-header-title">{{translate('messages.welcome')}}, {{auth('agent')->user()->f_name}}.</h1>
                     <p class="page-header-text">{{translate('messages.employee_welcome_message')}}</p>
                 </div>
             </div>

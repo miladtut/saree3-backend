@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vendor;
+namespace App\Http\Controllers\Agent;
 
 use App\CentralLogics\Helpers;
 use App\Http\Controllers\Controller;
@@ -15,17 +15,18 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
+
         $params = [
             'statistics_type' => $request['statistics_type'] ?? 'overall'
         ];
         session()->put('dash_params', $params);
 
-        $data = self::dashboard_order_stats_data();
+        $data = [];
         $earning = [];
         $commission = [];
         $from = Carbon::now()->startOfYear()->format('Y-m-d');
         $to = Carbon::now()->endOfYear()->format('Y-m-d');
-        $store_earnings = OrderTransaction::where(['vendor_id' => Helpers::get_vendor_id()])->select(
+        $store_earnings = OrderTransaction::where(['agent_id' => Helpers::get_agent_id()])->select(
             DB::raw('IFNULL(sum(store_amount),0) as earning'),
             DB::raw('IFNULL(sum(admin_commission),0) as commission'),
             DB::raw('YEAR(created_at) year, MONTH(created_at) month')
@@ -41,17 +42,8 @@ class DashboardController extends Controller
             }
         }
 
-        $top_sell = Item::orderBy("order_count", 'desc')
-            ->take(6)
-            ->get();
-        $most_rated_items = Item::
-        orderBy('rating_count','desc')
-        ->take(6)
-        ->get();
-        $data['top_sell'] = $top_sell;
-        $data['most_rated_items'] = $most_rated_items;
 
-        return view('vendor-views.dashboard', compact('data', 'earning', 'commission', 'params'));
+        return view('agent-views.dashboard', compact('data', 'earning', 'commission', 'params'));
     }
 
     public function store_data()
@@ -63,7 +55,7 @@ class DashboardController extends Controller
         }
         $new_pending_order = $new_pending_order->count();
         $new_confirmed_order = DB::table('orders')->where(['checked' => 0])->where('store_id', Helpers::get_store_id())->whereIn('order_status',['confirmed', 'accepted'])->whereNotNull('confirmed')->count();
-        
+
         return response()->json([
             'success' => 1,
             'data' => ['new_pending_order' => $new_pending_order, 'new_confirmed_order' => $new_confirmed_order]

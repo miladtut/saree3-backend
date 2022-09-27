@@ -59,14 +59,9 @@ class LoginController extends Controller
         $agent = Agent::where('email', $request->email)->first();
         if($agent)
         {
-            if($agent->stores[0]->status == 0)
-            {
-                return redirect()->back()->withInput($request->only('email', 'remember'))
-            ->withErrors([translate('messages.inactive_vendor_warning')]);
-            }
 
             if (auth('agent')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-                return redirect()->route('vendor.dashboard');
+                return redirect()->route('agent.dashboard');
             }
         }
 

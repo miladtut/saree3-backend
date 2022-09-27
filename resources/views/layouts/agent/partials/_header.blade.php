@@ -4,18 +4,18 @@
         <div class="navbar-nav-wrap">
             <div class="navbar-brand-wrapper">
                 <!-- Logo Div-->
-                @php($store_logo=\App\CentralLogics\Helpers::get_store_data()->logo)
-                <a class="navbar-brand" href="{{route('vendor.dashboard')}}" aria-label="">
-                    <img class="navbar-brand-logo"
-                         style="border-radius: 50%;height: 47px;width: 47px!important; border: 5px solid #80808012"
-                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                         src="{{asset('public/storage/store/'.$store_logo)}}" alt="Logo">
-                    <img class="navbar-brand-logo-mini"
-                         style="border-radius: 50%;height: 47px;width: 47px!important; border: 5px solid #80808012"
-                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                         src="{{asset('public/storage/store/'.$store_logo)}}"
-                         alt="Logo">
-                </a>
+{{--                @php($store_logo=\App\CentralLogics\Helpers::get_store_data()->logo)--}}
+{{--                <a class="navbar-brand" href="{{route('vendor.dashboard')}}" aria-label="">--}}
+{{--                    <img class="navbar-brand-logo"--}}
+{{--                         style="border-radius: 50%;height: 47px;width: 47px!important; border: 5px solid #80808012"--}}
+{{--                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"--}}
+{{--                         src="{{asset('public/storage/store/'.$store_logo)}}" alt="Logo">--}}
+{{--                    <img class="navbar-brand-logo-mini"--}}
+{{--                         style="border-radius: 50%;height: 47px;width: 47px!important; border: 5px solid #80808012"--}}
+{{--                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"--}}
+{{--                         src="{{asset('public/storage/store/'.$store_logo)}}"--}}
+{{--                         alt="Logo">--}}
+{{--                </a>--}}
                 <!-- End Logo -->
             </div>
 
@@ -58,7 +58,7 @@
                                 <div class="avatar avatar-sm avatar-circle">
                                     <img class="avatar-img"
                                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                        src="{{asset('public/storage/vendor')}}/{{\App\CentralLogics\Helpers::get_loggedin_user()->image}}"
+                                        src="{{asset('public/storage/agent')}}/{{\App\CentralLogics\Helpers::get_loggedin_user()->image}}"
                                         alt="Image Description">
                                     <span class="avatar-status avatar-sm-status avatar-status-success"></span>
                                 </div>

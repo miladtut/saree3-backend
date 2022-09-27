@@ -112,8 +112,8 @@
 <!-- End Builder -->
 
 <!-- JS Preview mode only -->
-@include('layouts.vendor.partials._header')
-@include('layouts.vendor.partials._sidebar')
+@include('layouts.agent.partials._header')
+@include('layouts.agent.partials._sidebar')
 <!-- END ONLY DEV -->
 
 <main id="content" role="main" class="main pointer-event">
@@ -122,7 +122,7 @@
 <!-- End Content -->
 
     <!-- Footer -->
-@include('layouts.vendor.partials._footer')
+@include('layouts.agent.partials._footer')
 <!-- End Footer -->
 
     <div class="modal fade" id="popup-modal">

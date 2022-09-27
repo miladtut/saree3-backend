@@ -440,7 +440,7 @@
   'veg' => 'نباتي',
   'non_veg' => 'غير نباتي  ',
   'walk_in_customer' => 'عميل بدون حجز  ',
-  'wallet' => 'محفظة جيب  ',
+  'wallet' => 'المحفظة  ',
   'want' => 'يريد',
   'wise' => 'حكيم',
   'withdraw' => 'ينسحب',
@@ -1402,4 +1402,5 @@
   'agency_not_found' => 'Agency not found',
   'broker_name' => 'Broker name',
   'collect_cash' => 'Collect cash',
+  'agent.dashboard' => 'Agent.dashboard',
 );
