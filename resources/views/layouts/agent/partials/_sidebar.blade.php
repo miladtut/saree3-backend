@@ -132,69 +132,6 @@
                         </a>
                     </li>
 
-                    <!-- End Wallet -->
-                    @if(\App\CentralLogics\Helpers::employee_module_permission_check('reviews'))
-                    <li class="navbar-vertical-aside-has-menu {{Request::is('vendor-panel/reviews')?'active':''}}">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link"
-                            href="{{route('vendor.reviews')}}" title="{{translate('messages.reviews')}}"
-                        >
-                            <i class="tio-star-outlined nav-icon"></i>
-                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
-                                {{translate('messages.reviews')}}
-                            </span>
-                        </a>
-                    </li>
-                    @endif
-                    <!-- End Business Settings -->
-
-                    <!-- Employee-->
-                    <li class="nav-item">
-                        <small class="nav-subtitle" title="{{translate('messages.employee')}} {{translate('messages.section')}}">{{translate('messages.employee')}} {{translate('messages.section')}}</small>
-                        <small class="tio-more-horizontal nav-subtitle-replacer"></small>
-                    </li>
-
-                    @if(\App\CentralLogics\Helpers::employee_module_permission_check('custom_role'))
-                    <li class="navbar-vertical-aside-has-menu {{Request::is('vendor-panel/custom-role*')?'active':''}}">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{route('vendor.custom-role.create')}}"
-                        title="{{translate('messages.employee')}} {{translate('messages.Role')}}">
-                            <i class="tio-incognito nav-icon"></i>
-                            <span
-                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{translate('messages.employee')}} {{translate('messages.Role')}}</span>
-                        </a>
-                    </li>
-                    @endif
-
-                    @if(\App\CentralLogics\Helpers::employee_module_permission_check('employee'))
-                    <li class="navbar-vertical-aside-has-menu {{Request::is('vendor-panel/employee*')?'active':''}}">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:"
-                        title="{{translate('messages.employees')}}">
-                            <i class="tio-user nav-icon"></i>
-                            <span
-                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{translate('messages.employees')}}</span>
-                        </a>
-                        <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
-                            style="display: {{Request::is('vendor-panel/employee*')?'block':'none'}}">
-                            <li class="nav-item {{Request::is('vendor-panel/employee/add-new')?'active':''}}">
-                                <a class="nav-link " href="{{route('vendor.employee.add-new')}}" title="{{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.Employee')}}">
-                                    <span class="tio-circle nav-indicator-icon"></span>
-                                    <span class="text-truncate">{{translate('messages.add')}} {{translate('messages.new')}}</span>
-                                </a>
-                            </li>
-                            <li class="nav-item {{Request::is('vendor-panel/employee/list')?'active':''}}">
-                                <a class="nav-link " href="{{route('vendor.employee.list')}}" title="{{translate('messages.Employee')}} {{translate('messages.list')}}">
-                                    <span class="tio-circle nav-indicator-icon"></span>
-                                    <span class="text-truncate">{{translate('messages.list')}}</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    @endif
-                    <!-- End Employee -->
-
-                    <li class="nav-item" style="padding-top: 100px">
-
-                    </li>
                 </ul>
             </div>
             <!-- End Content -->

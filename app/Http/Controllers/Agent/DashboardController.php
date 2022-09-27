@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderTransaction;
+use App\Models\WithdrawRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,35 +16,8 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-
-        $params = [
-            'statistics_type' => $request['statistics_type'] ?? 'overall'
-        ];
-        session()->put('dash_params', $params);
-
-        $data = [];
-        $earning = [];
-        $commission = [];
-        $from = Carbon::now()->startOfYear()->format('Y-m-d');
-        $to = Carbon::now()->endOfYear()->format('Y-m-d');
-        $store_earnings = OrderTransaction::where(['agent_id' => Helpers::get_agent_id()])->select(
-            DB::raw('IFNULL(sum(store_amount),0) as earning'),
-            DB::raw('IFNULL(sum(admin_commission),0) as commission'),
-            DB::raw('YEAR(created_at) year, MONTH(created_at) month')
-        )->whereBetween('created_at', [$from, $to])->groupby('year', 'month')->get()->toArray();
-        for ($inc = 1; $inc <= 12; $inc++) {
-            $earning[$inc] = 0;
-            $commission[$inc] = 0;
-            foreach ($store_earnings as $match) {
-                if ($match['month'] == $inc) {
-                    $earning[$inc] = $match['earning'];
-                    $commission[$inc] = $match['commission'];
-                }
-            }
-        }
-
-
-        return view('agent-views.dashboard', compact('data', 'earning', 'commission', 'params'));
+        $withdraw_req = WithdrawRequest::with(['agent'])->where('agent_id', Helpers::get_agent_id())->latest()->paginate(config('default_pagination'));
+        return view('agent-views.wallet.index', compact('withdraw_req'));
     }
 
     public function store_data()

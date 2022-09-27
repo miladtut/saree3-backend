@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.agent.app')
 
 @section('title',translate('messages.store').' '.translate('messages.wallet'))
 
@@ -14,14 +14,14 @@
         </div>
         <div class="card-body row">
         <?php
-            $wallet = \App\Models\StoreWallet::where('vendor_id',\App\CentralLogics\Helpers::get_vendor_id())->first();
+            $wallet = \App\Models\AgentWallet::where('agent_id',\App\CentralLogics\Helpers::get_agent_id())->first();
             if(isset($wallet)==false){
-                \Illuminate\Support\Facades\DB::table('store_wallets')->insert([
-                    'vendor_id'=>\App\CentralLogics\Helpers::get_vendor_id(),
+                \Illuminate\Support\Facades\DB::table('agent_wallets')->insert([
+                    'agent_id'=>\App\CentralLogics\Helpers::get_agent_id(),
                     'created_at'=>now(),
                     'updated_at'=>now()
                 ]);
-                $wallet = \App\Models\StoreWallet::where('vendor_id',\App\CentralLogics\Helpers::get_vendor_id())->first();
+                $wallet = \App\Models\AgentWallet::where('agent_id',\App\CentralLogics\Helpers::get_agent_id())->first();
             }
         ?>
                     <!-- Earnings (Monthly) Card Example -->
@@ -40,9 +40,9 @@
                         </div>
                     </div>
                     <div class="card-footer"  style="background: #8d8d8d; border:none;">
-                        @if(\App\CentralLogics\Helpers::get_vendor_data()->account_no==null || \App\CentralLogics\Helpers::get_vendor_data()->bank_name==null)
+                        @if(\App\CentralLogics\Helpers::get_agent_data()->account_no==null || \App\CentralLogics\Helpers::get_agent_data()->bank_name==null)
                         <a tabindex="0" class="btn btn w-100 btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="{{translate('messages.warning_missing_bank_info')}}" data-content="{{translate('messages.warning_add_bank_info')}}">{{translate('messages.request')}} {{translate('messages.withdraw')}}</a>
-                        @else   
+                        @else
                         <a class="btn w-100" style="background: #f9fafc;" href="javascript:" data-toggle="modal" data-target="#balance-modal">{{translate('messages.request')}} {{translate('messages.withdraw')}}</a>
                         @endif
                     </div>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>
@@ -141,14 +141,18 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{route('vendor.wallet.withdraw-request')}}" method="post">
+                <form action="{{route('agent.wallet.withdraw-request')}}" method="post">
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">{{translate('messages.amount')}}:</label>
                             <input type="number" name="amount" step="0.01"
-                                    value="{{$wallet->balance}}" 
+                                    value="{{$wallet->balance}}"
                                     class="form-control" id="" min="0" max="{{$wallet->balance}}">
+{{--                            <label class="col-form-label">{{translate('messages.note')}}:</label>--}}
+{{--                            <textarea name="transaction_note" class="form-control">--}}
+
+{{--                            </textarea>--}}
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -213,7 +217,7 @@
                                             <a class="btn btn-sm btn-danger" href="javascript:" onclick="form_alert('withdraw-{{$wr['id']}}','Want to delete this  ?')" title="{{translate('messages.delete')}}"><i class="tio-delete-outlined"></i>
                                         </a>
 
-                                            <form action="{{route('vendor.wallet.close-request',[$wr['id']])}}"
+                                            <form action="{{route('agent.wallet.close-request',[$wr['id']])}}"
                                                     method="post" id="withdraw-{{$wr['id']}}">
                                                 @csrf @method('delete')
                                             </form>

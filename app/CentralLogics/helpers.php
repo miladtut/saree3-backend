@@ -1202,6 +1202,11 @@ class Helpers
         return 0;
     }
 
+    public static function get_agent_data()
+    {
+        return auth('agent')->user();
+    }
+
     public static function get_loggedin_user()
     {
         if (auth('vendor')->check()) {
@@ -1316,6 +1321,15 @@ class Helpers
 
         return false;
     }
+
+
+    public function agent_broker_module_check($mod_name){
+        if ($mod_name == 'wallet'){
+            return true;
+        }
+        return false;
+    }
+
     public static function calculate_addon_price($addons, $add_on_qtys)
     {
         $add_ons_cost = 0;

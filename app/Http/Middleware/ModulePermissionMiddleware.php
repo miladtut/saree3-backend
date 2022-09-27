@@ -26,6 +26,12 @@ class ModulePermissionMiddleware
                 return $next($request);
             }
         }
+        else if(auth ('agent')->check () || auth ('broker')->check ()){
+            if(Helpers::agent_broker_module_check($module))
+            {
+                return $next($request);
+            }
+        }
 
         Toastr::error(translate('messages.access_denied'));
         return back();

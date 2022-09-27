@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Vendor;
+namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Models\AgentWallet;
 use App\Models\StoreWallet;
 use App\Models\WithdrawRequest;
 use Brian2694\Toastr\Facades\Toastr;
@@ -19,10 +20,12 @@ class WalletController extends Controller
     }
     public function w_request(Request $request)
     {
-        $w = StoreWallet::where('vendor_id', Helpers::get_vendor_id())->first();
+
+        $w = AgentWallet::where('agent_id', Helpers::get_agent_id())->first();
         if ($w->balance >= $request['amount'] && $request['amount'] > .01) {
             $data = [
-                'vendor_id' => Helpers::get_vendor_id(),
+                'agent_id' => Helpers::get_agent_id(),
+                'vendor_id'=>0,
                 'amount' => $request['amount'],
                 'transaction_note' => null,
                 'approved' => 0,
@@ -30,7 +33,7 @@ class WalletController extends Controller
                 'updated_at' => now()
             ];
             DB::table('withdraw_requests')->insert($data);
-            StoreWallet::where('vendor_id', Helpers::get_vendor_id())->increment('pending_withdraw', $request['amount']);
+            AgentWallet::where('agent_id', Helpers::get_agent_id())->increment('pending_withdraw', $request['amount']);
             Toastr::success('Withdraw request has been sent.');
             return redirect()->back();
         }
@@ -43,7 +46,7 @@ class WalletController extends Controller
     {
         $wr = WithdrawRequest::find($id);
         if ($wr->approved == 0) {
-            StoreWallet::where('vendor_id', Helpers::get_vendor_id())->decrement('pending_withdraw', $wr['amount']);
+            AgentWallet::where('agent_id', Helpers::get_agent_id())->decrement('pending_withdraw', $wr['amount']);
         }
         $wr->delete();
         Toastr::success('request closed!');
