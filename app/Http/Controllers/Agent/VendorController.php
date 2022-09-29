@@ -79,6 +79,7 @@ class VendorController extends Controller
         $vendor->phone = $request->phone;
         $vendor->password = bcrypt($request->password);
         $vendor->agent_id = Helpers::get_agent_id ();
+        $vendor->status = null;
         $vendor->save();
 
         $store = new Store;
@@ -95,6 +96,7 @@ class VendorController extends Controller
         $store->tax = $request->tax;
         $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
         $store->module_id = $request->module_id;
+        $store->status = 0;
         $store->save();
         $store->module->increment('stores_count');
         if(config('module.'.$store->module->module_type)['always_open'])
@@ -157,7 +159,6 @@ class VendorController extends Controller
         $vendor->l_name = $request->l_name;
         $vendor->email = $request->email;
         $vendor->phone = $request->phone;
-        $vendor->status = null;
         $vendor->password = strlen($request->password)>1?bcrypt($request->password):$store->vendor->password;
         $vendor->save();
 
