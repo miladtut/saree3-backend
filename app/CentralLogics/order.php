@@ -17,7 +17,7 @@ class OrderLogic
     {
         return rand(1000, 9999) . '-' . Str::random(5) . '-' . time();
     }
-    
+
     public static function track_order($order_id)
     {
         return Helpers::order_data_formatting(Order::with(['details', 'delivery_man.rating'])->where(['id' => $order_id])->first(), false);
@@ -38,8 +38,8 @@ class OrderLogic
             $dm_tips = $dm_tips_manage_status ? $order->dm_tips : 0;
             $comission = isset($comission) ? $comission->value : 0;
             $order_amount = $order->order_amount - $dm_tips;
-            $dm_commission = $comission?($order_amount/ 100) * $comission:0;            
-            $comission_amount = $order_amount - $dm_commission;        
+            $dm_commission = $comission?($order_amount/ 100) * $comission:0;
+            $comission_amount = $order_amount - $dm_commission;
         }
         else
         {
@@ -56,13 +56,16 @@ class OrderLogic
         }
 
         try{
+            $admin_comission = $comission_amount - $admin_subsidy;
             OrderTransaction::insert([
                 'vendor_id' =>$type=='parcel'?null:$order->store->vendor->id,
                 'delivery_man_id'=>$order->delivery_man_id,
                 'order_id' =>$order->id,
                 'order_amount'=>$order->order_amount,
                 'store_amount'=>$order_amount + $order->total_tax_amount - $comission_amount,
-                'admin_commission'=>$comission_amount - $admin_subsidy,
+                'admin_commission'=>$admin_comission,
+                'agent_commission'=>$admin_comission * 0.4,
+                'broker_commission'=>$admin_comission * 0.2,
                 'delivery_charge'=>$order->delivery_charge,
                 'original_delivery_charge'=>$dm_commission,
                 'tax'=>$order->total_tax_amount,
@@ -92,7 +95,7 @@ class OrderLogic
                 else{
                     $adminWallet->delivery_charge = $adminWallet->delivery_charge+$order->delivery_charge;
                 }
-                $vendorWallet->total_earning = $vendorWallet->total_earning+($order_amount + $order->total_tax_amount - $comission_amount);                
+                $vendorWallet->total_earning = $vendorWallet->total_earning+($order_amount + $order->total_tax_amount - $comission_amount);
             }
 
             try
@@ -116,13 +119,13 @@ class OrderLogic
                         ['delivery_man_id' => $order->delivery_man_id]
                     );
                     $dmWallet->collected_cash = $dmWallet->collected_cash+$order->order_amount;
-                    
+
                     if ($order->delivery_man->earning == 1) {
                         $dmWallet->total_earning = $dmWallet->total_earning + $order->original_delivery_charge + $dm_tips;
                     } else {
                         $adminWallet->total_commission_earning = $adminWallet->total_commission_earning - $dm_tips;
                     }
- 
+
                     $dmWallet->save();
                 }
 
@@ -131,7 +134,7 @@ class OrderLogic
                 {
                     $vendorWallet->save();
                 }
-                
+
                 DB::commit();
                 if($order->user_id) CustomerLogic::create_loyalty_point_transaction($order->user_id, $order->id, $order->order_amount, 'order_place');
 
@@ -168,7 +171,7 @@ class OrderLogic
             ['vendor_id' => $order->store->vendor->id]
         );
 
-        
+
         $adminWallet->total_commission_earning = $adminWallet->total_commission_earning - $order_transaction->admin_commission;
 
         $vendorWallet->total_earning = $vendorWallet->total_earning - $order_transaction->restaurant_amount;
@@ -198,13 +201,13 @@ class OrderLogic
                 {
                     $adminWallet->manual_received = $adminWallet->manual_received - $refund_amount;
                 }
-                
+
             }
             else if($received_by=='store')
             {
                 $vendorWallet->collected_cash = $vendorWallet->collected_cash - $refund_amount;
             }
- 
+
             else if($received_by=='deliveryman')
             {
                 $dmWallet = DeliveryManWallet::firstOrNew(
