@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\CentralLogics\Helpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,5 +32,9 @@ class Broker extends Model
 
     public function wallet(){
         return $this->hasOne (BrokerWallet::class);
+    }
+
+    public function scopeOwner($q){
+        return $q->where('agent_id',Helpers::get_agent_id ());
     }
 }

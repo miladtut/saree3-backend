@@ -18,6 +18,8 @@ class AgentScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('agent_id', Helpers::get_agent_id());
+        $builder->whereHas('vendor',function ($q){
+            return $q->where('agent_id', Helpers::get_agent_id());
+        });
     }
 }

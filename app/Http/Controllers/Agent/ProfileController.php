@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vendor;
+namespace App\Http\Controllers\Agent;
 
 use App\CentralLogics\Helpers;
 use App\Http\Controllers\Controller;
@@ -12,13 +12,13 @@ class ProfileController extends Controller
 {
     public function view()
     {
-        return view('vendor-views.profile.index');
+        return view('agent-views.profile.index');
     }
-    
+
     public function bank_view()
     {
-        $data = Helpers::get_vendor_data();
-        return view('vendor-views.profile.bankView', compact('data'));
+        $data = Helpers::get_agent_data();
+        return view('agent-views.profile.bankView', compact('data'));
     }
 
     public function edit()
@@ -75,20 +75,20 @@ class ProfileController extends Controller
             'holder_name' => 'required|max:191',
             'account_no' => 'required|max:191',
         ]);
-        $bank = Helpers::get_vendor_data();
+        $bank = Helpers::get_agent_data();
         $bank->bank_name = $request->bank_name;
         $bank->branch = $request->branch;
         $bank->holder_name = $request->holder_name;
         $bank->account_no = $request->account_no;
         $bank->save();
         Toastr::success(translate('messages.bank_info_updated_successfully'));
-        return redirect()->route('vendor.profile.bankView');
+        return redirect()->route('agent.profile.bankView');
     }
 
     public function bank_edit()
     {
-        $data = Helpers::get_vendor_data();
-        return view('vendor-views.profile.bankEdit', compact('data'));
+        $data = Helpers::get_agent_data();
+        return view('agent-views.profile.bankEdit', compact('data'));
     }
 
 }

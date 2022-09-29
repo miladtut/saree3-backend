@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Agent;
 
 use App\Models\Agent;
 use App\Models\AgentWallet;
@@ -32,7 +32,7 @@ class BrokerController extends Controller
 {
     public function index()
     {
-        return view('admin-views.broker.index');
+        return view('agent-views.broker.index');
     }
 
     public function store(Request $request)
@@ -40,7 +40,6 @@ class BrokerController extends Controller
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|max:100',
             'l_name' => 'nullable|max:100',
-            'agent_id'=>'required',
             'email' => 'required|unique:agents',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:agents',
             'password' => 'required|min:6',
@@ -62,12 +61,11 @@ class BrokerController extends Controller
         $broker->password = bcrypt($request->password);
         $broker->image = Helpers::upload('broker/', 'png', $request->file('logo'));
         $broker->status = 1;
-        $broker->agent_id = $request->agent_id;
+        $broker->agent_id = Helpers::get_loggedin_user ()->id;
         $broker->save();
 
-        // $store->zones()->attach($request->zone_ids);
         Toastr::success(translate('messages.broker')." ".translate('messages.added_successfully'));
-        return redirect('admin/broker/list');
+        return redirect()->route ('agent.broker.list');
     }
 
     public function edit($id)
@@ -170,8 +168,8 @@ class BrokerController extends Controller
 
     public function list(Request $request)
     {
-        $brokers = Broker::latest()->paginate(config('default_pagination'));
-        return view('admin-views.broker.list', compact('brokers'));
+        $brokers = Broker::latest()->owner()->paginate(config('default_pagination'));
+        return view('agent-views.broker.list', compact('brokers'));
     }
 
     public function search(Request $request){
@@ -183,11 +181,11 @@ class BrokerController extends Controller
                     ->orWhere('email', 'like', "%{$value}%")
                     ->orWhere('phone', 'like', "%{$value}%");
             }
-        })
+        })->owner()
        ->get();
         $total=$brokers->count();
         return response()->json([
-            'view'=>view('admin-views.broker.partials._table',compact('brokers'))->render(), 'total'=>$total
+            'view'=>view('agent-views.broker.partials._table',compact('brokers'))->render(), 'total'=>$total
         ]);
     }
 

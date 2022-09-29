@@ -18,6 +18,8 @@ class BrokerScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('broker_id', Helpers::get_broker_id());
+        $builder->whereHas('vendor',function ($q){
+            return $q->where('broker_id', Helpers::get_broker_id());
+        });
     }
 }

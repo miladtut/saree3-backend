@@ -60,13 +60,13 @@
                         <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                             style="display: {{Request::is('vendor-panel/employee*')?'block':'none'}}">
                             <li class="nav-item {{Request::is('agent-panel/stores/add-new')?'active':''}}">
-                                <a class="nav-link " href="{{route('vendor.employee.add-new')}}" title="{{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.Employee')}}">
+                                <a class="nav-link " href="{{route('agent.vendor.add')}}" title="{{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.Employee')}}">
                                     <span class="tio-circle nav-indicator-icon"></span>
                                     <span class="text-truncate">{{translate('messages.add')}} {{translate('messages.new')}}</span>
                                 </a>
                             </li>
                             <li class="nav-item {{Request::is('agent-panel/stores/list')?'active':''}}">
-                                <a class="nav-link " href="{{route('vendor.employee.list')}}" title="{{translate('messages.stores')}} {{translate('messages.list')}}">
+                                <a class="nav-link " href="{{route('agent.vendor.list')}}" title="{{translate('messages.stores')}} {{translate('messages.list')}}">
                                     <span class="tio-circle nav-indicator-icon"></span>
                                     <span class="text-truncate">{{translate('messages.list')}}</span>
                                 </a>
@@ -88,13 +88,13 @@
                         <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                             style="display: {{Request::is('vendor-panel/employee*')?'block':'none'}}">
                             <li class="nav-item {{Request::is('agent-panel/brokers/add-new')?'active':''}}">
-                                <a class="nav-link " href="{{route('vendor.employee.add-new')}}" title="{{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.Employee')}}">
+                                <a class="nav-link " href="{{route('agent.broker.add')}}" title="{{translate('messages.add')}} {{translate('messages.new')}} {{translate('messages.Employee')}}">
                                     <span class="tio-circle nav-indicator-icon"></span>
                                     <span class="text-truncate">{{translate('messages.add')}} {{translate('messages.new')}}</span>
                                 </a>
                             </li>
                             <li class="nav-item {{Request::is('agent-panel/brokers/list')?'active':''}}">
-                                <a class="nav-link " href="{{route('vendor.employee.list')}}" title="{{translate('messages.brokers')}} {{translate('messages.list')}}">
+                                <a class="nav-link " href="{{route('agent.broker.list')}}" title="{{translate('messages.brokers')}} {{translate('messages.list')}}">
                                     <span class="tio-circle nav-indicator-icon"></span>
                                     <span class="text-truncate">{{translate('messages.list')}}</span>
                                 </a>
@@ -122,15 +122,7 @@
 
 
 
-                    <!-- Wallet -->
-                    <li class="navbar-vertical-aside-has-menu {{Request::is('agent-panel/wallet*')?'active':''}}">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{route('agent.wallet.index')}}" title="{{translate('messages.my')}} {{translate('messages.wallet')}}"
-                        >
-                            <i class="tio-table nav-icon"></i>
-                            <span
-                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{translate('messages.wallet')}}</span>
-                        </a>
-                    </li>
+
 
                 </ul>
             </div>

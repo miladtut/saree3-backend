@@ -33,5 +33,64 @@ Route::group( ['namespace' => 'Agent', 'as' => 'agent.'], function () {
         Route::delete('close/{id}', 'WalletController@close_request')->name('close-request');
     });
 
+    Route::group(['prefix' => 'broker', 'as' => 'broker.'], function () {
+        Route::get('get-stores-data/{store}', 'BrokerController@get_store_data')->name('get-stores-data');
+        Route::get('store-filter/{id}', 'BrokerController@store_filter')->name('storefilter');
+        Route::get('get-account-data/{broker}', 'BrokerController@get_account_data')->name('storefilter');
+        Route::get('get-brokers', 'BrokerController@get_brokers')->name('get-brokers');
+        Route::get('get-addons', 'BrokerController@get_addons')->name('get_addons');
+
+
+
+        Route::get('add', 'BrokerController@index')->name('add');
+        Route::post('store', 'BrokerController@store')->name('store');
+        Route::get('list', 'BrokerController@list')->name('list');
+        Route::post('search', 'BrokerController@search')->name('search');
+
+    });
+
+    Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
+        Route::get('get-stores-data/{store}', 'VendorController@get_store_data')->name('get-stores-data');
+        Route::get('store-filter/{id}', 'VendorController@store_filter')->name('storefilter');
+        Route::get('get-account-data/{store}', 'VendorController@get_account_data')->name('storefilter');
+        Route::get('get-stores', 'VendorController@get_stores')->name('get-stores');
+        Route::get('get-addons', 'VendorController@get_addons')->name('get_addons');
+        Route::group(['middleware' => ['module:store']], function () {
+            Route::get('update-application/{id}/{status}', 'VendorController@update_application')->name('application');
+            Route::get('add', 'VendorController@index')->name('add');
+            Route::post('store', 'VendorController@store')->name('store');
+            Route::get('edit/{id}', 'VendorController@edit')->name('edit');
+            Route::post('update/{store}', 'VendorController@update')->name('update');
+            Route::post('discount/{store}', 'VendorController@discountSetup')->name('discount');
+            Route::post('update-settings/{store}', 'VendorController@updateStoreSettings')->name('update-settings');
+            Route::delete('delete/{store}', 'VendorController@destroy')->name('delete');
+            Route::delete('clear-discount/{store}', 'VendorController@cleardiscount')->name('clear-discount');
+            // Route::get('view/{store}', 'VendorController@view')->name('view_tab');
+            Route::get('view/{store}/{tab?}/{sub_tab?}', 'VendorController@view')->name('view');
+            Route::get('list', 'VendorController@list')->name('list');
+            Route::post('search', 'VendorController@search')->name('search');
+            Route::get('status/{store}/{status}', 'VendorController@status')->name('status');
+            Route::get('featured/{store}/{status}', 'VendorController@featured')->name('featured');
+            Route::get('toggle-settings-status/{store}/{status}/{menu}', 'VendorController@store_status')->name('toggle-settings');
+            Route::post('status-filter', 'VendorController@status_filter')->name('status-filter');
+
+            //Import and export
+            Route::get('bulk-import', 'VendorController@bulk_import_index')->name('bulk-import');
+            Route::post('bulk-import', 'VendorController@bulk_import_data');
+            Route::get('bulk-export', 'VendorController@bulk_export_index')->name('bulk-export-index');
+            Route::post('bulk-export', 'VendorController@bulk_export_data')->name('bulk-export');
+            //Store shcedule
+            Route::post('add-schedule', 'VendorController@add_schedule')->name('add-schedule');
+            Route::get('remove-schedule/{store_schedule}', 'VendorController@remove_schedule')->name('remove-schedule');
+        });
+
+        Route::group(['middleware' => ['module:withdraw_list']], function () {
+            Route::post('withdraw-status/{id}', 'VendorController@withdrawStatus')->name('withdraw_status');
+            Route::get('withdraw_list', 'VendorController@withdraw')->name('withdraw_list');
+            Route::get('withdraw-view/{withdraw_id}/{seller_id}', 'VendorController@withdraw_view')->name('withdraw_view');
+        });
+
+    });
+
 });
 

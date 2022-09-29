@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.agent.app')
 
 @section('title',translate('messages.bank_info'))
 
@@ -14,8 +14,8 @@
     <div class="content container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('vendor.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
-                <li class="breadcrumb-item" aria-current="page">{{translate('messages.owner')}}</li>
+                <li class="breadcrumb-item"><a href="{{route('agent.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
+                <li class="breadcrumb-item" aria-current="page">{{translate('messages.agent')}}</li>
                 <li class="breadcrumb-item">{{translate('messages.bank_info')}}</li>
             </ol>
         </nav>
@@ -32,7 +32,7 @@
                         <h1 class="h3 mb-0 ">{{translate('messages.edit_bank_info')}}</h1>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('vendor.profile.bank_update')}}" method="post"
+                        <form action="{{route('agent.profile.bank_update')}}" method="post"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
@@ -72,7 +72,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary" id="btn_update">{{translate('messages.update')}}</button>
-                            <a class="btn btn-danger" href="{{route('vendor.profile.bankView')}}">{{translate('messages.cancel')}}</a>
+                            <a class="btn btn-danger" href="{{route('agent.profile.bankView')}}">{{translate('messages.cancel')}}</a>
                         </form>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\AgentScope;
+use App\Scopes\BrokerScope;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Vendor;
 use App\Scopes\ZoneScope;
@@ -179,7 +180,7 @@ class Store extends Model
         }
         if(auth('broker')->check())
         {
-            static::addGlobalScope(new AgentScope());
+            static::addGlobalScope(new BrokerScope());
         }
     }
 

@@ -245,7 +245,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::get('get-account-data/{broker}', 'BrokerController@get_account_data')->name('storefilter');
             Route::get('get-brokers', 'BrokerController@get_brokers')->name('get-brokers');
             Route::get('get-addons', 'BrokerController@get_addons')->name('get_addons');
-            Route::group(['middleware' => ['module:store']], function () {
+            Route::group(['middleware' => ['module:broker']], function () {
                 Route::get('update-application/{id}/{status}', 'BrokerController@update_application')->name('application');
                 Route::get('add', 'BrokerController@index')->name('add');
                 Route::post('store', 'BrokerController@store')->name('store');

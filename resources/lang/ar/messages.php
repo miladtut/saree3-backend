@@ -1399,8 +1399,11 @@
   'broker_logo' => 'Broker logo',
   'agent deleted!' => 'Agent deleted!',
   'agency' => 'Agency',
-  'agency_not_found' => 'Agency not found',
+  'agency_not_found' => 'لا يوجد وكيل',
   'broker_name' => 'Broker name',
   'collect_cash' => 'Collect cash',
   'agent.dashboard' => 'Agent.dashboard',
+  'un_active' => 'Un active',
+  'non_featured' => 'Non featured',
+  'broker_not_found' => 'لا يوجد وسيط',
 );

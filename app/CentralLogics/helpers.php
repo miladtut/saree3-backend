@@ -1324,7 +1324,7 @@ class Helpers
 
 
     public function agent_broker_module_check($mod_name){
-        if ($mod_name == 'wallet'){
+        if ($mod_name == 'wallet' || $mod_name == 'bank_info' || $mod_name == 'store'){
             return true;
         }
         return false;

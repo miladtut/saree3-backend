@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.agent.app')
 
 @section('title','Vendor List')
 
@@ -88,12 +88,11 @@
                                 <th style="width: 15%;">{{translate('messages.module')}}</th>
                                 <th style="width: 15%;">{{translate('messages.owner')}}</th>
                                 <th style="width: 15%;">{{translate('messages.agent')}}</th>
-                                <th style="width: 15%;">{{translate('messages.broker')}}</th>
                                 <th style="width: 10%;">{{translate('messages.zone')}}</th>
                                 <th style="width: 10%;">{{translate('messages.phone')}}</th>
                                 <th class="text-uppercase" style="width: 10%;">{{translate('messages.featured')}}</th>
                                 <th class="text-uppercase" style="width: 10%;">{{translate('messages.active')}}/{{translate('messages.inactive')}}</th>
-                                <th style="width: 10%;">{{translate('messages.action')}}</th>
+
                             </tr>
                             </thead>
 
@@ -131,9 +130,6 @@
                                         {{$store->vendor->agency}}
                                     </td>
                                     <td>
-                                        {{$store->vendor->broker_name}}
-                                    </td>
-                                    <td>
                                         {{$store->zone?$store->zone->name:translate('messages.zone').' '.translate('messages.deleted')}}
                                         {{--<span class="d-block font-size-sm">{{$banner['image']}}</span>--}}
                                     </td>
@@ -141,45 +137,26 @@
                                         {{$store['phone']}}
                                     </td>
                                     <td>
-                                        <label class="toggle-switch toggle-switch-sm" for="featuredCheckbox{{$store->id}}">
-                                            <input type="checkbox" onclick="location.href='{{route('admin.vendor.featured',[$store->id,$store->featured?0:1])}}'" class="toggle-switch-input" id="featuredCheckbox{{$store->id}}" {{$store->featured?'checked':''}}>
-                                            <span class="toggle-switch-label">
-                                                <span class="toggle-switch-indicator"></span>
-                                            </span>
-                                        </label>
+                                        @if($store->featured)
+                                            <div class="badge badge-success">{{translate('messages.yes')}}</div>
+                                        @else
+                                            <div class="badge badge-secondary">{{translate('messages.no')}}</div>
+                                        @endif
                                     </td>
 
                                     <td>
                                         @if(isset($store->vendor->status))
                                             @if($store->vendor->status)
-                                            <label class="toggle-switch toggle-switch-sm" for="stocksCheckbox{{$store->id}}">
-                                                <input type="checkbox" onclick="status_change_alert('{{route('admin.vendor.status',[$store->id,$store->status?0:1])}}', '{{translate('messages.you_want_to_change_this_store_status')}}', event)" class="toggle-switch-input" id="stocksCheckbox{{$store->id}}" {{$store->status?'checked':''}}>
-                                                <span class="toggle-switch-label">
-                                                    <span class="toggle-switch-indicator"></span>
-                                                </span>
-                                            </label>
+                                                <div class="badge badge-success">{{translate('messages.active')}}</div>
                                             @else
-                                            <span class="badge badge-soft-danger">{{translate('messages.denied')}}</span>
+                                                <div class="badge badge-secondary">{{translate('messages.inactive')}}</div>
                                             @endif
                                         @else
                                             <span class="badge badge-soft-danger">{{translate('messages.pending')}}</span>
                                         @endif
                                     </td>
 
-                                    <td>
-                                        <a class="btn btn-sm btn-white"
-                                            href="{{route('admin.vendor.view',[$store['id']])}}" title="{{translate('messages.view')}} {{translate('messages.store')}}"><i class="tio-visible text-success"></i>
-                                        </a>
-                                        <a class="btn btn-sm btn-white"
-                                            href="{{route('admin.vendor.edit',[$store['id']])}}" title="{{translate('messages.edit')}} {{translate('messages.store')}}"><i class="tio-edit text-primary"></i>
-                                        </a>
-                                        <a class="btn btn-sm btn-white" href="javascript:"
-                                        onclick="form_alert('vendor-{{$store['id']}}','{{translate('You want to remove this store')}}')" title="{{translate('messages.delete')}} {{translate('messages.store')}}"><i class="tio-delete-outlined text-danger"></i>
-                                        </a>
-                                        <form action="{{route('admin.vendor.delete',[$store['id']])}}" method="post" id="vendor-{{$store['id']}}">
-                                            @csrf @method('delete')
-                                        </form>
-                                    </td>
+
                                 </tr>
                             @endforeach
                             </tbody>
@@ -275,7 +252,7 @@
                 }
             });
             $.post({
-                url: '{{route('admin.vendor.search')}}',
+                url: '{{route('agent.vendor.search')}}',
                 data: formData,
                 cache: false,
                 contentType: false,

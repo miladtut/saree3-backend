@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.agent.app')
 @section('title',translate('messages.Bank Info View'))
 @push('css_or_js')
     <!-- Custom styles for this page -->
@@ -9,8 +9,8 @@
     <div class="content container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('vendor.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
-                <li class="breadcrumb-item" aria-current="page">{{translate('messages.store')}}</li>
+                <li class="breadcrumb-item"><a href="{{route('agent.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
+                <li class="breadcrumb-item" aria-current="page">{{translate('messages.agent')}}</li>
                 <li class="breadcrumb-item">{{translate('messages.my_bank_info')}}</li>
             </ol>
         </nav>
@@ -34,7 +34,7 @@
 
 
                             <a class="btn btn-primary"
-                               href="{{route('vendor.profile.bankInfo')}}">{{translate('messages.edit')}}</a>
+                               href="{{route('agent.profile.bankInfo')}}">{{translate('messages.edit')}}</a>
                         </div>
                     </div>
                 </div>

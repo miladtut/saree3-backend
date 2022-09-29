@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\CentralLogics\Helpers;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Store;
@@ -79,7 +80,23 @@ class Vendor extends Authenticatable
         return $this->belongsTo (Agent::class);
     }
 
+    public function getAgencyAttribute(){
+        if ($this->agent){
+            return $this->agent->f_name.' '.$this->agent->l_name;
+        }
+        return translate ('messages.not_found');
+    }
+
     public function broker(){
         return $this->belongsTo (Broker::class);
     }
+
+    public function getBrokerNameAttribute(){
+        if ($this->broker){
+            return $this->agent->f_name.' '.$this->agent->l_name;
+        }
+        return translate ('messages.not_found');
+    }
+
+
 }

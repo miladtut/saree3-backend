@@ -1,11 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Agent;
 
-use App\Models\Agent;
-use App\Models\AgentWallet;
-use App\Models\Broker;
-use App\Models\BrokerWallet;
 use App\Models\Zone;
 use App\Models\AddOn;
 use App\Models\Store;
@@ -28,46 +24,86 @@ use Illuminate\Support\Facades\Validator;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 
 
-class BrokerController extends Controller
+class VendorController extends Controller
 {
     public function index()
     {
-        return view('admin-views.broker.index');
+        return view('agent-views.vendor.index');
     }
 
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|max:100',
             'l_name' => 'nullable|max:100',
-            'agent_id'=>'required',
-            'email' => 'required|unique:agents',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:agents',
+            'name' => 'required|max:191',
+            'address' => 'required|max:1000',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'email' => 'required|unique:vendors',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:vendors',
+            'minimum_delivery_time' => 'required',
+            'maximum_delivery_time' => 'required',
+            'delivery_time_type'=>'required',
             'password' => 'required|min:6',
+            'zone_id' => 'required',
+            'module_id' => 'required',
             'logo' => 'required',
+            'tax' => 'required'
         ], [
             'f_name.required' => translate('messages.first_name_is_required')
         ]);
 
+
+        if($request->zone_id)
+        {
+            $point = new Point($request->latitude, $request->longitude);
+            $zone = Zone::contains('coordinates', $point)->where('id', $request->zone_id)->first();
+            if(!$zone){
+                $validator->getMessageBag()->add('latitude', translate('messages.coordinates_out_of_zone'));
+                return back()->withErrors($validator)
+                        ->withInput();
+            }
+        }
         if ($validator->fails()) {
             return back()
                 ->withErrors($validator)
                 ->withInput();
         }
-        $broker = new Broker();
-        $broker->f_name = $request->f_name;
-        $broker->l_name = $request->l_name;
-        $broker->email = $request->email;
-        $broker->phone = $request->phone;
-        $broker->password = bcrypt($request->password);
-        $broker->image = Helpers::upload('broker/', 'png', $request->file('logo'));
-        $broker->status = 1;
-        $broker->agent_id = $request->agent_id;
-        $broker->save();
 
+        $vendor = new Vendor();
+        $vendor->f_name = $request->f_name;
+        $vendor->l_name = $request->l_name;
+        $vendor->email = $request->email;
+        $vendor->phone = $request->phone;
+        $vendor->password = bcrypt($request->password);
+        $vendor->agent_id = Helpers::get_agent_id ();
+        $vendor->save();
+
+        $store = new Store;
+        $store->name = $request->name;
+        $store->phone = $request->phone;
+        $store->email = $request->email;
+        $store->logo = Helpers::upload('store/', 'png', $request->file('logo'));
+        $store->cover_photo = Helpers::upload('store/cover/', 'png', $request->file('cover_photo'));
+        $store->address = $request->address;
+        $store->latitude = $request->latitude;
+        $store->longitude = $request->longitude;
+        $store->vendor_id = $vendor->id;
+        $store->zone_id = $request->zone_id;
+        $store->tax = $request->tax;
+        $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
+        $store->module_id = $request->module_id;
+        $store->save();
+        $store->module->increment('stores_count');
+        if(config('module.'.$store->module->module_type)['always_open'])
+        {
+            StoreLogic::insert_schedule($store->id);
+        }
         // $store->zones()->attach($request->zone_ids);
-        Toastr::success(translate('messages.broker')." ".translate('messages.added_successfully'));
-        return redirect('admin/broker/list');
+        Toastr::success(translate('messages.store').translate('messages.added_successfully'));
+        return redirect()->route ('agent.vendor.list');
     }
 
     public function edit($id)
@@ -77,75 +113,94 @@ class BrokerController extends Controller
             Toastr::warning(translate('messages.you_can_not_edit_this_store_please_add_a_new_store_to_edit'));
             return back();
         }
-        $broker = Broker::findOrFail($id);
-        return view('admin-views.broker.edit', compact('broker'));
+        $store = Store::findOrFail($id);
+        return view('admin-views.vendor.edit', compact('store'));
     }
 
-    public function update($broker,Request $request)
+    public function update(Request $request, Store $store)
     {
-        $broker = Broker::query ()->findOrFail ($broker);
         $validator = Validator::make($request->all(), [
             'f_name' => 'required|max:100',
             'l_name' => 'nullable|max:100',
-            'agent_id' => 'required|numeric',
-            'email' => 'required|unique:brokers,email,'.$broker->id,
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:brokers,phone,'.$broker->id,
+            'name' => 'required|max:191',
+            'email' => 'required|unique:vendors,email,'.$store->vendor->id,
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:20|unique:vendors,phone,'.$store->vendor->id,
+            'zone_id'=>'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'tax' => 'required',
             'password' => 'nullable|min:6',
+            'minimum_delivery_time' => 'required',
+            'maximum_delivery_time' => 'required',
+            'delivery_time_type'=>'required'
         ], [
             'f_name.required' => translate('messages.first_name_is_required')
         ]);
 
-
+        if($request->zone_id)
+        {
+            $point = new Point($request->latitude, $request->longitude);
+            $zone = Zone::contains('coordinates', $point)->where('id', $request->zone_id)->first();
+            if(!$zone){
+                $validator->getMessageBag()->add('latitude', translate('messages.coordinates_out_of_zone'));
+                return back()->withErrors($validator)
+                        ->withInput();
+            }
+        }
         if ($validator->fails()) {
             return back()
                     ->withErrors($validator)
                     ->withInput();
         }
+        $vendor = Vendor::findOrFail($store->vendor->id);
+        $vendor->f_name = $request->f_name;
+        $vendor->l_name = $request->l_name;
+        $vendor->email = $request->email;
+        $vendor->phone = $request->phone;
+        $vendor->password = strlen($request->password)>1?bcrypt($request->password):$store->vendor->password;
+        $vendor->save();
 
-        $broker->f_name = $request->f_name;
-        $broker->l_name = $request->l_name;
-        $broker->email = $request->email;
-        $broker->agent_id = $request->agent_id;
-        $broker->phone = $request->phone;
-        $broker->password = strlen($request->password)>1?bcrypt($request->password):$broker->password;
-
-
-        if ($request->hasFile ('logo')){
-            $broker->image = Helpers::upload('broker/', 'png', $request->file('logo'));
-        }
-
-
-        $broker->save();
-
-
-        Toastr::success(translate('messages.broker')." ".translate('messages.updated_successfully'));
-        return redirect('admin/broker/list');
+        $store->email = $request->email;
+        $store->phone = $request->phone;
+        $store->logo = $request->has('logo') ? Helpers::update('store/', $store->logo, 'png', $request->file('logo')) : $store->logo;
+        $store->cover_photo = $request->has('cover_photo') ? Helpers::update('store/cover/', $store->cover_photo, 'png', $request->file('cover_photo')) : $store->cover_photo;
+        $store->name = $request->name;
+        $store->address = $request->address;
+        $store->latitude = $request->latitude;
+        $store->longitude = $request->longitude;
+        $store->zone_id = $request->zone_id;
+        $store->tax = $request->tax;
+        $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
+        $store->save();
+        Toastr::success(translate('messages.store').translate('messages.updated_successfully'));
+        return redirect('admin/vendor/list');
     }
 
-    public function destroy($broker ,Request $request)
+    public function destroy(Request $request, Store $store)
     {
-        $broker = Broker::query ()->findOrFail ($broker);
-        if(env('APP_MODE')=='demo' && $broker->id == 2)
+        if(env('APP_MODE')=='demo' && $store->id == 2)
         {
-            Toastr::warning(translate('messages.you_can_not_delete_this_broker_please_add_a_new_broker_to_delete'));
+            Toastr::warning(translate('messages.you_can_not_delete_this_store_please_add_a_new_store_to_delete'));
             return back();
         }
-        if (Storage::disk('public')->exists('broker/' . $broker['image'])) {
-            Storage::disk('public')->delete('broker/' . $broker['image']);
+        if (Storage::disk('public')->exists('store/' . $store['logo'])) {
+            Storage::disk('public')->delete('store/' . $store['logo']);
         }
-        $broker->delete();
-        Toastr::success(translate('messages.broker').' '.translate('messages.removed'));
+        $store->delete();
+
+        $vendor = Vendor::findOrFail($store->vendor->id);
+        $vendor->delete();
+        Toastr::success(translate('messages.store').' '.translate('messages.removed'));
         return back();
     }
 
-    public function view($broker, $tab=null, $sub_tab='cash')
+    public function view(Store $store, $tab=null, $sub_tab='cash')
     {
-        $broker = Broker::query ()->findOrFail ($broker);
-        $wallet = $broker->wallet;
+        $wallet = $store->vendor->wallet;
         if(!$wallet)
         {
-            $wallet= new BrokerWallet();
-            $wallet->broker_id = $broker->id;
+            $wallet= new StoreWallet();
+            $wallet->vendor_id = $store->vendor->id;
             $wallet->total_earning= 0.0;
             $wallet->total_withdrawn=0.0;
             $wallet->pending_withdraw=0.0;
@@ -153,55 +208,33 @@ class BrokerController extends Controller
             $wallet->updated_at=now();
             $wallet->save();
         }
-
-        if($tab == 'store')
+        if($tab == 'settings')
         {
-            return view('admin-views.broker.view.store', compact('broker'));
+            return view('admin-views.vendor.view.settings', compact('store'));
+        }
+        else if($tab == 'order')
+        {
+            return view('admin-views.vendor.view.order', compact('store'));
+        }
+        else if($tab == 'item')
+        {
+            return view('admin-views.vendor.view.product', compact('store'));
+        }
+        else if($tab == 'discount')
+        {
+            return view('admin-views.vendor.view.discount', compact('store'));
         }
         else if($tab == 'transaction')
         {
-            return view('admin-views.broker.view.transaction', compact('broker', 'sub_tab'));
+            return view('admin-views.vendor.view.transaction', compact('store', 'sub_tab'));
         }
 
-        return view('admin-views.broker.view.index', compact('broker', 'wallet'));
+        else if($tab == 'reviews')
+        {
+            return view('admin-views.vendor.view.review', compact('store', 'sub_tab'));
+        }
+        return view('admin-views.vendor.view.index', compact('store', 'wallet'));
     }
-
-
-
-    public function list(Request $request)
-    {
-        $brokers = Broker::latest()->paginate(config('default_pagination'));
-        return view('admin-views.broker.list', compact('brokers'));
-    }
-
-    public function search(Request $request){
-        $key = explode(' ', $request['search']);
-        $brokers=Broker::where(function ($q) use ($key) {
-            foreach ($key as $value) {
-                $q->orWhere('f_name', 'like', "%{$value}%")
-                    ->orWhere('l_name', 'like', "%{$value}%")
-                    ->orWhere('email', 'like', "%{$value}%")
-                    ->orWhere('phone', 'like', "%{$value}%");
-            }
-        })
-       ->get();
-        $total=$brokers->count();
-        return response()->json([
-            'view'=>view('admin-views.broker.partials._table',compact('brokers'))->render(), 'total'=>$total
-        ]);
-    }
-
-    public function status($broker, Request $request)
-    {
-        $broker = Broker::query ()->findOrFail ($broker);
-        $broker->status = $request->status;
-        $broker->save();
-        Toastr::success(translate('messages.broker').translate('messages.status_updated'));
-        return back();
-    }
-
-    //-----------------------------------------------------
-
 
     public function view_tab(Store $store)
     {
@@ -210,20 +243,104 @@ class BrokerController extends Controller
         return back();
     }
 
-    public function get_brokers(Request $request){
-        $key = explode(' ', $request->q);
-        $data=Broker::when($request->earning, function($query){
-                return $query->earning();
-            })
-            ->where(function ($q) use ($key) {
-                foreach ($key as $value) {
-                    $q->orWhere('f_name', 'like', "%{$value}%")
-                        ->orWhere('l_name', 'like', "%{$value}%")
-                        ->orWhere('email', 'like', "%{$value}%")
-                        ->orWhere('phone', 'like', "%{$value}%");
-                }
-            })->active()->limit(8)->get(['id',DB::raw('CONCAT(f_name, " ", l_name) as text')]);
+    public function list(Request $request)
+    {
+
+        $zone_id = $request->query('zone_id', 'all');
+        $type = $request->query('type', 'all');
+        $stores = Store::when(is_numeric($zone_id), function($query)use($zone_id){
+                return $query->where('zone_id', $zone_id);
+        })
+        ->when($request->query('module_id', null), function($query)use($request){
+            return $query->module($request->query('module_id'));
+        })
+        ->with('vendor','module')->type($type)->latest()->paginate(config('default_pagination'));
+        $zone = is_numeric($zone_id)?Zone::findOrFail($zone_id):null;
+        return view('agent-views.vendor.list', compact('stores', 'zone','type'));
+    }
+
+    public function search(Request $request){
+        $key = explode(' ', $request['search']);
+        $stores=Store::orWhereHas('vendor',function ($q) use ($key) {
+            foreach ($key as $value) {
+                $q->orWhere('f_name', 'like', "%{$value}%")
+                    ->orWhere('l_name', 'like', "%{$value}%")
+                    ->orWhere('email', 'like', "%{$value}%")
+                    ->orWhere('phone', 'like', "%{$value}%");
+            }
+        })
+        ->where(function ($q) use ($key) {
+            foreach ($key as $value) {
+                $q->orWhere('name', 'like', "%{$value}%")
+                    ->orWhere('email', 'like', "%{$value}%")
+                    ->orWhere('phone', 'like', "%{$value}%");
+            }
+        })->get();
+        $total=$stores->count();
+        return response()->json([
+            'view'=>view('agent-views.vendor.partials._table',compact('stores'))->render(), 'total'=>$total
+        ]);
+    }
+
+    public function get_stores(Request $request){
+        $zone_ids = isset($request->zone_ids)?(count($request->zone_ids)>0?$request->zone_ids:[]):0;
+        $data = Store::withOutGlobalScopes()->join('zones', 'zones.id', '=', 'stores.zone_id')
+        ->when($zone_ids, function($query) use($zone_ids){
+            $query->whereIn('stores.zone_id', $zone_ids);
+        })
+        ->when($request->module_id, function($query)use($request){
+            $query->where('module_id', $request->module_id);
+        })
+        ->when($request->module_type, function($query)use($request){
+            $query->whereHas('module', function($q)use($request){
+                $q->where('module_type', $request->module_type);
+            });
+        })
+        ->where('stores.name', 'like', '%'.$request->q.'%')->limit(8)->get([DB::raw('stores.id as id, CONCAT(stores.name, " (", zones.name,")") as text')]);
+        if(isset($request->all))
+        {
+            $data[]=(object)['id'=>'all', 'text'=>'All'];
+        }
         return response()->json($data);
+    }
+
+    public function status(Store $store, Request $request)
+    {
+        $store->status = $request->status;
+        $store->save();
+        $vendor = $store->vendor;
+
+        try
+        {
+            if($request->status == 0)
+            {   $vendor->auth_token = null;
+                if(isset($vendor->fcm_token))
+                {
+                    $data = [
+                        'title' => translate('messages.suspended'),
+                        'description' => translate('messages.your_account_has_been_suspended'),
+                        'order_id' => '',
+                        'image' => '',
+                        'type'=> 'block'
+                    ];
+                    Helpers::send_push_notif_to_device($vendor->fcm_token, $data);
+                    DB::table('user_notifications')->insert([
+                        'data'=> json_encode($data),
+                        'vendor_id'=>$vendor->id,
+                        'created_at'=>now(),
+                        'updated_at'=>now()
+                    ]);
+                }
+
+            }
+
+        }
+        catch (\Exception $e) {
+            Toastr::warning(translate('messages.push_notification_faild'));
+        }
+
+        Toastr::success(translate('messages.store').translate('messages.status_updated'));
+        return back();
     }
 
     public function store_status(Store $store, Request $request)
@@ -423,9 +540,9 @@ class BrokerController extends Controller
         return back();
     }
 
-    public function get_account_data(Broker $broker)
+    public function get_account_data(Store $store)
     {
-        $wallet = $broker->wallet;
+        $wallet = $store->vendor->wallet;
         $cash_in_hand = 0;
         $balance = 0;
 

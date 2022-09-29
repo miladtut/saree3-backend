@@ -57,8 +57,13 @@ class LoginController extends Controller
         }
 
         $agent = Agent::where('email', $request->email)->first();
+
         if($agent)
         {
+            if ($agent->status != 1){
+                return redirect()->back()->withInput($request->only('email', 'remember'))
+                    ->withErrors(['your account is un active.']);
+            }
 
             if (auth('agent')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
                 return redirect()->route('agent.dashboard');
