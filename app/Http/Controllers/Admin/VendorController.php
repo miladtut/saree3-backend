@@ -73,6 +73,7 @@ class VendorController extends Controller
         $vendor->f_name = $request->f_name;
         $vendor->l_name = $request->l_name;
         $vendor->email = $request->email;
+        $vendor->status = null;
         $vendor->phone = $request->phone;
         $vendor->password = bcrypt($request->password);
         $vendor->save();
@@ -92,7 +93,6 @@ class VendorController extends Controller
         $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
         $store->module_id = $request->module_id;
         $store->comission = $request->comission;
-        $store->status = 0;
         $store->save();
         $store->module->increment('stores_count');
         if(config('module.'.$store->module->module_type)['always_open'])
