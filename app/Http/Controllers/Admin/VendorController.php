@@ -92,13 +92,14 @@ class VendorController extends Controller
         $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
         $store->module_id = $request->module_id;
         $store->comission = $request->comission;
+        $store->status = 0;
         $store->save();
         $store->module->increment('stores_count');
         if(config('module.'.$store->module->module_type)['always_open'])
         {
             StoreLogic::insert_schedule($store->id);
         }
-        // $store->zones()->attach($request->zone_ids);
+
         Toastr::success(translate('messages.store').translate('messages.added_successfully'));
         return redirect('admin/vendor/list');
     }

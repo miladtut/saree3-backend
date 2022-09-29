@@ -57,15 +57,37 @@ class OrderLogic
 
         try{
             $admin_comission = $comission_amount - $admin_subsidy;
+
+
+            if ($type == 'parcel'){
+                $vendor_id = null;
+                $agent_id = null;
+                $broker_id = null;
+            }else{
+                $vendor_id = @$order->store->vendor->id;
+                if (@$order->store->vendor->agent->id){
+                    $agent_id = @$order->store->vendor->agent->id;
+                    $broker_id = null;
+                    $agent_commission = $admin_comission * 0.4;
+                    $broker_commission = 0;
+                }else{
+                    $agent_id = null;
+                    $broker_id = @$order->store->vendor->broker->id;
+                    $agent_commission = $admin_comission * 0.2;
+                    $broker_commission = $admin_comission  * 0.2;
+                }
+            }
             OrderTransaction::insert([
-                'vendor_id' =>$type=='parcel'?null:$order->store->vendor->id,
+                'vendor_id' =>$vendor_id,
+                'agent_id'=>$agent_id,
+                'broker_id'=>$broker_id,
                 'delivery_man_id'=>$order->delivery_man_id,
                 'order_id' =>$order->id,
                 'order_amount'=>$order->order_amount,
                 'store_amount'=>$order_amount + $order->total_tax_amount - $comission_amount,
                 'admin_commission'=>$admin_comission,
-                'agent_commission'=>$admin_comission * 0.4,
-                'broker_commission'=>$admin_comission * 0.2,
+                'agent_commission'=>$agent_commission,
+                'broker_commission'=>$broker_commission,
                 'delivery_charge'=>$order->delivery_charge,
                 'original_delivery_charge'=>$dm_commission,
                 'tax'=>$order->total_tax_amount,
@@ -81,7 +103,7 @@ class OrderLogic
                 ['admin_id' => Admin::where('role_id', 1)->first()->id]
             );
 
-            $adminWallet->total_commission_earning = $adminWallet->total_commission_earning + $comission_amount - $admin_subsidy;
+            $adminWallet->total_commission_earning = $adminWallet->total_commission_earning + $admin_comission;
 
             if($type != 'parcel')
             {
