@@ -73,7 +73,6 @@ class VendorController extends Controller
         $vendor->f_name = $request->f_name;
         $vendor->l_name = $request->l_name;
         $vendor->email = $request->email;
-        $vendor->status = null;
         $vendor->phone = $request->phone;
         $vendor->password = bcrypt($request->password);
         $vendor->save();
