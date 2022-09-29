@@ -91,6 +91,7 @@ class VendorController extends Controller
         $store->tax = $request->tax;
         $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
         $store->module_id = $request->module_id;
+        $store->comission = $request->comission;
         $store->save();
         $store->module->increment('stores_count');
         if(config('module.'.$store->module->module_type)['always_open'])
@@ -167,6 +168,7 @@ class VendorController extends Controller
         $store->zone_id = $request->zone_id;
         $store->tax = $request->tax;
         $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
+        $store->comission = $request->comission;
         $store->save();
         Toastr::success(translate('messages.store').translate('messages.updated_successfully'));
         return redirect('admin/vendor/list');

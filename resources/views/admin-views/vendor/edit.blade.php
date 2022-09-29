@@ -50,6 +50,10 @@
                                 <label class="input-label" for="address">{{translate('messages.vat/tax')}} (%)</label>
                                 <input type="number" name="tax" class="form-control" placeholder="{{translate('messages.vat/tax')}}" min="0" step=".01" required value="{{$store->tax}}">
                             </div>
+                            <div class="form-group">
+                                <label class="input-label" for="tax">{{translate('messages.comission')}} (%)</label>
+                                <input type="number" name="comission" class="form-control" placeholder="{{translate('messages.comission')}}" min="0" step=".01" required value="{{$store->comission}}">
+                            </div>
                             @php
 
                                 $delivery_time_start = preg_match('([0-9]+[\-][0-9]+\s[min|hours|days])', $store->delivery_time??'')?explode('-',$store->delivery_time)[0]:10;
