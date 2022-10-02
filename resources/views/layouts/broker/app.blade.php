@@ -108,12 +108,12 @@
 {{--loader--}}
 
 <!-- Builder -->
-@include('layouts.vendor.partials._front-settings')
+@include('layouts.broker.partials._front-settings')
 <!-- End Builder -->
 
 <!-- JS Preview mode only -->
-@include('layouts.vendor.partials._header')
-@include('layouts.vendor.partials._sidebar')
+@include('layouts.broker.partials._header')
+@include('layouts.broker.partials._sidebar')
 <!-- END ONLY DEV -->
 
 <main id="content" role="main" class="main pointer-event">
@@ -122,7 +122,7 @@
 <!-- End Content -->
 
     <!-- Footer -->
-@include('layouts.vendor.partials._footer')
+@include('layouts.broker.partials._footer')
 <!-- End Footer -->
 
     <div class="modal fade" id="popup-modal">

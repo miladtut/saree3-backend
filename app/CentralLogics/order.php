@@ -3,6 +3,9 @@
 namespace App\CentralLogics;
 
 use App\Models\Admin;
+use App\Models\AgentWallet;
+use App\Models\Broker;
+use App\Models\BrokerWallet;
 use App\Models\Order;
 use App\Models\OrderTransaction;
 use App\Models\AdminWallet;
@@ -65,16 +68,26 @@ class OrderLogic
                 $broker_id = null;
             }else{
                 $vendor_id = @$order->store->vendor->id;
-                if (@$order->store->vendor->agent->id){
-                    $agent_id = @$order->store->vendor->agent->id;
+                if (@$order->store->vendor->agent_id){
+                    $agent_id = @$order->store->vendor->agent_id;
                     $broker_id = null;
                     $agent_commission = $admin_comission * 0.4;
                     $broker_commission = 0;
-                }else{
+                    $agent_wallet = AgentWallet::firstOrNew(['agent_id'=>$agent_id]);
+                    $agent_wallet->total_earning = $agent_wallet->total_earning + $agent_commission;
+                    $agent_wallet->save();
+                }else if(@$order->store->vendor->broker_id){
                     $agent_id = null;
-                    $broker_id = @$order->store->vendor->broker->id;
+                    $broker_id = @$order->store->vendor->broker_id;
                     $agent_commission = $admin_comission * 0.2;
                     $broker_commission = $admin_comission  * 0.2;
+                    $broker_wallet = BrokerWallet::firstOrNew(['broker_id'=>$broker_id]);
+                    $broker = Broker::find($broker_id);
+                    $agent_wallet = AgentWallet::firstOrNew(['agent_id'=>$broker->agent_id]);
+                    $agent_wallet->total_earning = $agent_wallet->total_earning + $agent_commission;
+                    $broker_wallet->total_earning = $broker_wallet->total_earning + $broker_commission;
+                    $agent_wallet->save();
+                    $broker_wallet->save();
                 }
             }
             OrderTransaction::insert([
@@ -104,6 +117,8 @@ class OrderLogic
             );
 
             $adminWallet->total_commission_earning = $adminWallet->total_commission_earning + $admin_comission;
+
+
 
             if($type != 'parcel')
             {
@@ -192,6 +207,30 @@ class OrderLogic
         $vendorWallet = StoreWallet::firstOrNew(
             ['vendor_id' => $order->store->vendor->id]
         );
+
+        if (@$order->store->vendor->agent_id){
+            $agent_wallet = AgentWallet::firstOrNew(
+                ['agent_id'=>$order->store->vendor->agent_id]
+            );
+            $agent_wallet->total_earning = $agent_wallet->total_earning - $order_transaction->agent_commission;
+            $agent_wallet->save();
+        }elseif (@$order->store->vendor->broker_id){
+            $broker_wallet = BrokerWallet::firstOrNew(
+                ['broker_id'=>$order->store->vendor->broker_id]
+            );
+            $broker = Broker::find($order->store->vendor->broker_id);
+            $agent_wallet = AgentWallet::firstOrNew(
+                ['agent_id'=>$broker->agent_id]
+            );
+
+            $agent_wallet->total_earning = $agent_wallet->total_earning - $order_transaction->agent_commission;
+            $broker_wallet->total_earning = $broker_wallet->total_earning - $order_transaction->broker_commission;
+            $agent_wallet->save();
+            $broker_wallet->save();
+        }
+
+
+
 
 
         $adminWallet->total_commission_earning = $adminWallet->total_commission_earning - $order_transaction->admin_commission;

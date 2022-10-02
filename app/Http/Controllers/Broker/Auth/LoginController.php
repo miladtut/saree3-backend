@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Broker\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Broker;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
 use Gregwar\Captcha\CaptchaBuilder;
@@ -55,17 +56,17 @@ class LoginController extends Controller
             return back();
         }
 
-        $vendor = Vendor::where('email', $request->email)->first();
-        if($vendor)
+        $broker = Broker::where('email', $request->email)->first();
+        if($broker)
         {
-            if($vendor->stores[0]->status == 0)
+            if($broker->status != 1)
             {
                 return redirect()->back()->withInput($request->only('email', 'remember'))
-            ->withErrors([translate('messages.inactive_vendor_warning')]);
+            ->withErrors([translate('messages.inactive_broker_warning')]);
             }
 
-            if (auth('vendor')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-                return redirect()->route('vendor.dashboard');
+            if (auth('broker')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+                return redirect()->route('broker.dashboard');
             }
         }
 
@@ -76,7 +77,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        auth()->guard('vendor')->logout();
-        return redirect()->route('vendor.auth.login');
+        auth()->guard('broker')->logout();
+        return redirect()->route('broker.auth.login');
     }
 }

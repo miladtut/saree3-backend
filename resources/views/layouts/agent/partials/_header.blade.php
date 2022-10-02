@@ -4,18 +4,18 @@
         <div class="navbar-nav-wrap">
             <div class="navbar-brand-wrapper">
                 <!-- Logo Div-->
-{{--                @php($store_logo=\App\CentralLogics\Helpers::get_store_data()->logo)--}}
-{{--                <a class="navbar-brand" href="{{route('vendor.dashboard')}}" aria-label="">--}}
-{{--                    <img class="navbar-brand-logo"--}}
-{{--                         style="border-radius: 50%;height: 47px;width: 47px!important; border: 5px solid #80808012"--}}
-{{--                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"--}}
-{{--                         src="{{asset('public/storage/store/'.$store_logo)}}" alt="Logo">--}}
-{{--                    <img class="navbar-brand-logo-mini"--}}
-{{--                         style="border-radius: 50%;height: 47px;width: 47px!important; border: 5px solid #80808012"--}}
-{{--                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"--}}
-{{--                         src="{{asset('public/storage/store/'.$store_logo)}}"--}}
-{{--                         alt="Logo">--}}
-{{--                </a>--}}
+                @php($store_logo=\App\CentralLogics\Helpers::get_agent_data()->logo)
+                <a class="navbar-brand" href="{{route('agent.dashboard')}}" aria-label="">
+                    <img class="navbar-brand-logo"
+                         style="border-radius: 50%;height: 47px;width: 47px!important; border: 5px solid #80808012"
+                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
+                         src="{{asset('public/storage/agent/'.$store_logo)}}" alt="Logo">
+                    <img class="navbar-brand-logo-mini"
+                         style="border-radius: 50%;height: 47px;width: 47px!important; border: 5px solid #80808012"
+                         onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
+                         src="{{asset('public/storage/agent/'.$store_logo)}}"
+                         alt="Logo">
+                </a>
                 <!-- End Logo -->
             </div>
 
@@ -37,13 +37,7 @@
                 <ul class="navbar-nav align-items-center flex-row">
                     <li class="nav-item d-none d-sm-inline-block">
                         <!-- Notification -->
-                        <div class="hs-unfold">
-                            <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle"
-                               href="{{route('vendor.order.list',['status'=>'pending'])}}">
-                                <i class="tio-shopping-cart-outlined"></i>
-                                {{--<span class="btn-status btn-sm-status btn-status-danger"></span>--}}
-                            </a>
-                        </div>
+
                         <!-- End Notification -->
                     </li>
 
@@ -84,11 +78,7 @@
 
                                 <div class="dropdown-divider"></div>
 
-                                <a class="dropdown-item" href="{{route('vendor.profile.view')}}">
-                                    <span class="text-truncate pr-2" title="Settings">{{translate('messages.settings')}}</span>
-                                </a>
 
-                                <div class="dropdown-divider"></div>
 
                                 <a class="dropdown-item" href="javascript:" onclick="Swal.fire({
                                     title: 'Do you want to logout?',

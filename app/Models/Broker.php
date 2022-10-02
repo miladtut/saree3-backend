@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\CentralLogics\Helpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Broker extends Model
+class Broker extends Authenticatable
 {
     use HasFactory;
 

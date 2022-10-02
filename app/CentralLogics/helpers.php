@@ -1207,6 +1207,11 @@ class Helpers
         return auth('agent')->user();
     }
 
+    public static function get_broker_data()
+    {
+        return auth('broker')->user();
+    }
+
     public static function get_loggedin_user()
     {
         if (auth('vendor')->check()) {

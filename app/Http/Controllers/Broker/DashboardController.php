@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Vendor;
+namespace App\Http\Controllers\Broker;
 
 use App\CentralLogics\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderTransaction;
+use App\Models\WithdrawRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,43 +16,8 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-        $params = [
-            'statistics_type' => $request['statistics_type'] ?? 'overall'
-        ];
-        session()->put('dash_params', $params);
-
-        $data = self::dashboard_order_stats_data();
-        $earning = [];
-        $commission = [];
-        $from = Carbon::now()->startOfYear()->format('Y-m-d');
-        $to = Carbon::now()->endOfYear()->format('Y-m-d');
-        $store_earnings = OrderTransaction::where(['vendor_id' => Helpers::get_vendor_id()])->select(
-            DB::raw('IFNULL(sum(store_amount),0) as earning'),
-            DB::raw('IFNULL(sum(admin_commission),0) as commission'),
-            DB::raw('YEAR(created_at) year, MONTH(created_at) month')
-        )->whereBetween('created_at', [$from, $to])->groupby('year', 'month')->get()->toArray();
-        for ($inc = 1; $inc <= 12; $inc++) {
-            $earning[$inc] = 0;
-            $commission[$inc] = 0;
-            foreach ($store_earnings as $match) {
-                if ($match['month'] == $inc) {
-                    $earning[$inc] = $match['earning'];
-                    $commission[$inc] = $match['commission'];
-                }
-            }
-        }
-
-        $top_sell = Item::orderBy("order_count", 'desc')
-            ->take(6)
-            ->get();
-        $most_rated_items = Item::
-        orderBy('rating_count','desc')
-        ->take(6)
-        ->get();
-        $data['top_sell'] = $top_sell;
-        $data['most_rated_items'] = $most_rated_items;
-
-        return view('vendor-views.dashboard', compact('data', 'earning', 'commission', 'params'));
+        $withdraw_req = WithdrawRequest::with(['broker'])->where('broker_id', Helpers::get_broker_id())->latest()->paginate(config('default_pagination'));
+        return view('broker-views.wallet.index', compact('withdraw_req'));
     }
 
     public function store_data()
@@ -63,7 +29,7 @@ class DashboardController extends Controller
         }
         $new_pending_order = $new_pending_order->count();
         $new_confirmed_order = DB::table('orders')->where(['checked' => 0])->where('store_id', Helpers::get_store_id())->whereIn('order_status',['confirmed', 'accepted'])->whereNotNull('confirmed')->count();
-        
+
         return response()->json([
             'success' => 1,
             'data' => ['new_pending_order' => $new_pending_order, 'new_confirmed_order' => $new_confirmed_order]
