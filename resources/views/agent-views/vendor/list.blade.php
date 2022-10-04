@@ -102,19 +102,20 @@
                                     <td>{{$key+$stores->firstItem()}}</td>
                                     <td>
                                         <div style="height: 60px; width: 60px; overflow-x: hidden;overflow-y: hidden">
-                                            <a href="{{route('admin.vendor.view', $store->id)}}" alt="view store">
+{{--                                            <a href="{{route('admin.vendor.view', $store->id)}}" alt="view store">--}}
                                             <img width="60" style="border-radius: 50%; height:100%;"
                                                  onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
-                                                 src="{{asset('public/storage/store')}}/{{$store['logo']}}"></a>
+                                                 src="{{asset('public/storage/store')}}/{{$store['logo']}}">
+{{--                                            </a>--}}
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('admin.vendor.view', $store->id)}}" alt="view store">
+{{--                                        <a href="{{route('admin.vendor.view', $store->id)}}" alt="view store">--}}
                                             <span class="d-block font-size-sm text-body">
                                                 {{Str::limit($store->name,20,'...')}}<br>
                                                 {{translate('messages.id')}}:{{$store->id}}
                                             </span>
-                                        </a>
+{{--                                        </a>--}}
                                     </td>
                                     <td>
                                         <span class="d-block font-size-sm text-body">
