@@ -335,7 +335,7 @@ class AgentController extends Controller
         $denied = session()->has('withdraw_status_filter') && session('withdraw_status_filter') == 'denied' ? 1 : 0;
         $pending = session()->has('withdraw_status_filter') && session('withdraw_status_filter') == 'pending' ? 1 : 0;
 
-        $withdraw_req =WithdrawRequest::with(['vendor'])
+        $withdraw_req =WithdrawRequest::whereHas('agent')->with(['agent'])
             ->when($all, function ($query) {
                 return $query;
             })
@@ -354,9 +354,9 @@ class AgentController extends Controller
         return view('admin-views.wallet.withdraw', compact('withdraw_req'));
     }
 
-    public function withdraw_view($withdraw_id, $seller_id)
+    public function withdraw_view($withdraw_id, $agent_id)
     {
-        $wr = WithdrawRequest::with(['vendor'])->where(['id' => $withdraw_id])->first();
+        $wr = WithdrawRequest::whereHas('agent')->with(['agent'])->where(['id' => $withdraw_id])->first();
         return view('admin-views.wallet.withdraw-view', compact('wr'));
     }
 

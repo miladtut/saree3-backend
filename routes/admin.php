@@ -232,9 +232,9 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             });
 
             Route::group(['middleware' => ['module:withdraw_list']], function () {
-                Route::post('withdraw-status/{id}', 'VendorController@withdrawStatus')->name('withdraw_status');
-                Route::get('withdraw_list', 'VendorController@withdraw')->name('withdraw_list');
-                Route::get('withdraw-view/{withdraw_id}/{seller_id}', 'VendorController@withdraw_view')->name('withdraw_view');
+                Route::post('withdraw-status/{id}', 'AgentController@withdrawStatus')->name('withdraw_status');
+                Route::get('withdraw_list', 'AgentController@withdraw')->name('withdraw_list');
+                Route::get('withdraw-view/{withdraw_id}/{agent_id}', 'AgentController@withdraw_view')->name('withdraw_view');
             });
 
         });
@@ -275,9 +275,9 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             });
 
             Route::group(['middleware' => ['module:withdraw_list']], function () {
-                Route::post('withdraw-status/{id}', 'VendorController@withdrawStatus')->name('withdraw_status');
-                Route::get('withdraw_list', 'VendorController@withdraw')->name('withdraw_list');
-                Route::get('withdraw-view/{withdraw_id}/{seller_id}', 'VendorController@withdraw_view')->name('withdraw_view');
+                Route::post('withdraw-status/{id}', 'BrokerController@withdrawStatus')->name('withdraw_status');
+                Route::get('withdraw_list', 'BrokerController@withdraw')->name('withdraw_list');
+                Route::get('withdraw-view/{withdraw_id}/{broker_id}', 'BrokerController@withdraw_view')->name('withdraw_view');
             });
 
         });
