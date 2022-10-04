@@ -93,7 +93,7 @@ class Vendor extends Authenticatable
 
     public function getBrokerNameAttribute(){
         if ($this->broker){
-            return $this->agent->f_name.' '.$this->agent->l_name;
+            return $this->broker->f_name.' '.$this->broker->l_name;
         }
         return translate ('messages.not_found');
     }
