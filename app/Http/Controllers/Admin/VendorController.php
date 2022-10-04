@@ -451,7 +451,7 @@ class VendorController extends Controller
         $denied = session()->has('withdraw_status_filter') && session('withdraw_status_filter') == 'denied' ? 1 : 0;
         $pending = session()->has('withdraw_status_filter') && session('withdraw_status_filter') == 'pending' ? 1 : 0;
 
-        $withdraw_req =WithdrawRequest::with(['vendor'])
+        $withdraw_req =WithdrawRequest::whereHas('vendor')->with(['vendor'])
             ->when($all, function ($query) {
                 return $query;
             })
