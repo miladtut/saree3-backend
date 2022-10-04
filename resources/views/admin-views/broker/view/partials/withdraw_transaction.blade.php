@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-            @php($withdraw_transaction = \App\Models\WithdrawRequest::where('vendor_id', $broker->id)->paginate(25))
+            @php($withdraw_transaction = \App\Models\WithdrawRequest::where('broker_id', $broker->id)->paginate(25))
             @foreach($withdraw_transaction as $k=>$wt)
                 <tr>
                     <td scope="row">{{$k+$withdraw_transaction->firstItem()}}</td>

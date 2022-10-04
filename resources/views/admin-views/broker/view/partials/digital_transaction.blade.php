@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-            @php($digital_transaction = \App\Models\OrderTransaction::where('vendor_id', $broker->id)->latest()->paginate(25))
+            @php($digital_transaction = \App\Models\OrderTransaction::where('broker_id', $broker->id)->latest()->paginate(25))
             @foreach($digital_transaction as $k=>$dt)
                 <tr>
                     <td scope="row">{{$k+$digital_transaction->firstItem()}}</td>
