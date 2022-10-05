@@ -337,7 +337,7 @@ class BrokerController extends Controller
         $denied = session()->has('withdraw_status_filter') && session('withdraw_status_filter') == 'denied' ? 1 : 0;
         $pending = session()->has('withdraw_status_filter') && session('withdraw_status_filter') == 'pending' ? 1 : 0;
 
-        $withdraw_req =WithdrawRequest::with(['vendor'])
+        $withdraw_req =WithdrawRequest::whereHas('broker')->with(['broker'])
             ->when($all, function ($query) {
                 return $query;
             })
@@ -353,13 +353,13 @@ class BrokerController extends Controller
             ->latest()
             ->paginate(config('default_pagination'));
 
-        return view('admin-views.wallet.withdraw', compact('withdraw_req'));
+        return view('admin-views.wallet.broker.withdraw', compact('withdraw_req'));
     }
 
     public function withdraw_view($withdraw_id, $seller_id)
     {
-        $wr = WithdrawRequest::with(['vendor'])->where(['id' => $withdraw_id])->first();
-        return view('admin-views.wallet.withdraw-view', compact('wr'));
+        $wr = WithdrawRequest::whereHas('broker')->with(['broker'])->where(['id' => $withdraw_id])->first();
+        return view('admin-views.wallet.broker.withdraw-view', compact('wr'));
     }
 
     public function status_filter(Request $request){

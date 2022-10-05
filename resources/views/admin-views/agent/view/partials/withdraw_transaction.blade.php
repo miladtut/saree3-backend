@@ -31,9 +31,9 @@
                         @endif
                     </td>
                     <td>
-{{--                       <a href="{{route('admin.vendor.withdraw_view',[$wt['id'],$store->vendor['id']])}}"--}}
-{{--                           class="btn btn-white btn-sm"><i class="tio-visible"></i>--}}
-{{--                        </a>--}}
+                       <a href="{{route('admin.agent.withdraw_view',[$wt['id'],$agent['id']])}}"
+                           class="btn btn-white btn-sm"><i class="tio-visible"></i>
+                        </a>
                     </td>
                 </tr>
             @endforeach

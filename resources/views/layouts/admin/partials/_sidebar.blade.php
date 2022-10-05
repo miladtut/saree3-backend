@@ -789,6 +789,20 @@
                             {{ translate('messages.withdraws') }}</span>
                     </a>
                 </li>
+                <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/agent/withdraw*') ? 'active' : '' }}">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.agent.withdraw_list') }}" title="{{ translate('messages.agent') }} {{ translate('messages.withdraws') }}">
+                        <i class="tio-table nav-icon"></i>
+                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.agent') }}
+                            {{ translate('messages.withdraws') }}</span>
+                    </a>
+                </li>
+                <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/broker/withdraw*') ? 'active' : '' }}">
+                    <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('admin.broker.withdraw_list') }}" title="{{ translate('messages.broker') }} {{ translate('messages.withdraws') }}">
+                        <i class="tio-table nav-icon"></i>
+                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.broker') }}
+                            {{ translate('messages.withdraws') }}</span>
+                    </a>
+                </li>
                 @endif
                 <!-- End withdraw -->
                 <!-- account -->

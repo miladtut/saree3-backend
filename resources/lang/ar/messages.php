@@ -1406,4 +1406,9 @@
   'un_active' => 'Un active',
   'non_featured' => 'Non featured',
   'broker_not_found' => 'لا يوجد وسيط',
+  'Withdraw request process' => 'Withdraw request process',
+  'Note about transaction or
+                                    request' => 'Note about transaction or
+                                    request',
+  'agent_payment_approved' => 'Agent payment approved',
 );

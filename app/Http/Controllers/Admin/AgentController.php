@@ -351,13 +351,13 @@ class AgentController extends Controller
             ->latest()
             ->paginate(config('default_pagination'));
 
-        return view('admin-views.wallet.withdraw', compact('withdraw_req'));
+        return view('admin-views.wallet.agent.withdraw', compact('withdraw_req'));
     }
 
     public function withdraw_view($withdraw_id, $agent_id)
     {
         $wr = WithdrawRequest::whereHas('agent')->with(['agent'])->where(['id' => $withdraw_id])->first();
-        return view('admin-views.wallet.withdraw-view', compact('wr'));
+        return view('admin-views.wallet.agent.withdraw-view', compact('wr'));
     }
 
     public function status_filter(Request $request){
@@ -371,16 +371,16 @@ class AgentController extends Controller
         $withdraw->approved = $request->approved;
         $withdraw->transaction_note = $request['note'];
         if ($request->approved == 1) {
-            StoreWallet::where('vendor_id', $withdraw->vendor_id)->increment('total_withdrawn', $withdraw->amount);
-            StoreWallet::where('vendor_id', $withdraw->vendor_id)->decrement('pending_withdraw', $withdraw->amount);
+            AgentWallet::where('agent_id', $withdraw->agent_id)->increment('total_withdrawn', $withdraw->amount);
+            AgentWallet::where('agent_id', $withdraw->agent_id)->decrement('pending_withdraw', $withdraw->amount);
             $withdraw->save();
-            Toastr::success(translate('messages.seller_payment_approved'));
-            return redirect()->route('admin.vendor.withdraw_list');
+            Toastr::success(translate('messages.agent_payment_approved'));
+            return redirect()->route('admin.agent.withdraw_list');
         } else if ($request->approved == 2) {
-            StoreWallet::where('vendor_id', $withdraw->vendor_id)->decrement('pending_withdraw', $withdraw->amount);
+            AgentWallet::where('agent_id', $withdraw->agent_id)->decrement('pending_withdraw', $withdraw->amount);
             $withdraw->save();
-            Toastr::info(translate('messages.seller_payment_denied'));
-            return redirect()->route('admin.vendor.withdraw_list');
+            Toastr::info(translate('messages.agent_payment_denied'));
+            return redirect()->route('admin.agent.withdraw_list');
         } else {
             Toastr::error(translate('messages.not_found'));
             return back();
