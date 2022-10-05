@@ -61,6 +61,10 @@ class OrderLogic
         try{
             $admin_comission = $comission_amount - $admin_subsidy;
 
+            $agent_id = null;
+            $broker_id = null;
+            $agent_commission = 0;
+            $broker_commission = 0;
 
             if ($type == 'parcel'){
                 $vendor_id = null;
@@ -90,6 +94,7 @@ class OrderLogic
                     $broker_wallet->save();
                 }
             }
+            $admin_commission = $admin_comission - $agent_commission - $broker_commission;
             OrderTransaction::insert([
                 'vendor_id' =>$vendor_id,
                 'agent_id'=>$agent_id,
@@ -98,7 +103,7 @@ class OrderLogic
                 'order_id' =>$order->id,
                 'order_amount'=>$order->order_amount,
                 'store_amount'=>$order_amount + $order->total_tax_amount - $comission_amount,
-                'admin_commission'=>$admin_comission,
+                'admin_commission'=>$admin_commission,
                 'agent_commission'=>$agent_commission,
                 'broker_commission'=>$broker_commission,
                 'delivery_charge'=>$order->delivery_charge,
@@ -116,7 +121,7 @@ class OrderLogic
                 ['admin_id' => Admin::where('role_id', 1)->first()->id]
             );
 
-            $adminWallet->total_commission_earning = $adminWallet->total_commission_earning + $admin_comission;
+            $adminWallet->total_commission_earning = $adminWallet->total_commission_earning + $admin_commission;
 
 
 
