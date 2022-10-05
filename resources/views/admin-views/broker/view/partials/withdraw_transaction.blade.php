@@ -31,7 +31,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{route('admin.vendor.withdraw_view',[$wt['id'],$store->vendor['id']])}}"
+                        <a href="{{route('admin.broker.withdraw_view',[$wt['id'],$broker['id']])}}"
                             class="btn btn-white btn-sm"><i class="tio-visible"></i>
                         </a>
                     </td>

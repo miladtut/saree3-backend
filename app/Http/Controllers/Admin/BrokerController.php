@@ -373,16 +373,16 @@ class BrokerController extends Controller
         $withdraw->approved = $request->approved;
         $withdraw->transaction_note = $request['note'];
         if ($request->approved == 1) {
-            StoreWallet::where('vendor_id', $withdraw->vendor_id)->increment('total_withdrawn', $withdraw->amount);
-            StoreWallet::where('vendor_id', $withdraw->vendor_id)->decrement('pending_withdraw', $withdraw->amount);
+            BrokerWallet::where('broker_id', $withdraw->broker_id)->increment('total_withdrawn', $withdraw->amount);
+            BrokerWallet::where('broker_id', $withdraw->broker_id)->decrement('pending_withdraw', $withdraw->amount);
             $withdraw->save();
-            Toastr::success(translate('messages.seller_payment_approved'));
-            return redirect()->route('admin.vendor.withdraw_list');
+            Toastr::success(translate('messages.broker_payment_approved'));
+            return redirect()->route('admin.broker.withdraw_list');
         } else if ($request->approved == 2) {
-            StoreWallet::where('vendor_id', $withdraw->vendor_id)->decrement('pending_withdraw', $withdraw->amount);
+            BrokerWallet::where('broker_id', $withdraw->broker_id)->decrement('pending_withdraw', $withdraw->amount);
             $withdraw->save();
-            Toastr::info(translate('messages.seller_payment_denied'));
-            return redirect()->route('admin.vendor.withdraw_list');
+            Toastr::info(translate('messages.broker_payment_denied'));
+            return redirect()->route('admin.broker.withdraw_list');
         } else {
             Toastr::error(translate('messages.not_found'));
             return back();

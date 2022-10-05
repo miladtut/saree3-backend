@@ -66,9 +66,9 @@
                                         <td>{{$wr['amount']}}</td>
                                         {{-- <td>{{$wr->__action_note}}</td> --}}
                                         <td>
-                                            @if($wr->vendor)
+                                            @if($wr->broker)
                                             <a class="deco-none"
-                                               href="{{route('admin.vendor.view',[$wr->vendor['id']])}}">{{ Str::limit($wr->vendor->stores[0]->name, 20, '...') }}</a>
+                                               href="{{route('admin.broker.view',[$wr->broker['id']])}}">{{ $wr->broker['f_name'] }} {{ $wr->broker['l_name'] }}</a>
                                             @else
                                             {{translate('messages.store deleted!') }}
                                             @endif
@@ -84,8 +84,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($wr->vendor)
-                                            <a href="{{route('admin.vendor.withdraw_view',[$wr['id'],$wr->vendor['id']])}}"
+                                            @if($wr->broker)
+                                            <a href="{{route('admin.broker.withdraw_view',[$wr['id'],$wr->broker['id']])}}"
                                                class="btn btn-white btn-sm"><i class="tio-visible"></i>
                                             </a>
                                             @else

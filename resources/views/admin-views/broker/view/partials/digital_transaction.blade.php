@@ -12,6 +12,8 @@
                     <th style="width: 20%">{{translate('messages.total_order_amount')}}</th>
                     <th style="width: 20%">{{translate('messages.store')}} {{translate('messages.earned')}}</th>
                     <th style="width: 15%">{{translate('messages.admin')}}  {{translate('messages.earned')}}</th>
+                    <th style="width: 15%">{{translate('messages.agent')}}  {{translate('messages.earned')}}</th>
+                    <th style="width: 15%">{{translate('messages.broker')}}  {{translate('messages.earned')}}</th>
                     <th style="width: 15%">{{translate('messages.delivery')}}  {{translate('messages.fee')}}</th>
                     <th style="width: 10%">{{translate('messages.vat/tax')}}</th>
                 </tr>
@@ -25,6 +27,8 @@
                     <td>{{$dt->order_amount}}</td>
                     <td>{{$dt->store_amount - $dt->tax}}</td>
                     <td>{{$dt->admin_commission}}</td>
+                    <td>{{$dt->agent_commission}}</td>
+                    <td>{{$dt->broker_commission}}</td>
                     <td>{{$dt->delivery_charge}}</td>
                     <td>{{$dt->tax}}</td>
                 </tr>

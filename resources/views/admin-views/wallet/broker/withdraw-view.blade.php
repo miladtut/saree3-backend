@@ -71,48 +71,31 @@
                 <div class="card-body">
                     <div class="col-md-8 mt-2">
                         <h4>{{translate('messages.bank_name')}}
-                            : {{$wr->vendor && $wr->vendor->bank_name ? $wr->vendor->bank_name : 'No Data found'}}</h4>
+                            : {{$wr->broker && $wr->broker->bank_name ? $wr->broker->bank_name : 'No Data found'}}</h4>
                         <h6 class="text-capitalize">{{translate('messages.branch')}}
-                            : {{$wr->vendor && $wr->vendor->branch ? $wr->vendor->branch : 'No Data found'}}</h6>
+                            : {{$wr->broker && $wr->broker->branch ? $wr->broker->branch : 'No Data found'}}</h6>
                         <h6>{{translate('messages.holder_name')}}
-                            : {{$wr->vendor && $wr->vendor->holder_name ? $wr->vendor->holder_name : 'No Data found'}}</h6>
+                            : {{$wr->broker && $wr->broker->holder_name ? $wr->broker->holder_name : 'No Data found'}}</h6>
                         <h6>{{translate('messages.account_no')}}
-                            : {{$wr->vendor && $wr->vendor->account_no ? $wr->vendor->account_no : 'No Data found'}}</h6>
+                            : {{$wr->broker && $wr->broker->account_no ? $wr->broker->account_no : 'No Data found'}}</h6>
                     </div>
                 </div>
             </div>
         </div>
-        @if($wr->vendor && $wr->vendor->stores[0])
-            <div class="col-md-4">
-                <div class="card" style="min-height: 260px;">
-                    <div class="card-header">
-                        <h3 class="h3 mb-0">{{translate('messages.store')}} {{translate('messages.info')}}</h3>
-                        <i class="tio tio-shop-outlined"></i>
-                    </div>
-                    <div class="card-body">
-                        <h5>{{translate('messages.store')}} : {{$wr->vendor->stores[0]->name}}</h5>
-                        <h5>{{translate('messages.phone')}} : {{$wr->vendor->stores[0]->contact}}</h5>
-                        <h5>{{translate('messages.address')}} : {{$wr->vendor->stores[0]->address}}</h5>
-                        <h5 class="text-capitalize badge badge-success">{{translate('messages.balance')}}
-                            : {{$wr->vendor->wallet->balance}}
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        @endif
+
         <div class="col-md-4">
             <div class="card" style="min-height: 260px;">
                 <div class="card-header">
-                    <h3 class="h3 mb-0 "> {{translate('messages.owner')}} {{translate('messages.info')}}</h3>
+                    <h3 class="h3 mb-0 "> {{translate('messages.broker')}} {{translate('messages.info')}}</h3>
                     <i class="tio tio-user-big-outlined"></i>
                 </div>
                 <div class="card-body">
-                    @if ($wr->vendor)
-                        <h5>{{translate('messages.name')}} : {{$wr->vendor->f_name}} {{$wr->vendor->l_name}}</h5>
-                        <h5>{{translate('messages.email')}} : {{$wr->vendor->email}}</h5>
-                        <h5>{{translate('messages.phone')}} : {{$wr->vendor->phone}}</h5>                        
+                    @if ($wr->broker)
+                        <h5>{{translate('messages.name')}} : {{$wr->broker->f_name}} {{$wr->broker->l_name}}</h5>
+                        <h5>{{translate('messages.email')}} : {{$wr->broker->email}}</h5>
+                        <h5>{{translate('messages.phone')}} : {{$wr->broker->phone}}</h5>
                     @else
-                        <h5>{{translate('messages.store deleted!')}}</h5>
+                        <h5>{{translate('messages.broker deleted!')}}</h5>
                     @endif
 
                 </div>
@@ -129,7 +112,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{route('admin.vendor.withdraw_status',[$wr->id])}}" method="POST">
+                    <form action="{{route('admin.broker.withdraw_status',[$wr->id])}}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
