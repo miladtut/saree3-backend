@@ -1413,4 +1413,6 @@
   'agent_payment_approved' => 'Agent payment approved',
   'broker deleted!' => 'Broker deleted!',
   'broker_payment_approved' => 'Broker payment approved',
+  'kashier' => 'Kashier',
+  'merchant_id' => 'Merchant id',
 );

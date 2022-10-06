@@ -418,7 +418,8 @@ class BusinessSettingsController extends Controller
                     'updated_at' => now(),
                 ]);
             }
-        } elseif ($name == 'flutterwave') {
+        }
+        elseif ($name == 'flutterwave') {
             $payment = BusinessSetting::where('key', 'flutterwave')->first();
             if (isset($payment) == false) {
                 DB::table('business_settings')->insert([
@@ -444,7 +445,8 @@ class BusinessSettingsController extends Controller
                     'updated_at' => now(),
                 ]);
             }
-        } elseif ($name == 'mercadopago') {
+        }
+        elseif ($name == 'mercadopago') {
             $payment = BusinessSetting::updateOrInsert(
                 ['key' => 'mercadopago'],
                 [
@@ -456,7 +458,8 @@ class BusinessSettingsController extends Controller
                     'updated_at' => now()
                 ]
             );
-        } elseif ($name == 'paymob_accept') {
+        }
+        elseif ($name == 'paymob_accept') {
             DB::table('business_settings')->updateOrInsert(['key' => 'paymob_accept'], [
                 'value' => json_encode([
                     'status' => $request['status'],
@@ -467,7 +470,8 @@ class BusinessSettingsController extends Controller
                 ]),
                 'updated_at' => now()
             ]);
-        } elseif ($name == 'liqpay') {
+        }
+        elseif ($name == 'liqpay') {
             DB::table('business_settings')->updateOrInsert(['key' => 'liqpay'], [
                 'value' => json_encode([
                     'status' => $request['status'],
@@ -476,7 +480,8 @@ class BusinessSettingsController extends Controller
                 ]),
                 'updated_at' => now()
             ]);
-        } elseif ($name == 'paytm') {
+        }
+        elseif ($name == 'paytm') {
             DB::table('business_settings')->updateOrInsert(['key' => 'paytm'], [
                 'value' => json_encode([
                     'status' => $request['status'],
@@ -487,7 +492,8 @@ class BusinessSettingsController extends Controller
                 ]),
                 'updated_at' => now()
             ]);
-        } elseif ($name == 'bkash') {
+        }
+        elseif ($name == 'bkash') {
             DB::table('business_settings')->updateOrInsert(['key' => 'bkash'], [
                 'value' => json_encode([
                     'status' => $request['status'],
@@ -498,7 +504,8 @@ class BusinessSettingsController extends Controller
                 ]),
                 'updated_at' => now()
             ]);
-        } elseif ($name == 'paytabs') {
+        }
+        elseif ($name == 'paytabs') {
             DB::table('business_settings')->updateOrInsert(['key' => 'paytabs'], [
                 'value' => json_encode([
                     'status' => $request['status'],
@@ -508,6 +515,33 @@ class BusinessSettingsController extends Controller
                 ]),
                 'updated_at' => now()
             ]);
+        }
+        elseif ($name == 'kashier') {
+            $payment = BusinessSetting::where('key', 'kashier')->first();
+            if (isset($payment) == false) {
+                DB::table('business_settings')->insert([
+                   'key'        => 'kashier',
+                   'value'      => json_encode([
+                       'status'        => 1,
+                       'public_key'     => '',
+                       'secret_key'     => '',
+                       'merchant_id'    => '',
+                   ]),
+                   'created_at' => now(),
+                   'updated_at' => now(),
+               ]);
+            } else {
+                DB::table('business_settings')->where(['key' => 'kashier'])->update([
+                    'key'        => 'kashier',
+                    'value'      => json_encode([
+                        'status'        => $request['status'],
+                        'public_key'     => $request['public_key'],
+                        'secret_key'     => $request['secret_key'],
+                        'merchant_id'    => $request['hash'],
+                    ]),
+                    'updated_at' => now(),
+                ]);
+            }
         }
 
         Toastr::success(translate('messages.payment_settings_updated'));

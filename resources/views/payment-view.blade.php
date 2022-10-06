@@ -351,6 +351,36 @@
                         </div>
                     @endif
 
+                    @php($config=\App\CentralLogics\Helpers::get_business_settings('kashier'))
+                    @if($config['status'])
+                        <div class="col-md-6 mb-4" style="cursor: pointer">
+                            <div class="card" onclick="$('#ssl-form').submit()">
+                                <div class="card-body pt-2" style="height: 70px">
+                                    <a href="https://checkout.kashier.io/?merchantId=YOUR-MERCHANT-ACCOUNT-ID&
+                                    orderId=ORDER-ID&
+                                    amount=ORDER-AMOUNT&
+                                    currency=ORDER-CURRENCY&
+                                    hash=ORDER-HASH&
+                                    mode=ORDER-MODE&
+                                    merchantRedirect=YOUR-SUCCESS-REDIRECT-URL&
+                                    serverWebhook=YOUR-WEBHOOK-URL&
+                                    metaData=ORDER-META-DATA&
+                                    paymentRequestId=ORDER-PAYMENTREQUESTID&
+                                    allowedMethods=ORDER-ALLOWED-METHODS&
+                                    defaultMethod=ORDER-DEFAULT-METHOD&
+                                    failureRedirect=ORDER-FAILURE-REDIRECT&
+                                    redirectMethod=ORDER-REDIRECT-METHOD&
+                                    connectedAccount=ORDER-CONNECTED-ACCOUNT&
+                                    brandColor= ORDER-BRAND-COLOR&
+                                    display=ORDER-DISPLAY">
+                                        <img width="100" src="{{asset('public/assets/admin/img/kashier.png')}}"/>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </section>

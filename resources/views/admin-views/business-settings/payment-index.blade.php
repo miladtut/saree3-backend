@@ -26,7 +26,7 @@
                         <form action="{{route('admin.business-settings.payment-method-update',['cash_on_delivery'])}}"
                               method="post">
                             @csrf
-                            
+
                                 <div class="form-group mb-2">
                                     <label class="control-label">{{translate('messages.cash_on_delivery')}}</label>
                                 </div>
@@ -288,16 +288,16 @@
                                     <button type="{{env('APP_MODE')!='demo'?'submit':'button'}}"
                                         onclick="{{env('APP_MODE')!='demo'?'':'call_demo()'}}"
                                         class="btn btn-primary mb-2">{{translate('messages.save')}}</button>
-                                    <button type="button" class="btn btn-info mb-2 pull-right" onclick="copy_text('{{url('/')}}/paystack-callback')">{{translate('messages.copy_callback')}}</button>        
+                                    <button type="button" class="btn btn-info mb-2 pull-right" onclick="copy_text('{{url('/')}}/paystack-callback')">{{translate('messages.copy_callback')}}</button>
                                 </div>
 
-                                
+
                             @else
                                 <button type="submit"
                                         class="btn btn-primary mb-2">{{translate('messages.configure')}}</button>
-                                
 
-                                
+
+
                             @endif
 
                         </form>
@@ -638,7 +638,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 mt-4">
                 <div class="card">
                     <div class="card-body" style="padding: 20px">
@@ -727,6 +727,57 @@
                                            style="padding-left: 10px">{{translate('messages.privateKey')}}</label><br>
                                     <input type="text" class="form-control" name="private_key"
                                            value="{{env('APP_MODE')!='demo'?$config['private_key']:''}}">
+                                </div>
+
+                                <button type="{{env('APP_MODE')!='demo'?'submit':'button'}}" onclick="{{env('APP_MODE')!='demo'?'':'call_demo()'}}" class="btn btn-primary mb-2">{{translate('messages.save')}}</button>
+                            @else
+                                <button type="submit"
+                                        class="btn btn-primary mb-2">{{translate('messages.configure')}}</button>
+                            @endif
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 pt-4">
+                <div class="card">
+                    <div class="card-body" style="padding: 20px">
+                        <h5 class="text-center">{{translate('messages.kashier')}}</h5>
+                        @php($config=\App\CentralLogics\Helpers::get_business_settings('kashier'))
+                        <form action="{{env('APP_MODE')!='demo'?route('admin.business-settings.payment-method-update',['kashier']):'javascript:'}}"
+                              method="post">
+                            @csrf
+                            @if(isset($config))
+                                <div class="form-group mb-2">
+                                    <label class="control-label">{{translate('messages.kashier')}}</label>
+                                </div>
+                                <div class="form-group mb-2 mt-2">
+                                    <input type="radio" name="status" value="1" {{$config['status']==1?'checked':''}}>
+                                    <label style="padding-left: 10px">{{translate('messages.active')}}</label>
+                                    <br>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <input type="radio" name="status" value="0" {{$config['status']==0?'checked':''}}>
+                                    <label style="padding-left: 10px">{{translate('messages.inactive')}} </label>
+                                    <br>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="text-capitalize"
+                                           style="padding-left: 10px">{{translate('messages.publicKey')}}</label><br>
+                                    <input type="text" class="form-control" name="public_key"
+                                           value="{{env('APP_MODE')!='demo'?$config['public_key']:''}}">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="text-capitalize"
+                                           style="padding-left: 10px">{{translate('messages.secret')}} {{translate('messages.key')}}</label><br>
+                                    <input type="text" class="form-control" name="secret_key"
+                                           value="{{env('APP_MODE')!='demo'?$config['secret_key']:''}}">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="text-capitalize"
+                                           style="padding-left: 10px">{{translate('messages.merchant_id')}}</label><br>
+                                    <input type="text" class="form-control" name="hash"
+                                           value="{{env('APP_MODE')!='demo'?$config['merchant_id']:''}}">
                                 </div>
 
                                 <button type="{{env('APP_MODE')!='demo'?'submit':'button'}}" onclick="{{env('APP_MODE')!='demo'?'':'call_demo()'}}" class="btn btn-primary mb-2">{{translate('messages.save')}}</button>
