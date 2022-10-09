@@ -50,7 +50,7 @@ class VendorController extends Controller
             'zone_id' => 'required',
             'module_id' => 'required',
             'logo' => 'required',
-            'tax' => 'required'
+//            'tax' => 'required'
         ], [
             'f_name.required' => translate('messages.first_name_is_required')
         ]);
@@ -93,7 +93,7 @@ class VendorController extends Controller
         $store->longitude = $request->longitude;
         $store->vendor_id = $vendor->id;
         $store->zone_id = $request->zone_id;
-        $store->tax = $request->tax;
+        $store->tax = $request->tax??0;
         $store->delivery_time = $request->minimum_delivery_time .'-'. $request->maximum_delivery_time.' '.$request->delivery_time_type;
         $store->module_id = $request->module_id;
         $store->status = 0;

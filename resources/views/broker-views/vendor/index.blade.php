@@ -44,10 +44,10 @@
                                 <label class="input-label" for="address">{{translate('messages.store')}} {{translate('messages.address')}}</label>
                                 <textarea type="text" name="address" class="form-control" placeholder="{{translate('messages.store')}} {{translate('messages.address')}}" required >{{old('address')}}</textarea>
                             </div>
-                            <div class="form-group">
-                                <label class="input-label" for="tax">{{translate('messages.vat/tax')}} (%)</label>
-                                <input type="number" name="tax" class="form-control" placeholder="{{translate('messages.vat/tax')}}" min="0" step=".01" required value="{{old('tax')}}">
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label class="input-label" for="tax">{{translate('messages.vat/tax')}} (%)</label>--}}
+{{--                                <input type="number" name="tax" class="form-control" placeholder="{{translate('messages.vat/tax')}}" min="0" step=".01" required value="{{old('tax')}}">--}}
+{{--                            </div>--}}
                             <div class="form-group">
                                 <label class="input-label" for="maximum_delivery_time">{{translate('messages.approx_delivery_time')}}</label>
                                 <div class="input-group">
