@@ -17,10 +17,12 @@ class PaymentController extends Controller
         session()->put('customer_id', $request['customer_id']);
         session()->put('order_id', $request->order_id);
 
+
         $customer = User::find($request['customer_id']);
 
         $order = Order::where(['id' => $request->order_id, 'user_id' => $request['customer_id']])->first();
 
+        session ()->put ('order',$order);
         if (isset($customer) && isset($order)) {
             $data = [
                 'name' => $customer['f_name'],

@@ -1587,4 +1587,19 @@ class Helpers
         return $user_name . $user_id;
     }
 
+    public static function generateKashierOrderHash(){
+        $mid = "MID-14518-380"; //your merchant id
+        $amount = 100; //eg: 100
+        $currency = 'EGP'; //eg: "EGP"
+        $orderId = 10; //eg: 99, your system order ID
+        $secret = "2f88b5f5-740e-4f7b-b288-85635240a6f2";
+        $path = "/?payment=".$mid.".".$orderId.".".$amount.".".$currency;
+        $hash = hash_hmac( 'sha256' , $path , $secret ,false);
+        return $hash;
+    }
+    public static function encodeURIComponent($str) {
+        $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+        return strtr(rawurlencode($str), $revert);
+    }
+
 }
