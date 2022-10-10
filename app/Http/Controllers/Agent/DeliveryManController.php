@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vendor;
+namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeliveryMan;
@@ -18,13 +18,13 @@ class DeliveryManController extends Controller
 {
     public function index()
     {
-        return view('vendor-views.delivery-man.index');
+        return view('agent-views.delivery-man.index');
     }
 
     public function list(Request $request)
     {
-        $delivery_men = DeliveryMan::where('store_id', Helpers::get_store_id())->latest()->paginate(config('default_pagination'));
-        return view('vendor-views.delivery-man.list', compact('delivery_men'));
+        $delivery_men = DeliveryMan::where('agent_id', Helpers::get_agent_id ())->latest()->paginate(config('default_pagination'));
+        return view('agent-views.delivery-man.list', compact('delivery_men'));
     }
 
     public function search(Request $request){
@@ -37,30 +37,32 @@ class DeliveryManController extends Controller
                     ->orWhere('phone', 'like', "%{$value}%")
                     ->orWhere('identity_number', 'like', "%{$value}%");
             }
-        })->where('store_id', Helpers::get_store_id())->get();
+        })->where('agent_id', Helpers::get_agent_id ())->get();
         return response()->json([
-            'view'=>view('vendor-views.delivery-man.partials._table',compact('delivery_men'))->render(),
+            'view'=>view('agent-views.delivery-man.partials._table',compact('delivery_men'))->render(),
             'count'=>$delivery_men->count()
         ]);
     }
 
     public function reviews_list(){
-        $reviews=DMReview::with(['delivery_man','customer'])->latest()->paginate(config('default_pagination'));
-        return view('vendor-views.delivery-man.reviews-list',compact('reviews'));
+        $reviews=DMReview::with(['delivery_man'=>function($q){
+            $q->where('agent_id',Helpers::get_agent_id ());
+        },'customer'])->latest()->paginate(config('default_pagination'));
+        return view('agent-views.delivery-man.reviews-list',compact('reviews'));
     }
 
     public function preview($id, $tab='info')
     {
-        $dm = DeliveryMan::with(['reviews'])->where('store_id', Helpers::get_store_id())->where(['id' => $id])->first();
+        $dm = DeliveryMan::with(['reviews'])->where('agent_id', Helpers::get_agent_id ())->where(['id' => $id])->first();
         if($tab == 'info')
         {
             $reviews=DMReview::where(['delivery_man_id'=>$id])->latest()->paginate(config('default_pagination'));
-            return view('vendor-views.delivery-man.view.info', compact('dm', 'reviews'));
+            return view('agent-views.delivery-man.view.info', compact('dm', 'reviews'));
         }
         else if($tab == 'transaction')
         {
-            return view('vendor-views.delivery-man.view.transaction', compact('dm'));
-        }        
+            return view('agent-views.delivery-man.view.transaction', compact('dm'));
+        }
     }
 
     public function store(Request $request)
@@ -102,12 +104,14 @@ class DeliveryManController extends Controller
         $dm->phone = $request->phone;
         $dm->identity_number = $request->identity_number;
         $dm->identity_type = $request->identity_type;
-        $dm->store_id =  Helpers::get_store_id();
+//        $dm->store_id =  Helpers::get_store_id();
+        $dm->agent_id =  Helpers::get_agent_id();
         $dm->identity_image = $identity_image;
         $dm->image = $image_name;
         $dm->active = 0;
         $dm->earning = 0;
-        $dm->type = 'restaurant_wise';
+//        $dm->type = 'restaurant_wise';
+        $dm->type = 'agent_wise';
         $dm->password = bcrypt($request->password);
         $dm->save();
 

@@ -90,7 +90,32 @@ Route::group( ['namespace' => 'Agent', 'as' => 'agent.'], function () {
             });
 
         });
+
+        Route::group(['prefix' => 'delivery-man', 'as' => 'delivery-man.'], function () {
+            Route::get('get-account-data/{deliveryman}', 'DeliveryManController@get_account_data')->name('storefilter');
+            Route::group(['middleware' => ['module:deliveryman']], function () {
+                Route::get('add', 'DeliveryManController@index')->name('add');
+                Route::post('store', 'DeliveryManController@store')->name('store');
+                Route::get('list', 'DeliveryManController@list')->name('list');
+                Route::get('preview/{id}/{tab?}', 'DeliveryManController@preview')->name('preview');
+                Route::get('status/{id}/{status}', 'DeliveryManController@status')->name('status');
+                Route::get('earning/{id}/{status}', 'DeliveryManController@earning')->name('earning');
+                Route::get('update-application/{id}/{status}', 'DeliveryManController@update_application')->name('application');
+                Route::get('edit/{id}', 'DeliveryManController@edit')->name('edit');
+                Route::post('update/{id}', 'DeliveryManController@update')->name('update');
+                Route::delete('delete/{id}', 'DeliveryManController@delete')->name('delete');
+                Route::post('search', 'DeliveryManController@search')->name('search');
+                Route::get('get-deliverymen', 'DeliveryManController@get_deliverymen')->name('get-deliverymen');
+
+                Route::group(['prefix' => 'reviews', 'as' => 'reviews.'], function () {
+                    Route::get('list', 'DeliveryManController@reviews_list')->name('list');
+                    Route::get('status/{id}/{status}', 'DeliveryManController@reviews_status')->name('status');
+                });
+            });
+        });
     });
+
+
 
 
 

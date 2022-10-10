@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.agent.app')
 
 @section('title','Review List')
 
@@ -53,20 +53,18 @@
                                         <td>{{$key+1}}</td>
                                         <td>
                                         <span class="d-block font-size-sm text-body">
-                                            <a href="{{route('vendor.delivery-man.preview',[$review['delivery_man_id']])}}">
+                                            <a href="{{route('agent.delivery-man.preview',[$review['delivery_man_id']])}}">
                                                 {{$review->delivery_man->f_name.' '.$review->delivery_man->l_name}}
                                             </a>
                                         </span>
                                         </td>
                                         <td>
                                             @if ($review->customer)
-                                            <a href="{{route('vendor.customer.view',[$review->user_id])}}">
                                                 {{$review->customer?$review->customer->f_name:""}} {{$review->customer?$review->customer->l_name:""}}
-                                            </a>
                                             @else
                                                 {{translate('messages.customer_not_found')}}
                                             @endif
-                                            
+
                                         </td>
                                         <td>
                                             {{$review->comment}}

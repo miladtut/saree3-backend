@@ -21,11 +21,11 @@
             <a class="deco-none" href="tel:{{$dm['phone']}}">{{$dm['phone']}}</a>
         </td>
         <td>
-            <a class="btn btn-sm btn-white" href="{{route('vendor.delivery-man.edit',[$dm['id']])}}" title="{{translate('messages.edit')}}"><i class="tio-edit"></i>
+            <a class="btn btn-sm btn-white" href="{{route('agent.delivery-man.edit',[$dm['id']])}}" title="{{translate('messages.edit')}}"><i class="tio-edit"></i>
             </a>
             <a class="btn btn-sm btn-white text-danger" href="javascript:" onclick="form_alert('delivery-man-{{$dm['id']}}','Want to remove this deliveryman ?')" title="{{translate('messages.delete')}}"><i class="tio-delete-outlined"></i>
             </a>
-            <form action="{{route('vendor.delivery-man.delete',[$dm['id']])}}" method="post" id="delivery-man-{{$dm['id']}}">
+            <form action="{{route('agent.delivery-man.delete',[$dm['id']])}}" method="post" id="delivery-man-{{$dm['id']}}">
                 @csrf @method('delete')
             </form>
         </td>

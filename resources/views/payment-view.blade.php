@@ -366,11 +366,12 @@
 {{--                                    serverWebhook=YOUR-WEBHOOK-URL&--}}
                                     metaData={{App\CentralLogics\Helpers::encodeURIComponent(json_encode(['email'=>'email@gmail.com']))}}&
 {{--                                    paymentRequestId=ORDER-PAYMENTREQUESTID&--}}
-{{--                                    allowedMethods=ORDER-ALLOWED-METHODS&--}}
+                                    allowedMethods=ORDER-ALLOWED-METHODS&
 {{--                                    defaultMethod=ORDER-DEFAULT-METHOD&--}}
 {{--                                    failureRedirect=ORDER-FAILURE-REDIRECT&--}}
 {{--                                    redirectMethod=ORDER-REDIRECT-METHOD&--}}
 {{--                                    connectedAccount=ORDER-CONNECTED-ACCOUNT&--}}
+                                        type=external&
 {{--                                    brandColor= ORDER-BRAND-COLOR&--}}
                                     display=en">
                                         <img width="100" src="{{asset('public/assets/admin/img/kashier.png')}}"/>

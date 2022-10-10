@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.agent.app')
 
 @section('title','Delivery Man Preview')
 
@@ -10,7 +10,7 @@
     <div class="content container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('vendor.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
+                <li class="breadcrumb-item"><a href="{{route('agent.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
                 <li class="breadcrumb-item" aria-current="page">{{translate('messages.deliveryman')}} {{translate('messages.view')}}</li>
             </ol>
         </nav>
@@ -29,10 +29,10 @@
                     <!-- Nav -->
                     <ul class="nav nav-tabs page-header-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('vendor.delivery-man.preview', ['id'=>$dm->id, 'tab'=> 'info'])}}"  aria-disabled="true">{{translate('messages.info')}}</a>
+                            <a class="nav-link active" href="{{route('agent.delivery-man.preview', ['id'=>$dm->id, 'tab'=> 'info'])}}"  aria-disabled="true">{{translate('messages.info')}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('vendor.delivery-man.preview', ['id'=>$dm->id, 'tab'=> 'transaction'])}}"  aria-disabled="true">{{translate('messages.transaction')}}</a>
+                            <a class="nav-link" href="{{route('agent.delivery-man.preview', ['id'=>$dm->id, 'tab'=> 'transaction'])}}"  aria-disabled="true">{{translate('messages.transaction')}}</a>
                         </li>
                     </ul>
                     <!-- End Nav -->
@@ -270,9 +270,11 @@
                                 </div>
                             </td>
                             <td>
-                                @foreach(json_decode($review['attachment'],true) as $attachment)
-                                    <img width="100" onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" src="{{asset('public/storage')}}/{{$attachment}}">
-                                @endforeach
+                                @if($review['attachment'])
+                                    @foreach(json_decode($review['attachment'],true) as $attachment)
+                                        <img width="100" onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" src="{{asset('public/storage')}}/{{$attachment}}">
+                                    @endforeach
+                                @endif
                             </td>
                             <td>
                                 {{date('d M Y '. config('timeformat'),strtotime($review['created_at']))}}

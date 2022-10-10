@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.agent.app')
 
 @section('title','Add new delivery-man')
 
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                     </div>
- 
+
 
                     <div class="form-group">
                         <label>{{translate('messages.deliveryman')}} {{translate('messages.image')}}</label><small style="color: red">* ( {{translate('messages.ratio')}} 1:1 )</small>
@@ -106,7 +106,7 @@
                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" required>
                             <label class="custom-file-label" for="customFileEg1">{{translate('messages.choose')}} {{translate('messages.file')}}</label>
                         </div>
-                        
+
                         <center class="pt-4">
                             <img style="height: 200px;border: 1px solid; border-radius: 10px;" id="viewer"
                                  src="{{asset('public/assets/admin/img/400x400/img2.jpg')}}" alt="delivery-man image"/>
@@ -159,7 +159,7 @@
         //     $(this).val(phone.getNumber());
         // })
 
-        
+
     </script>
 
     <script src="{{asset('public/assets/admin/js/spartan-multi-image-picker.js')}}"></script>
@@ -210,7 +210,7 @@
                 }
             });
             $.post({
-                url: '{{route('vendor.delivery-man.store')}}',
+                url: '{{route('agent.delivery-man.store')}}',
                 // data: $('#food_form').serialize(),
                 data: formData,
                 cache: false,
@@ -230,7 +230,7 @@
                             ProgressBar: true
                         });
                         setTimeout(function () {
-                            location.href = '{{route('vendor.delivery-man.list')}}';
+                            location.href = '{{route('agent.delivery-man.list')}}';
                         }, 2000);
                     }
                 }

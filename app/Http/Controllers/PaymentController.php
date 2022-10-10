@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function payment(Request $request)
+    public function payment0(Request $request)
     {
         if ($request->has('callback')) {
             Order::where(['id' => $request->order_id])->update(['callback' => $request['callback']]);
@@ -21,6 +21,34 @@ class PaymentController extends Controller
         $customer = User::find($request['customer_id']);
 
         $order = Order::where(['id' => $request->order_id, 'user_id' => $request['customer_id']])->first();
+
+        session ()->put ('order',$order);
+        if (isset($customer) && isset($order)) {
+            $data = [
+                'name' => $customer['f_name'],
+                'email' => $customer['email'],
+                'phone' => $customer['phone'],
+            ];
+            session()->put('data', $data);
+            return view('payment-view');
+        }
+
+        return response()->json(['errors' => ['code' => 'order-payment', 'message' => 'Data not found']], 403);
+    }
+
+    public function payment(Request $request)
+    {
+
+
+        session()->put('customer_id', 1);
+        session()->put('order_id', 3);
+
+
+        $customer = User::find(1);
+
+        $order = Order::where(['id' => 3, 'user_id' => 1])->first();
+
+        
 
         session ()->put ('order',$order);
         if (isset($customer) && isset($order)) {

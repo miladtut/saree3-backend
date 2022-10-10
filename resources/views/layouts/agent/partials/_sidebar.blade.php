@@ -106,6 +106,44 @@
 
 
 
+                    <!-- DeliveryMan -->
+
+                        <li class="nav-item">
+                            <small class="nav-subtitle" title="{{ translate('messages.deliveryman') }} {{ translate('messages.section') }}">{{ translate('messages.deliveryman') }}
+                                {{ translate('messages.section') }}</small>
+                            <small class="tio-more-horizontal nav-subtitle-replacer"></small>
+                        </li>
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('agent/delivery-man/add') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('agent.delivery-man.add') }}" title="{{ translate('messages.add_delivery_man') }}">
+                                <i class="tio-running nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    {{ translate('messages.add_delivery_man') }}
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('agent/delivery-man/list') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('agent.delivery-man.list') }}" title="{{ translate('messages.deliveryman') }} {{ translate('messages.list') }}">
+                                <i class="tio-filter-list nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    {{ translate('messages.deliverymen') }}
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('agent/delivery-man/reviews/list') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('agent.delivery-man.reviews.list') }}" title="{{ translate('messages.reviews') }}">
+                                <i class="tio-star-outlined nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    {{ translate('messages.reviews') }}
+                                </span>
+                            </a>
+                        </li>
+
+                    <!-- End DeliveryMan -->
+
+
+
 
                     <!-- Business Settings -->
                     <li class="navbar-vertical-aside-has-menu {{Request::is('agent-panel/profile*')?'active':''}}">
