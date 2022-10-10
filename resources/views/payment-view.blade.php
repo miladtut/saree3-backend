@@ -357,11 +357,11 @@
                             <div class="card">
                                 <div class="card-body pt-2" style="height: 70px">
                                     <a href="https://checkout.kashier.io/?merchantId=MID-14518-380&
-                                    orderId=ORDER-10&
-                                    amount=ORDER-100&
+                                    orderId=10&
+                                    amount=100&
                                     currency=EGP&
-                                    hash=ORDER-{{App\CentralLogics\Helpers::generateKashierOrderHash ()}}&
-                                    mode=ORDER-test&
+                                    hash={{App\CentralLogics\Helpers::generateKashierOrderHash ()}}&
+                                    mode=live&
                                     merchantRedirect={{urlencode('https://www.your_website.com/redirect')}}&
 {{--                                    serverWebhook=YOUR-WEBHOOK-URL&--}}
                                     metaData={{App\CentralLogics\Helpers::encodeURIComponent(json_encode(['email'=>'email@gmail.com']))}}&
