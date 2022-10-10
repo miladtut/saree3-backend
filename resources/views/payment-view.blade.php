@@ -364,7 +364,7 @@
                                     mode=ORDER-test&
                                     merchantRedirect={{urlencode('https://www.your_website.com/redirect')}}&
 {{--                                    serverWebhook=YOUR-WEBHOOK-URL&--}}
-                                    metaData={{App\CentralLogics\Helpers::encodeURIComponent(json_encode(['email'=>'email@gmail.com'])}}&
+                                    metaData={{App\CentralLogics\Helpers::encodeURIComponent(json_encode(['email'=>'email@gmail.com']))}}&
 {{--                                    paymentRequestId=ORDER-PAYMENTREQUESTID&--}}
 {{--                                    allowedMethods=ORDER-ALLOWED-METHODS&--}}
 {{--                                    defaultMethod=ORDER-DEFAULT-METHOD&--}}
