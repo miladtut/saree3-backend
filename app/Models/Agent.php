@@ -25,6 +25,9 @@ class Agent extends Authenticatable
     public function brokers(){
         return $this->hasMany (Broker::class);
     }
+    public function deliveryMen(){
+        return $this->hasMany (DeliveryMan::class);
+    }
     public function scopeActive($query)
     {
         return $query->where('status', 1);

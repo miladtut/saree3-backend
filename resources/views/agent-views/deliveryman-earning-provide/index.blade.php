@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.agent.app')
 
 @section('title',translate('messages.deliverymen_earning_provide'))
 
@@ -24,13 +24,13 @@
                 <h4 class="text-capitalize">{{translate('messages.provide')}} {{translate('messages.deliverymen')}} {{translate('messages.earning')}}</h4>
             </div>
             <div class="card-body">
-                <form action="{{route('admin.provide-deliveryman-earnings.store')}}" method='post' id="add_transaction">
+                <form action="{{route('agent.provide-deliveryman-earnings.store')}}" method='post' id="add_transaction">
                     @csrf
                     <div class="row">
                         <div class="col-sm-6 col-12">
                             <div class="form-group">
                                 <label class="input-label" for="deliveryman">{{translate('messages.deliveryman')}}<span class="input-label-secondary"></span></label>
-                                <select id="deliveryman" name="deliveryman_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.deliveryman')}}" onchange="getAccountData('{{url('/')}}/admin/delivery-man/get-account-data/',this.value,'deliveryman')" class="form-control" title="Select deliveryman">
+                                <select id="deliveryman" name="deliveryman_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.deliveryman')}}" onchange="getAccountData('{{url('/')}}/agent-panel/delivery-man/get-account-data/',this.value,'deliveryman')" class="form-control" title="Select deliveryman">
 
                                 </select>
                             </div>
@@ -82,12 +82,11 @@
                                     <th>{{translate('messages.amount')}}</th>
                                     <th>{{translate('messages.method')}}</th>
                                     <th>{{translate('messages.reference')}}</th>
-{{--                                    <th>{{translate('messages.person')}}</th>--}}
+
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($provide_dm_earning as $k=>$at)
-{{--                                    @php($collector = $at['agent_id']?\App\CentralLogics\Helpers::get_agent_by_id ($at['agent_id'])->f_name . ' '.\App\CentralLogics\Helpers::get_agent_by_id ($at['agent_id'])->l_name:'admin')--}}
                                     <tr>
                                         <td scope="row">{{$k+$provide_dm_earning->firstItem()}}</td>
                                         <td>@if($at->delivery_man)<a href="{{route('admin.delivery-man.preview', $at->delivery_man_id)}}">{{$at->delivery_man->f_name.' '.$at->delivery_man->l_name}}</a> @else <label class="text-capitalize text-danger">{{translate('messages.deliveryman')}} {{translate('messages.deleted')}}</label> @endif </td>
@@ -95,14 +94,7 @@
                                         <td>{{$at['amount']}}</td>
                                         <td>{{$at['method']}}</td>
                                         <td>{{$at['ref']}}</td>
-{{--                                        <td>--}}
 
-{{--                                            @if($collector != 'admin')--}}
-{{--                                                <a href="{{route('admin.agent.view', $at['agent_id'])}}" alt="view agent"> {{$collector}}</a>--}}
-{{--                                            @else--}}
-{{--                                                {{$collector}}--}}
-{{--                                            @endif--}}
-{{--                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -147,7 +139,7 @@
         $('#deliveryman').select2({
 
             ajax: {
-                url: '{{url('/')}}/admin/delivery-man/get-deliverymen',
+                url: '{{url('/')}}/agent-panel/delivery-man/get-deliverymen',
                 data: function (params) {
                     return {
                         q: params.term, // search term
@@ -192,7 +184,7 @@
                 }
             });
             $.post({
-                url: '{{route('admin.provide-deliveryman-earnings.store')}}',
+                url: '{{route('agent.provide-deliveryman-earnings.store')}}',
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -211,7 +203,7 @@
                             ProgressBar: true
                         });
                         setTimeout(function () {
-                            location.href = '{{route('admin.provide-deliveryman-earnings.index')}}';
+                            location.href = '{{route('agent.provide-deliveryman-earnings.index')}}';
                         }, 2000);
                     }
                 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,8 +20,8 @@ class ProvideDMEarningController extends Controller
     public function index()
     {
 
-        $provide_dm_earning = ProvideDMEarning::latest()->paginate(config('default_pagination'));
-        return view('admin-views.deliveryman-earning-provide.index', compact('provide_dm_earning'));
+        $provide_dm_earning = ProvideDMEarning::where('agent_id',Helpers::get_agent_id ())->latest()->paginate(config('default_pagination'));
+        return view('agent-views.deliveryman-earning-provide.index', compact('provide_dm_earning'));
     }
 
     /**
@@ -69,6 +69,8 @@ class ProvideDMEarningController extends Controller
         $provide_dm_earning->method = $request['method'];
         $provide_dm_earning->ref = $request['ref'];
         $provide_dm_earning->amount = $request['amount'];
+        $provide_dm_earning->agent_id = Helpers::get_agent_id ();
+
 
         try
         {

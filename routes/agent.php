@@ -113,11 +113,10 @@ Route::group( ['namespace' => 'Agent', 'as' => 'agent.'], function () {
                 });
             });
         });
+
+        Route::resource('account-transaction', 'AccountTransactionController');
+
+        Route::resource('provide-deliveryman-earnings', 'ProvideDMEarningController');
     });
-
-
-
-
-
 });
 

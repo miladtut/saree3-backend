@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.agent.app')
 
 @section('title',translate('messages.account_transaction'))
 
@@ -10,7 +10,7 @@
 <div class="content container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
+            <li class="breadcrumb-item"><a href="{{route('agent.dashboard')}}">{{translate('messages.dashboard')}}</a></li>
             <li class="breadcrumb-item" aria-current="page">{{translate('messages.account_transaction')}}  </li>
         </ol>
     </nav>
@@ -24,7 +24,7 @@
             <h4 class="text-capitalize">{{translate('messages.add')}} {{translate('messages.account_transaction')}}</h4>
         </div>
         <div class="card-body">
-            <form action="{{route('admin.account-transaction.store')}}" method='post' id="add_transaction">
+            <form action="{{route('agent.account-transaction.store')}}" method='post' id="add_transaction">
                 @csrf
                 <div class="row">
                     <div class="col-md-4">
@@ -32,20 +32,20 @@
                         <label class="input-label" for="type">{{translate('messages.type')}}<span class="input-label-secondary"></span></label>
                             <select name="type" id="type" class="form-control">
                                 <option value="deliveryman">{{translate('messages.deliveryman')}}</option>
-                                <option value="store">{{translate('messages.store')}}</option>
-                                <option value="agent">{{translate('messages.agent')}}</option>
-                                <option value="broker">{{translate('messages.broker')}}</option>
+{{--                                <option value="store">{{translate('messages.store')}}</option>--}}
+{{--                                <option value="agent">{{translate('messages.agent')}}</option>--}}
+{{--                                <option value="broker">{{translate('messages.broker')}}</option>--}}
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="input-label" for="store">{{translate('messages.store')}}<span class="input-label-secondary"></span></label>
-                            <select id="store" name="store_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.store')}}" onchange="getAccountData('{{url('/')}}/admin/vendor/get-account-data/',this.value,'store')" class="form-control" title="Select Restaurant" disabled>
+{{--                    <div class="col-md-4">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="input-label" for="store">{{translate('messages.store')}}<span class="input-label-secondary"></span></label>--}}
+{{--                            <select id="store" name="store_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.store')}}" onchange="getAccountData('{{url('/')}}/admin/vendor/get-account-data/',this.value,'store')" class="form-control" title="Select Restaurant" disabled>--}}
 
-                            </select>
-                        </div>
-                    </div>
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="input-label" for="deliveryman">{{translate('messages.deliveryman')}}<span class="input-label-secondary"></span></label>
@@ -55,22 +55,22 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="input-label" for="agent">{{translate('messages.agent')}}<span class="input-label-secondary"></span></label>
-                            <select id="agent" name="agent_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.agent')}}" onchange="getAccountData('{{url('/')}}/admin/agent/get-account-data/',this.value,'agent')" class="form-control" title="Select agent" disabled>
+{{--                    <div class="col-md-4">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="input-label" for="agent">{{translate('messages.agent')}}<span class="input-label-secondary"></span></label>--}}
+{{--                            <select id="agent" name="agent_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.agent')}}" onchange="getAccountData('{{url('/')}}/admin/agent/get-account-data/',this.value,'agent')" class="form-control" title="Select agent" disabled>--}}
 
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="input-label" for="broker">{{translate('messages.broker')}}<span class="input-label-secondary"></span></label>
-                            <select id="broker" name="broker_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.broker')}}" onchange="getAccountData('{{url('/')}}/admin/broker/get-account-data/',this.value,'broker')" class="form-control" title="Select broker" disabled>
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-4">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="input-label" for="broker">{{translate('messages.broker')}}<span class="input-label-secondary"></span></label>--}}
+{{--                            <select id="broker" name="broker_id" data-placeholder="{{translate('messages.select')}} {{translate('messages.broker')}}" onchange="getAccountData('{{url('/')}}/admin/broker/get-account-data/',this.value,'broker')" class="form-control" title="Select broker" disabled>--}}
 
-                            </select>
-                        </div>
-                    </div>
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
 
                 <div class="row">
@@ -118,7 +118,6 @@
                                     <th>{{translate('messages.received_at')}}</th>
                                     <th>{{translate('messages.amount')}}</th>
                                     <th>{{translate('messages.reference')}}</th>
-                                    <th>{{translate('messages.collector')}}</th>
                                     <th style="width: 5px">{{translate('messages.action')}}</th>
                                 </tr>
                             </thead>
@@ -130,7 +129,7 @@
                                         @if($at->store)
                                         <a href="{{route('admin.vendor.view',[$at->store['id']])}}">{{ Str::limit($at->store->name, 20, '...') }}</a>
                                         @elseif($at->deliveryman)
-                                        <a href="{{route('admin.delivery-man.preview',[$at->deliveryman->id])}}">{{ $at->deliveryman->f_name }} {{ $at->deliveryman->l_name }}</a>
+                                        <a href="{{route('agent.delivery-man.preview',[$at->deliveryman->id])}}">{{ $at->deliveryman->f_name }} {{ $at->deliveryman->l_name }}</a>
                                         @elseif($at->agent)
                                         <a href="{{route('admin.agent.view',[$at->agent['id']])}}">{{ $at->agent->f_name }} {{ $at->agent->l_name }}</a>
                                         @elseif($at->broker)
@@ -144,15 +143,7 @@
                                     <td>{{$at['amount']}}</td>
                                     <td>{{$at['ref']}}</td>
                                     <td>
-                                        @php($collector = $at['agent_id']?\App\CentralLogics\Helpers::get_agent_by_id ($at['agent_id'])->f_name . ' '.\App\CentralLogics\Helpers::get_agent_by_id ($at['agent_id'])->l_name:'admin')
-                                        @if($collector != 'admin')
-                                            <a href="{{route('admin.agent.view', $at['agent_id'])}}" alt="view agent"> {{$collector}}</a>
-                                        @else
-                                            {{$collector}}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{route('admin.account-transaction.show',[$at['id']])}}"
+                                        <a href="{{route('agent.account-transaction.show',[$at['id']])}}"
                                         class="btn btn-white btn-sm"><i class="tio-visible"></i>
                                         </a>
                                     </td>
@@ -250,7 +241,7 @@
 
     $('#deliveryman').select2({
         ajax: {
-            url: '{{url('/')}}/admin/delivery-man/get-deliverymen',
+            url: '{{url('/')}}/agent-panel/delivery-man/get-deliverymen',
             data: function (params) {
                 return {
                     q: params.term, // search term
@@ -341,7 +332,7 @@
             }
         });
         $.post({
-            url: '{{route('admin.account-transaction.store')}}',
+            url: '{{route('agent.account-transaction.store')}}',
             data: formData,
             cache: false,
             contentType: false,
@@ -360,7 +351,7 @@
                         ProgressBar: true
                     });
                     setTimeout(function () {
-                        location.href = '{{route('admin.account-transaction.index')}}';
+                        location.href = '{{route('agent.account-transaction.index')}}';
                     }, 2000);
                 }
             }

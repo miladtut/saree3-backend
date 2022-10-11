@@ -128,12 +128,13 @@
                             </div>
                         </div>
                         <br>
-
-                        @foreach(json_decode($delivery_man['identity_image'],true) as $img)
-                            <div class="col-md-4 col-12 mb-2">
-                                <img height="150" src="{{asset('public/storage/delivery-man').'/'.$img}}">
-                            </div>
-                        @endforeach
+                        @if($delivery_man['identity_image'])
+                            @foreach(json_decode($delivery_man['identity_image'],true) as $img)
+                                <div class="col-md-4 col-12 mb-2">
+                                    <img height="150" src="{{asset('public/storage/delivery-man').'/'.$img}}">
+                                </div>
+                            @endforeach
+                        @endif
                         <hr>
                     </div>
 

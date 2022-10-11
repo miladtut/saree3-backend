@@ -96,7 +96,33 @@
                                     required>
                             </div>
                         </div>
+
+                        <div class="col-sm-4 col-12">
+                            <div class="form-group">
+                                <label class="input-label" for="exampleFormControlInput1">{{translate('messages.deliveryman')}} {{translate('messages.type')}}</label>
+                                <select name="earning" class="form-control">
+                                    <option value="1">{{translate('messages.freelancer')}}</option>
+                                    <option value="0">{{translate('messages.salary_based')}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 col-12">
+                            <div class="form-group">
+                                <label class="input-label" for="exampleFormControlInput1">{{translate('messages.zone')}}</label>
+                                <select name="zone_id" class="form-control" required data-placeholder="{{translate('messages.select')}} {{translate('messages.zone')}}">
+                                    <option value="" readonly="true" hidden="true">{{translate('messages.select')}} {{translate('messages.zone')}}</option>
+                                    @foreach(\App\Models\Zone::all() as $zone)
+
+                                            <option value="{{$zone->id}}">{{$zone->name}}</option>
+
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
+
+
 
 
                     <div class="form-group">

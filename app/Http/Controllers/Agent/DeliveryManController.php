@@ -74,6 +74,8 @@ class DeliveryManController extends Controller
             'email' => 'required|unique:delivery_men',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:delivery_men',
             'password'=>'required|min:6',
+            'zone_id' => 'required',
+            'earning' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -111,8 +113,10 @@ class DeliveryManController extends Controller
         $dm->active = 0;
         $dm->earning = 0;
 //        $dm->type = 'restaurant_wise';
-        $dm->type = 'agent_wise';
+        $dm->type = 'zone_wise';
         $dm->password = bcrypt($request->password);
+        $dm->zone_id = $request->zone_id;
+        $dm->earning = $request->earning;
         $dm->save();
 
         return response()->json(['message' => translate('messages.deliveryman_added_successfully')], 200);
@@ -269,7 +273,7 @@ class DeliveryManController extends Controller
                     ->orWhere('phone', 'like', "%{$value}%")
                     ->orWhere('identity_number', 'like', "%{$value}%");
             }
-        })->where('store_id', Helpers::get_store_id())->limit(8)->get(['id',DB::raw('CONCAT(f_name, " ", l_name) as text')]);
+        })->where('agent_id', Helpers::get_agent_id ())->limit(8)->get(['id',DB::raw('CONCAT(f_name, " ", l_name) as text')]);
         return response()->json($data);
     }
 

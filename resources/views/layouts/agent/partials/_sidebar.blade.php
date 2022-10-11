@@ -143,6 +143,31 @@
                     <!-- End DeliveryMan -->
 
 
+                    <!-- account -->
+
+                        <li class="navbar-vertical-aside-has-menu {{ Request::is('agent-panel/account-transaction*') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('agent.account-transaction.index') }}" title="{{ translate('messages.collect') }} {{ translate('messages.cash') }}">
+                                <i class="tio-money nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.collect') }}
+                                    {{ translate('messages.cash') }}</span>
+                            </a>
+                        </li>
+
+                <!-- End account -->
+
+
+                    <!-- provide_dm_earning -->
+
+{{--                        <li class="navbar-vertical-aside-has-menu {{ Request::is('agent-panel/provide-deliveryman-earnings*') ? 'active' : '' }}">--}}
+{{--                            <a class="js-navbar-vertical-aside-menu-link nav-link" href="{{ route('agent.provide-deliveryman-earnings.index') }}" title="{{ translate('messages.deliverymen_earning_provide') }}">--}}
+{{--                                <i class="tio-send nav-icon"></i>--}}
+{{--                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('messages.deliverymen_earning_provide') }}</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+
+                <!-- End provide_dm_earning -->
+
+
 
 
                     <!-- Business Settings -->

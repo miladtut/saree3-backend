@@ -38,6 +38,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link {{request('tab')=='dm'?'active':''}}" href="{{route('admin.agent.view', ['agent'=>$agent->id, 'tab'=> 'dm'])}}"  aria-disabled="true">{{translate('messages.delivery_men')}}</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link {{request('tab')=='transaction'?'active':''}}" href="{{route('admin.agent.view', ['agent'=>$agent->id, 'tab'=> 'transaction'])}}"  aria-disabled="true">{{translate('messages.transaction')}}</a>
                 </li>
 

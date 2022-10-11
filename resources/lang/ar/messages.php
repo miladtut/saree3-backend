@@ -1415,4 +1415,7 @@
   'broker_payment_approved' => 'Broker payment approved',
   'kashier' => 'Kashier',
   'merchant_id' => 'Merchant id',
+  'delivery_men' => 'Delivery men',
+  'person' => 'Person',
+  'collector' => 'Collector',
 );

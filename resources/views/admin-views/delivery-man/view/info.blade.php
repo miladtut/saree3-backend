@@ -331,9 +331,11 @@
                                 </div>
                             </td>
                             <td>
-                                @foreach(json_decode($review['attachment'],true) as $attachment)
-                                    <img width="100" onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" src="{{asset('public/storage')}}/{{$attachment}}">
-                                @endforeach
+                                @if($review['attachment'])
+                                    @foreach(json_decode($review['attachment'],true) as $attachment)
+                                        <img width="100" onerror="this.src='{{asset('public/assets/admin/img/160x160/img2.jpg')}}'" src="{{asset('public/storage')}}/{{$attachment}}">
+                                    @endforeach
+                                @endif
                             </td>
                             <td>
                                 {{date('d M Y '.config('timeformat'),strtotime($review['created_at']))}}

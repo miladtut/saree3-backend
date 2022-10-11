@@ -156,6 +156,10 @@ class AgentController extends Controller
         {
             return view('admin-views.agent.view.broker', compact('agent'));
         }
+        else if($tab == 'dm')
+        {
+            return view('admin-views.agent.view.dm', compact('agent'));
+        }
         else if($tab == 'transaction')
         {
             return view('admin-views.agent.view.transaction', compact('agent', 'sub_tab'));

@@ -23,7 +23,7 @@ class DeliveryManController extends Controller
     {
         $zone_id = $request->query('zone_id', 'all');
         $delivery_men = DeliveryMan::when(is_numeric($zone_id), function($query) use($zone_id){
-            return $query->where('zone_id', $zone_id);           
+            return $query->where('zone_id', $zone_id);
         })->with('zone')->where('type','zone_wise')->latest()->paginate(config('default_pagination'));
         $zone = is_numeric($zone_id)?Zone::findOrFail($zone_id):null;
         return view('admin-views.delivery-man.list', compact('delivery_men', 'zone'));
@@ -65,7 +65,7 @@ class DeliveryManController extends Controller
         {
             $date = $request->query('date');
             return view('admin-views.delivery-man.view.transaction', compact('dm', 'date'));
-        }        
+        }
     }
 
     public function store(Request $request)
@@ -222,9 +222,11 @@ class DeliveryManController extends Controller
         }
 
         if ($request->has('identity_image')){
-            foreach (json_decode($delivery_man['identity_image'], true) as $img) {
-                if (Storage::disk('public')->exists('delivery-man/' . $img)) {
-                    Storage::disk('public')->delete('delivery-man/' . $img);
+            if ($delivery_man['identity_image']){
+                foreach (json_decode($delivery_man['identity_image'], true) as $img) {
+                    if (Storage::disk('public')->exists('delivery-man/' . $img)) {
+                        Storage::disk('public')->delete('delivery-man/' . $img);
+                    }
                 }
             }
             $img_keeper = [];

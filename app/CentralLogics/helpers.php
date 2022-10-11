@@ -2,6 +2,7 @@
 
 namespace App\CentralLogics;
 
+use App\Models\Agent;
 use App\Models\Zone;
 use App\Models\AddOn;
 use App\Models\Order;
@@ -1205,6 +1206,11 @@ class Helpers
     public static function get_agent_data()
     {
         return auth('agent')->user();
+    }
+
+    public static function get_agent_by_id($id)
+    {
+        return Agent::find($id);
     }
 
     public static function get_broker_data()
