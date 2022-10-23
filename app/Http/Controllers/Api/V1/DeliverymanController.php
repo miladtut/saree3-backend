@@ -48,7 +48,7 @@ class DeliverymanController extends Controller
         unset($dm['wallet']);
         return response()->json($dm, 200);
     }
-    
+
     public function update_profile(Request $request)
     {
         $dm = DeliveryMan::with(['rating'])->where(['auth_token' => $request['token']])->first();
@@ -120,13 +120,17 @@ class DeliverymanController extends Controller
 
         if($dm->type == 'zone_wise')
         {
-            $orders = $orders->where('zone_id', $dm->zone_id);
+            $orders = $orders->where('zone_id', $dm->zone_id)
+                ->whereDoesntHave('store',function ($q){
+                    $q->where('self_delivery_system',1);
+                });
+
         }
         else
         {
             $orders = $orders->where('store_id', $dm->store_id);
         }
-        
+
         if(config('order_confirmation_model') == 'deliveryman' && $dm->type == 'zone_wise')
         {
             $orders = $orders->whereIn('order_status', ['pending', 'confirmed','processing','handover']);
@@ -137,7 +141,7 @@ class DeliverymanController extends Controller
                 $query->whereIn('order_status', ['confirmed','processing','handover'])->orWhere('order_type','parcel');
             });
         }
-        
+
         $orders = $orders->dmOrder()
         ->Notpos()
         ->OrderScheduledIn(30)
@@ -187,7 +191,7 @@ class DeliverymanController extends Controller
         else{
             $order->order_status = in_array($order->order_status, ['pending', 'confirmed'])?'accepted':$order->order_status;
         }
-        
+
         $order->delivery_man_id = $dm->id;
         $order->accepted = now();
         $order->save();
@@ -220,7 +224,7 @@ class DeliverymanController extends Controller
         return response()->json(['message' => 'Order accepted successfully'], 200);
 
     }
-    
+
     public function record_location_data(Request $request)
     {
         $dm = DeliveryMan::where(['auth_token' => $request['token']])->first();
@@ -265,9 +269,9 @@ class DeliverymanController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
         $dm = DeliveryMan::where(['auth_token' => $request['token']])->first();
-        
+
         $order = Order::where(['id' => $request['order_id'], 'delivery_man_id' => $dm['id']])->dmOrder()->first();
-        
+
         if($request['status'] =="confirmed" && config('order_confirmation_model') == 'store')
         {
             return response()->json([
@@ -285,7 +289,7 @@ class DeliverymanController extends Controller
                 ]
             ], 403);
         }
-        
+
         if($order->confirmed && $request['status'] == 'canceled')
         {
             return response()->json([
@@ -303,7 +307,7 @@ class DeliverymanController extends Controller
                 ]
             ], 406);
         }
-        if ($request->status == 'delivered') 
+        if ($request->status == 'delivered')
         {
             if($order->transaction == null)
             {
@@ -334,7 +338,7 @@ class DeliverymanController extends Controller
                 }
             });
             $order->customer->increment('order_count');
-            
+
             $dm->current_orders = $dm->current_orders>1?$dm->current_orders-1:0;
             $dm->save();
 
@@ -356,7 +360,7 @@ class DeliverymanController extends Controller
                 $dm = $order->delivery_man;
                 $dm->current_orders = $dm->current_orders>1?$dm->current_orders-1:0;
                 $dm->save();
-            }                   
+            }
         }
         else if($order->order_type == 'parcel' && $request->status == 'handover')
         {
@@ -491,7 +495,7 @@ class DeliverymanController extends Controller
             })->where('tergat', 'deliveryman')->where('created_at', '>=', \Carbon\Carbon::today()->subDays(7))->get();
 
         $user_notifications = UserNotification::where('delivery_man_id', $dm->id)->where('created_at', '>=', \Carbon\Carbon::today()->subDays(7))->get();
-        
+
         $notifications->append('data');
 
         $notifications =  $notifications->merge($user_notifications);
@@ -505,7 +509,7 @@ class DeliverymanController extends Controller
     public function remove_account(Request $request)
     {
         $dm = DeliveryMan::where(['auth_token' => $request['token']])->first();
-        
+
         if(Order::where('delivery_man_id', $dm->id)->whereIn('order_status', ['pending','accepted','confirmed','processing','handover','picked_up'])->count())
         {
             return response()->json(['errors'=>[['code'=>'on-going', 'message'=>translate('messages.user_account_delete_warning')]]],203);
@@ -515,7 +519,7 @@ class DeliverymanController extends Controller
         {
             return response()->json(['errors'=>[['code'=>'on-going', 'message'=>translate('messages.user_account_wallet_delete_warning')]]],203);
         }
-        
+
         if (Storage::disk('public')->exists('delivery-man/' . $dm['image'])) {
             Storage::disk('public')->delete('delivery-man/' . $dm['image']);
         }
